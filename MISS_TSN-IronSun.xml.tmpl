@@ -1,0 +1,536 @@
+<mission_data version="1.0">
+    <start>
+        <!-- <create type="player" x="50000" y="0" z="50000" name="Artemis" /> -->
+
+
+        <set_difficulty_level value="10" />
+        <set_skybox_index index="4" />
+        <set_object_property property="nebulaIsOpaque" value="0" />
+        <set_object_property property="sensorSetting" value="1" />
+        <set_object_property property="nonPlayerSpeed" value="100" />
+        <set_object_property property="nonPlayerShield" value="100" />
+        <set_object_property property="nonPlayerWeapon" value="100" />
+        <set_object_property property="playerWeapon" value="100" />
+        <set_object_property property="playerShields" value="100" />
+
+        <big_message title="Iron Sun" subtitle1="by Kosai" subtitle2="version 0.1" />
+
+        <create count="150" type="asteroids" startAngle="0" endAngle="90" startX="64014.0" startY="0.0" startZ="29861.0" radius="20000" randomRange="10000" />
+        <create count="30" type="nebulas" nebType="2" startX="53634.0" startY="0.0" startZ="85709.0" radius="5000" randomRange="5000" />
+        <create count="15" type="nebulas" nebType="3" startAngle="90" endAngle="180" startX="67336.0" startY="0.0" startZ="67854.0" radius="20000" randomRange="10000" />
+        <create count="20" type="nebulas" startAngle="-90" endAngle="90" startX="70866.0" startY="0.0" startZ="25086.0" radius="10000" randomRange="20000" />
+        <create count="40" type="nebulas" nebType="1" startAngle="180" endAngle="270" startX="6713.0" startY="0.0" startZ="55605.0" radius="30000" randomRange="20000" />
+        <create count="20" type="asteroids" startAngle="90" endAngle="270" startX="26436.0" startY="0.0" startZ="73460.0" radius="15000" randomRange="10000" />
+        <create count="50" type="asteroids" startAngle="180" endAngle="270" startX="2353.0" startY="0.0" startZ="5363.0" radius="15000" randomRange="5000" />
+        <create count="30" type="nebulas" startAngle="90" endAngle="270" startX="76679.0" startY="0.0" startZ="79065.0" radius="20000" randomRange="10000" />
+
+
+
+        <create type="genericMesh" x="92872.0" y="-2100.0" z="50207.0" name="Terra Noua" 
+            meshFileName="dat\TSN\USFP\marker.dxs" textureFileName="dat\TSN\USFP\marker.png"
+            colorRed="0.0" colorGreen="0.2" colorBlue="0.7" />
+        <!-- <set_ship_text name="Terra Noua" race="Terrans" class="" desc="" scan_desc="Population: 10 bil." /> -->
+
+        <create type="genericMesh" x="100.0" y="0.0" z="100.0" angle="0" name="PA" meshFileName="dat\TSN\Planets\planet8.dxs" textureFileName="dat\TSN\Planets\pm1.png" fakeShieldsFront="1" fakeShieldsRear="1" hasFakeShldFreq="1" colorRed="0.0" colorGreen="0.2" colorBlue="0.7" />
+        <set_object_property property="pushRadius" value="1.0" name="PA" />
+        <set_object_property property="artScale" value="8.0" name="PA" />
+        <create type="genericMesh" x="100.0" y="2.0" z="100.0" angle="0" name="PB" meshFileName="dat\TSN\Planets\planet8.dxs" textureFileName="dat\TSN\Planets\pm2.png" fakeShieldsFront="1" fakeShieldsRear="1" hasFakeShldFreq="1" colorRed="0.0" colorGreen="0.2" colorBlue="0.7" />
+        <set_object_property property="artScale" value="8.0" name="PB" />
+        <set_object_property property="pushRadius" value="1.0" name="PB" />
+        <create type="genericMesh" x="100.0" y="4.0" z="100.0" angle="0" name="PC" meshFileName="dat\TSN\Planets\planet8.dxs" textureFileName="dat\TSN\Planets\pm3.png" fakeShieldsFront="1" fakeShieldsRear="1" hasFakeShldFreq="1" colorRed="0.0" colorGreen="0.2" colorBlue="0.7" />
+        <set_object_property property="pushRadius" value="1.0" name="PC" />
+        <set_object_property property="artScale" value="8.0" name="PC" />
+        <create type="genericMesh" x="100.0" y="6.0" z="100.0" angle="0" name="PD" meshFileName="dat\TSN\Planets\planet8.dxs" textureFileName="dat\TSN\Planets\pm4.png" fakeShieldsFront="1" fakeShieldsRear="1" hasFakeShldFreq="1" colorRed="0.0" colorGreen="0.2" colorBlue="0.7" />
+        <set_object_property property="pushRadius" value="1.0" name="PD" />
+        <set_object_property property="artScale" value="8.0" name="PD" />
+        <create type="genericMesh" x="100.0" y="8.0" z="100.0" angle="0" name="PE" meshFileName="dat\TSN\Planets\planet8.dxs" textureFileName="dat\TSN\Planets\pm5.png" fakeShieldsFront="1" fakeShieldsRear="1" hasFakeShldFreq="1" colorRed="0.0" colorGreen="0.2" colorBlue="0.7" />
+        <set_object_property property="pushRadius" value="1.0" name="PE" />
+        <set_object_property property="artScale" value="8.0" name="PE" />
+        <create type="genericMesh" x="100.0" y="10.0" z="100.0" angle="0" name="PF" meshFileName="dat\TSN\Planets\planet8.dxs" textureFileName="dat\TSN\Planets\pm6.png" fakeShieldsFront="1" fakeShieldsRear="1" hasFakeShldFreq="1" colorRed="0.0" colorGreen="0.2" colorBlue="0.7" />
+        <set_object_property property="pushRadius" value="1.0" name="PF" />
+        <set_object_property property="artScale" value="8.0" name="PF" />
+        <create type="genericMesh" x="100.0" y="12.0" z="100.0" angle="0" name="PG" meshFileName="dat\TSN\Planets\planet8.dxs" textureFileName="dat\TSN\Planets\pm7.png" fakeShieldsFront="1" fakeShieldsRear="1" hasFakeShldFreq="1" colorRed="0.0" colorGreen="0.2" colorBlue="0.7" />
+        <set_object_property property="pushRadius" value="1.0" name="PG" />
+        <set_object_property property="artScale" value="8.0" name="PG" />
+        <create type="genericMesh" x="100.0" y="14.0" z="100.0" angle="0" name="PH" meshFileName="dat\TSN\Planets\planet8.dxs" textureFileName="dat\TSN\Planets\pm8.png" fakeShieldsFront="1" fakeShieldsRear="1" hasFakeShldFreq="1" colorRed="0.0" colorGreen="0.2" colorBlue="0.7" />
+        <set_object_property property="pushRadius" value="1.0" name="PH" />
+        <set_object_property property="artScale" value="8.0" name="PH" />
+        <set_relative_position name2="PA" distance="2000" angle="0.0" name1="Terra Noua" />
+        <set_relative_position name2="PB" distance="2000" angle="45.0" name1="Terra Noua" />
+        <set_relative_position name2="PC" distance="2000" angle="90.0" name1="Terra Noua" />
+        <set_relative_position name2="PD" distance="2000" angle="135.0" name1="Terra Noua" />
+        <set_relative_position name2="PE" distance="2000" angle="180.0" name1="Terra Noua" />
+        <set_relative_position name2="PF" distance="2000" angle="225.0" name1="Terra Noua" />
+        <set_relative_position name2="PG" distance="2000" angle="270.0" name1="Terra Noua" />
+        <set_relative_position name2="PH" distance="2000" angle="315.0" name1="Terra Noua" />
+        <set_object_property property="positionY" value="-2100.0" name="PA" />
+        <set_object_property property="positionY" value="-2100.0" name="PB" />
+        <set_object_property property="positionY" value="-2100.0" name="PC" />
+        <set_object_property property="positionY" value="-2100.0" name="PD" />
+        <set_object_property property="positionY" value="-2100.0" name="PE" />
+        <set_object_property property="positionY" value="-2100.0" name="PF" />
+        <set_object_property property="positionY" value="-2100.0" name="PG" />
+        <set_object_property property="positionY" value="-2100.0" name="PH" />
+        <set_object_property property="angle" value="6.283185307" name="PA" />
+        <set_object_property property="angle" value="7.068583471" name="PB" />
+        <set_object_property property="angle" value="7.853981634" name="PC" />
+        <set_object_property property="angle" value="8.639379797" name="PD" />
+        <set_object_property property="angle" value="3.141590654" name="PE" />
+        <set_object_property property="angle" value="3.926990817" name="PF" />
+        <set_object_property property="angle" value="4.71238898" name="PG" />
+        <set_object_property property="angle" value="5.497787144" name="PH" />
+        <set_ship_text name="PA" newname=" " />
+        <set_ship_text name="PB" newname=" " />
+        <set_ship_text name="PC" newname=" " />
+        <set_ship_text name="PD" newname=" " />
+        <set_ship_text name="PE" newname=" " />
+        <set_ship_text name="PF" newname=" " />
+        <set_ship_text name="PG" newname=" " />
+        <set_ship_text name="PH" newname=" " />
+
+
+
+        <set_variable name="IronSunFireInMinutes" value="45" integer="yes" />
+        <set_timer name="IronSunNextMinute" seconds="1"/>
+
+        <create type="genericMesh" x="4222.0" y="-2000.0" z="50622.0" name="Iron Sun" 
+            meshFileName="dat\TSN\USFP\marker.dxs" textureFileName="dat\TSN\Caltron\shipHull13.png"
+            colorRed="1.0" colorGreen="0.0" colorBlue="0.0" />
+        <set_object_property property="artScale" value="20.0" name="Iron Sun" />
+        <set_object_property property="angleDelta" value="0.01" name="Iron Sun" />
+        <set_object_property property="pushRadius" value="2200.0" name="Iron Sun" />
+
+        <!-- Adding Shuttles -->
+        {%- for shuttle in shuttles %}
+        <set_player_carried_type player_slot="{{loop.index-1}}" bay_slot="0" hullID="102" name="{{shuttle}}" />
+            {%- for cargoType,cargoName in cargoTypes.items() %}
+        <set_variable name="{{shuttle}}Cargo{{cargoType}}" value="0" integer="yes" />
+            {%- endfor %}
+        {%- endfor %}
+
+
+        
+        <set_relative_position player_slot2="0" distance="4200" angle="0.0" name1="HQ" />
+        <set_relative_position player_slot2="1" distance="4200" angle="45.0" name1="HQ" />
+        <set_relative_position player_slot2="2" distance="4200" angle="90.0" name1="HQ" />
+        <set_relative_position player_slot2="3" distance="4200" angle="135.0" name1="HQ" />
+        <set_relative_position player_slot2="4" distance="4200" angle="180.0" name1="HQ" />
+        <set_relative_position player_slot2="5" distance="4200" angle="225.0" name1="HQ" />
+        <set_relative_position player_slot2="6" distance="4200" angle="270.0" name1="HQ" />
+        <set_relative_position player_slot2="7" distance="4200" angle="315.0" name1="HQ" />
+
+        <incoming_comms_text from="HQ" sideValue="2" type="STATION">Find a way to destroy Iron Sun before it obliterates Terra Noua! Also, defend us at the HQ.</incoming_comms_text>
+    
+        <set_timer name="Post init timer" seconds="1"/>
+        <set_variable name="Initted" value="0" integer="yes" />
+
+        <set_variable name="Fleetnumber" randomIntLow="0" randomIntHigh="97" integer="yes" />
+    </start>
+
+    <event name="Post init" >
+        <if_timer_finished name="Post init timer"/>
+        <if_variable name="Initted" comparator="EQUALS" value="0.0" />
+
+        <set_timer name="Initted" seconds="10" />
+
+        <set_variable name="HQCargo0" value="10" integer="yes" />
+        <set_variable name="HQCargo1" value="10" integer="yes" />
+        <set_variable name="HQCargo2" value="10" integer="yes" />
+        <set_variable name="HQCargo3" value="10" integer="yes" />
+
+        <!-- Below for dev only -->
+        <set_variable name="ShipyardCargo0" value="10" integer="yes" />
+        <set_variable name="ShipyardCargo1" value="10" integer="yes" />
+        <set_variable name="ShipyardCargo2" value="10" integer="yes" />
+        <set_variable name="ShipyardCargo3" value="10" integer="yes" />
+
+        <set_variable name="Mineral processorCargo0" value="10" integer="yes" />
+        <set_variable name="Mineral processorCargo1" value="10" integer="yes" />
+        <set_variable name="Mineral processorCargo2" value="10" integer="yes" />
+        <set_variable name="Mineral processorCargo3" value="10" integer="yes" />
+
+        <set_variable name="Gas refineryCargo0" value="10" integer="yes" />
+        <set_variable name="Gas refineryCargo1" value="10" integer="yes" />
+        <set_variable name="Gas refineryCargo2" value="10" integer="yes" />
+        <set_variable name="Gas refineryCargo3" value="10" integer="yes" />
+
+        <set_variable name="ArmoryCargo0" value="10" integer="yes" />
+        <set_variable name="ArmoryCargo1" value="10" integer="yes" />
+        <set_variable name="ArmoryCargo2" value="10" integer="yes" />
+        <set_variable name="ArmoryCargo3" value="10" integer="yes" />
+
+        <set_variable name="Nuclear labCargo0" value="10" integer="yes" />
+        <set_variable name="Nuclear labCargo1" value="10" integer="yes" />
+        <set_variable name="Nuclear labCargo2" value="10" integer="yes" />
+        <set_variable name="Nuclear labCargo3" value="10" integer="yes" />
+
+        <set_variable name="ProteusCargo0" value="10" integer="yes" />
+        <set_variable name="ProteusCargo1" value="10" integer="yes" />
+        <set_variable name="ProteusCargo2" value="10" integer="yes" />
+        <set_variable name="ProteusCargo3" value="10" integer="yes" />
+
+        <set_variable name="Initted" value="1" integer="yes" />
+    </event>
+
+    
+
+    <!-- Meta -->
+
+    <event name="Fleet number overflow" >
+        <log text="Fleet number overflow" />
+
+        <if_variable name="Fleetnumber" comparator="GREATER_EQUAL" value="98.0" />
+        <set_variable name="Fleetnumber" value="0" integer="yes" />
+    </event>
+
+    <event name="Iron Sun countdown" >
+        <log text="Iron Sun countdown" />
+
+        <if_timer_finished name="IronSunNextMinute"/>
+
+        <set_variable name="IronSunFireInMinutes" value="IronSunFireInMinutes-1" integer="yes" />
+        <set_ship_text name="Iron Sun" race="X" class="Doomsday Device" desc="Planetkiller weapon." scan_desc="Invulnerable to known attacks. Charged up in |IronSunFireInMinutes| minutes." />
+        <set_timer name="IronSunNextMinute" seconds="60"/>
+    </event>
+
+    <event name="Iron Sun fires" >
+        <log text="Iron Sun fires" />
+
+        <if_variable name="IronSunFireInMinutes" comparator="EQUALS" value="-1" />
+
+        <create count="200" type="mines" startX="92872.0" startY="0.0" startZ="50207.0" radius="5000" randomRange="5000" />
+
+        <set_ship_text name="Terra Noua" race="Terrans" class="" desc="" scan_desc="Population: 0" />
+
+        <warning_popup_message message="Iron Sun fired and obliterated Terra Noua; mission lost" consoles="MHWESCO" player_slot="0" />
+
+        <set_timer name="Mission end timer" seconds="20" />
+    </event>
+
+
+    <event name="HQ destroyed" >
+        <log text="HQ destroyed" />
+
+        <if_timer_finished name="Initted" />
+        <if_variable name="Initted" comparator="EQUALS" value="1.0" />
+
+        <set_variable name="Initted" value="1" integer="yes" />
+
+        <if_not_exists name="HQ" />
+        <warning_popup_message message="HQ destroyed; mission lost" consoles="MHWESCO" player_slot="0" />
+        <set_timer name="Mission end timer" seconds="20" />
+    </event>
+
+    <event name="Iron Sun destroyed" >
+        <log text="Iron Sun destroyed" />
+
+        <if_not_exists name="Iron Sun" />
+        <if_variable name="Initted" comparator="EQUALS" value="1.0" />
+
+        <warning_popup_message message="Iron Sun destroyed; mission successful" consoles="MHWESCO" player_slot="0" />
+        <set_timer name="Mission end timer" seconds="20" />
+    </event>
+
+    <event name="Mission ends" >
+        <log text="Mission ends" />
+
+        <if_timer_finished name="Mission end timer" />
+        <end_mission />
+    </event>
+
+
+    <!-- Shuttle brings cargo to construction site -->
+    {%- for siteName,site in sites.items() %}
+        {%- for cargoType,cargoNum in site.constructionRequirements.items() %}
+            {%- if cargoNum > 0 %}
+                {%- for shuttle in shuttles %}
+    <event name="{{shuttle}} brings {{cargoType}} to {{siteName}}" >
+        <log text="{{shuttle}} brings {{cargoType}} to {{siteName}}" />
+
+        <if_distance name1="{{shuttle}}" name2="{{site.constructionSiteName}}" comparator="LESS" value="100.0" />
+        <if_variable name="{{shuttle}}Cargo{{cargoType}}" comparator=">" value="0.0" />
+
+        <set_variable name="{{shuttle}}Cargo{{cargoType}}" value="{{shuttle}}Cargo{{cargoType}}-1" integer="yes" />
+        <set_variable name="{{siteName}}Cargo{{cargoType}}" value="{{shuttle}}Cargo{{cargoType}}+1" integer="yes" />
+
+        <incoming_comms_text from="{{shuttle}}" sideValue="2" type="STATUS">{{shuttle}} delivered {{cargoTypes[cargoType]}} to {{site.constructionSiteName}}. 
+            Current cargo: {{cargoTypes[1]}}: |{{shuttle}}Cargo1|. {{cargoTypes[2]}}: |{{shuttle}}Cargo2|. {{cargoTypes[3]}}: |{{shuttle}}Cargo3|.
+        </incoming_comms_text>
+        <log text="{{shuttle}} delivered {{cargoTypes[cargoType]}} to {{site.constructionSiteName}}. Current cargo: {{cargoTypes[1]}}: |{{shuttle}}Cargo1|. {{cargoTypes[2]}}: |{{shuttle}}Cargo2|. {{cargoTypes[3]}}: |{{shuttle}}Cargo3|." />
+    </event>
+                {%- endfor %}
+            {%- endif %}
+        {%- endfor %}
+    {% endfor %}
+
+    <!-- Shuttle picks up cargo -->
+    {%- for cargoType,cargoName in cargoTypes.items() %}
+        {%- for shuttle in shuttles %}
+    <event name="{{shuttle}} picks up {{cargoType}}" >
+        <log text="{{shuttle}} picks up {{cargoType}}" />
+
+        <if_distance name1="{{shuttle}}" name2="{{cargoName}}" comparator="LESS" value="100.0" />
+
+        <set_variable name="{{shuttle}}Cargo{{cargoType}}" value="{{shuttle}}Cargo{{cargoType}}+1" integer="yes" />
+
+        <destroy name="{{cargoName}}" />
+
+        <incoming_comms_text from="{{shuttle}}" sideValue="2" type="STATUS">{{shuttle}} picked up {{cargoTypes[cargoType]}}. 
+            Current cargo: {{cargoTypes[1]}}: |{{shuttle}}Cargo1|. {{cargoTypes[2]}}: |{{shuttle}}Cargo2|. {{cargoTypes[3]}}: |{{shuttle}}Cargo3|.
+        </incoming_comms_text>
+        <log text="{{shuttle}} picked up {{cargoTypes[cargoType]}}. Current cargo: {{cargoTypes[1]}}: |{{shuttle}}Cargo1|. {{cargoTypes[2]}}: |{{shuttle}}Cargo2|. {{cargoTypes[3]}}: |{{shuttle}}Cargo3|." />
+    </event>
+        {%- endfor %}
+    {% endfor %}
+
+    <!-- Common site logic -->
+    {%- for siteName,site in sites.items() %}
+    <event name="{{siteName}} constructed" >
+        <log text="{{siteName}} constructed" />
+
+        <if_not_exists name="{{siteName}}" />
+
+        {%- for cargoType,cargoNum in site.constructionRequirements.items() %}
+        <if_variable name="{{siteName}}Cargo{{cargoType}}" comparator="GREATER_EQUAL" value="{{cargoNum}}" />
+        {%- endfor %}
+
+        <create type="{{site.type}}" x="{{site.x}}" y="{{site.y}}" z="{{site.z}}" name="{{siteName}}" hullID="{{site.hullId}}" sideValue="2" />
+        <destroy name="{{site.constructionSiteName}}" />
+
+        <set_ship_text name="{{siteName}}" race="Terran" desc="{{site.desc}}" />
+
+
+        <set_object_property name="{{siteName}}" property="canBuild" value="0.0"/>
+        <set_object_property name="{{siteName}}" property="missileStoresHoming" value="0"  />
+        <set_object_property name="{{siteName}}" property="missileStoresNuke" value="0"  />
+        <set_object_property name="{{siteName}}" property="missileStoresMine" value="0"  />
+        <set_object_property name="{{siteName}}" property="missileStoresEMP" value="0"  />
+        <set_object_property name="{{siteName}}" property="missileStoresPShock" value="0"  />
+        <set_object_property name="{{siteName}}" property="missileStoresTag" value="0"  />
+        <set_object_property name="{{siteName}}" property="missileStoresBeacon" value="0"  />
+        <set_object_property name="{{siteName}}" property="missileStoresProbe" value="0"  />
+    
+        {%- for cargoType,cargoNum in site.constructionRequirements.items() %}
+        <set_variable name="{{siteName}}Cargo{{cargoType}}" value="0" integer="yes" />
+        {%- endfor %}
+
+        {%- for portType,port in site.ports.items() %}
+            <create type="genericMesh" name="{{port.portName}}" sideValue="0" meshFileName="dat\TSN\USFP\marker.dxs" textureFileName="dat\TSN\USFP\marker.png" />
+            <set_relative_position name2="{{port.portName}}" distance="500" angle="{{port.angle}}" name1="{{siteName}}" />
+            <set_object_property property="pushRadius" value="0.0" name="{{port.portName}}" />
+            <set_timer name="{{port.portName}}CooldownTimer" seconds="1" />
+            <set_timer name="{{port.portName}}ConfigureTimer" seconds="1" />
+            <set_ship_text name="{{port.portName}}" race="Terran" desc="{{port.desc}}" />
+        {%- endfor %}
+
+        <set_timer name="{{siteName}}ProdTimer" seconds="{{site.producesEvery}}" />
+    </event>
+
+        {%- for portType,port in site.ports.items() %}
+    <event name="{{port.portName}} configure">
+        <log text="{{port.portName}} configure" />
+
+        <if_timer_finished name="{{port.portName}}ConfigureTimer" />
+
+        <set_object_property property="pushRadius" value="0.0" name="{{port.portName}}" />
+        <set_relative_position name2="{{port.portName}}" distance="500" angle="{{port.angle}}" name1="{{siteName}}" />
+
+        <set_timer name="{{port.portName}}ConfigureTimer" seconds="10" />
+    </event>
+
+            {%- for shuttle in shuttles %}
+    <event name="{{shuttle}} brings {{portType}} to port {{port.portName}}" >
+        <log text="{{shuttle}} brings {{portType}} to port {{port.portName}}" />
+    
+        <if_distance name1="{{shuttle}}" name2="{{port.portName}}" comparator="LESS" value="100.0" />
+        <if_timer_finished name="{{port.portName}}CooldownTimer" />
+        <if_variable name="{{shuttle}}Cargo{{portType}}" comparator=">" value="0.0" />
+
+        <set_variable name="{{shuttle}}Cargo{{portType}}" value="{{shuttle}}Cargo{{portType}}-1" integer="yes" />
+        <set_variable name="{{port.var}}" value="1.0" integer="yes" />
+
+        <set_timer name="{{port.portName}}CooldownTimer" seconds="{{site.producesEvery}}" />
+
+        <incoming_comms_text from="{{shuttle}}" sideValue="2" type="STATUS">{{shuttle}} brought {{cargoTypes[portType]}} to {{port.portName}} port. 
+            Current cargo: {{cargoTypes[1]}}: |{{shuttle}}Cargo1|. {{cargoTypes[2]}}: |{{shuttle}}Cargo2|. {{cargoTypes[3]}}: |{{shuttle}}Cargo3|.
+        </incoming_comms_text>
+        <log text="{{shuttle}} brought {{cargoTypes[portType]}} to {{port.portName}} port. Current cargo: {{cargoTypes[1]}}: |{{shuttle}}Cargo1|. {{cargoTypes[2]}}: |{{shuttle}}Cargo2|. {{cargoTypes[3]}}: |{{shuttle}}Cargo3|." />
+
+    </event>
+            {%- endfor %}
+        {%- endfor %}
+
+    <event name="{{siteName}} destroyed" >
+        <log text="{{siteName}} destroyed" />
+
+        <if_not_exists name="{{siteName}}" />
+        <if_not_exists name="{{site.constructionSiteName}}" />
+
+        <create type="genericMesh" x="{{site.x}}" y="{{site.y}}" z="{{site.z}}" name="{{site.constructionSiteName}}" sideValue="0" meshFileName="dat\TSN\USFP\marker.dxs" textureFileName="dat\TSN\USFP\marker.png" />
+        <set_object_property property="pushRadius" value="0.0" name="{{site.constructionSiteName}}" />
+
+        {%- for portType,port in site.ports.items() %}
+        <destroy name="{{port.portName}}" />
+        {%- endfor %}
+
+        <set_timer name="{{site.constructionSiteName}}ConfigureTimer" seconds="1" />
+    </event>
+    <event name="{{site.constructionSiteName}} configure" >
+        <log text="{{site.constructionSiteName}} configure" />
+
+        <if_timer_finished name="{{site.constructionSiteName}}ConfigureTimer" />
+
+        <set_object_property property="pushRadius" value="0.0" name="{{site.constructionSiteName}}" />
+        <set_object_property property="rollDelta" value="-0.2" name="{{site.constructionSiteName}}" />
+        <set_object_property property="angleDelta" value="0.05" name="{{site.constructionSiteName}}" />
+
+        <set_timer name="{{site.constructionSiteName}}ConfigureTimer" seconds="10" />
+    </event>
+
+        {%- if site.producesCargo != 0 %}
+    <event name="{{siteName}} starts {{site.producesCargo}}" >
+        <log text="{{siteName}} starts {{site.producesCargo}}" />
+
+        <if_exists name="{{siteName}}" />
+        <if_not_exists name="{{cargoTypes[site.producesCargo]}}" />
+        <if_variable name="{{siteName}}Producing" comparator="EQUALS" value="0.0" />
+
+        <set_timer name="{{siteName}}ProdTimer" seconds="{{site.producesEvery}}" />
+        <set_variable name="{{siteName}}Producing" value="1.0" integer="yes" />
+    </event>
+    <event name="{{siteName}} produces {{site.producesCargo}}" >
+        <log text="{{siteName}} produces {{site.producesCargo}}" />
+
+        <if_exists name="{{siteName}}" />
+        <if_not_exists name="{{cargoTypes[site.producesCargo]}}" />
+        <if_variable name="{{siteName}}Producing" comparator="EQUALS" value="1.0" />
+        <if_timer_finished name="{{siteName}}ProdTimer" />
+
+        <create type="genericMesh" x="{{site.x}}" y="{{site.y}}" z="{{site.z}}-500" name="{{cargoTypes[site.producesCargo]}}" sideValue="0" meshFileName="dat\TSN\USFP\marker.dxs" textureFileName="dat\TSN\USFP\marker.png" />
+        <set_object_property property="pushRadius" value="0.0" name="{{cargoTypes[site.producesCargo]}}" />
+
+        <set_variable name="randomAngle" randomIntLow="0" randomIntHigh="360" />
+        <set_relative_position name2="{{cargoTypes[site.producesCargo]}}" distance="500" angle="randomAngle" name1="{{siteName}}" />
+
+        <set_variable name="{{siteName}}Producing" value="0.0" integer="yes" />
+
+        <set_timer name="{{cargoTypes[site.producesCargo]}}ConfigureTimer" seconds="1" />
+    </event>
+        {%- endif %}
+
+    <event name="{{cargoTypes[site.producesCargo]}} configure" >
+        <log text="{{cargoTypes[site.producesCargo]}} configure" />
+
+        <if_timer_finished name="{{cargoTypes[site.producesCargo]}}ConfigureTimer" />
+
+        <set_object_property property="pushRadius" value="0.0" name="{{cargoTypes[site.producesCargo]}}" />
+        <set_object_property property="rollDelta" value="-0.2" name="{{cargoTypes[site.producesCargo]}}" />
+        <set_object_property property="angleDelta" value="0.05" name="{{cargoTypes[site.producesCargo]}}" />
+
+        <set_timer name="{{cargoTypes[site.producesCargo]}}ConfigureTimer" seconds="10" />
+    </event>
+    {% endfor %}
+
+
+    
+
+    <event name="Shipyard produces light fleet">
+        <log text="Shipyard produces light fleet fleetnumber=|Fleetnumber|" />
+
+        <if_variable name="makeLightFleet" comparator="EQUALS" value="1.0" />
+        
+        <create type="enemy" name="New TSN 1" hullID="1" sideValue="2" fleetnumber="Fleetnumber" />
+        <create type="enemy" name="New TSN 2" hullID="1" sideValue="2" fleetnumber="Fleetnumber" />
+        <create type="enemy" name="New TSN 3" hullID="0" sideValue="2" fleetnumber="Fleetnumber" />
+
+        <set_variable name="randomAngle" randomIntLow="0" randomIntHigh="360" />
+        <set_relative_position name2="New TSN 1" distance="1500" angle="randomAngle" name1="Shipyard" />
+        <set_variable name="randomAngle" randomIntLow="0" randomIntHigh="360" />
+        <set_relative_position name2="New TSN 2" distance="1500" angle="randomAngle" name1="Shipyard" />
+        <set_variable name="randomAngle" randomIntLow="0" randomIntHigh="360" />
+        <set_relative_position name2="New TSN 3" distance="1500" angle="randomAngle" name1="Shipyard" />
+
+        <set_variable name="makeLightFleet" value="0.0" integer="yes" />
+
+        <set_variable name="Fleetnumber" value="Fleetnumber+1" integer="yes" />
+        <set_variable name="handleNewTSNFleet" value="1.0" integer="yes" />
+    </event>
+
+
+    <event name="Shipyard produces heavy fleet">
+        <log text="Shipyard produces heavy fleet fleetnumber=|Fleetnumber|" />
+
+        <if_variable name="makeHeavyFleet" comparator="EQUALS" value="1.0" />
+
+        <create type="enemy" name="New TSN 1" hullID="2" sideValue="2" fleetnumber="Fleetnumber" />
+        <create type="enemy" name="New TSN 2" hullID="2" sideValue="2" fleetnumber="Fleetnumber" />
+        <create type="enemy" name="New TSN 3" hullID="4" sideValue="2" fleetnumber="Fleetnumber" />
+
+        <set_variable name="randomAngle" randomIntLow="0" randomIntHigh="360" />
+        <set_relative_position name2="New TSN 1" distance="1500" angle="randomAngle" name1="Shipyard" />
+        <set_variable name="randomAngle" randomIntLow="0" randomIntHigh="360" />
+        <set_relative_position name2="New TSN 2" distance="1500" angle="randomAngle" name1="Shipyard" />
+        <set_variable name="randomAngle" randomIntLow="0" randomIntHigh="360" />
+        <set_relative_position name2="New TSN 3" distance="1500" angle="randomAngle" name1="Shipyard" />
+
+        <set_variable name="makeHeavyFleet" value="0.0" integer="yes" />
+
+        <set_variable name="Fleetnumber" value="Fleetnumber+1" integer="yes" />
+        <set_variable name="handleNewTSNFleet" value="1.0" integer="yes" />
+    </event>
+
+    <event name="Armory produces torpedos">
+        <log text="Armory produces torpedos" />
+        <if_variable name="makeTorpedos" comparator="EQUALS" value="1.0" />
+        <addto_object_property property="missileStoresHoming" value="10" name="Armory" />
+        <set_variable name="makeTorpedos" value="0.0" integer="yes" />
+    </event>
+    <event name="Armory produces pshocks">
+        <log text="Armory produces pshocks" />
+        <if_variable name="makePShocks" comparator="EQUALS" value="1.0" />
+        <addto_object_property property="missileStoresPShock" value="5" name="Armory" />
+        <set_variable name="makePShocks" value="0.0" integer="yes" />
+    </event>
+    <event name="Armory produces EMP">
+        <log text="Armory produces EMP" />
+        <if_variable name="makeEMPs" comparator="EQUALS" value="1.0" />
+        <addto_object_property property="missileStoresEMP" value="2" name="Armory" />
+        <set_variable name="makeEMPs" value="0.0" integer="yes" />
+    </event>
+
+    <event name="Nuclear lab produces mines">
+        <log text="Nuclear lab produces mines" />
+        <if_variable name="makeMines" comparator="EQUALS" value="1.0" />
+        <addto_object_property property="missileStoresMine" value="2" name="Nuclear lab" />
+        <set_variable name="makeMines" value="0.0" integer="yes" />
+    </event>
+    <event name="Nuclear lab produces nukes">
+        <log text="Nuclear lab produces nukes" />
+        <if_variable name="makeNukes" comparator="EQUALS" value="1.0" />
+        <addto_object_property property="missileStoresNuke" value="2" name="Nuclear lab" />
+        <set_variable name="makeNukes" value="0.0" integer="yes" />
+    </event>
+
+
+    {%- for i in range(100) %}
+    <event name="Assign TSN fleet name {{i}}" >
+        <log text="Assign TSN fleet name {{i}}" />
+
+        <if_variable name="handleNewTSNFleet" comparator="EQUALS" value="1.0" />
+        <if_variable name="Fleetnumber" comparator="EQUALS" value="{{i}}" />
+
+        <set_ship_text name="New TSN 1" newname="{{tsnShipNames[3*i+0]}}" />
+        <set_ship_text name="New TSN 2" newname="{{tsnShipNames[3*i+1]}}" />
+        <set_ship_text name="New TSN 3" newname="{{tsnShipNames[3*i+2]}}" />
+
+        <set_variable name="handleNewTSNFleet" value="0.0" />
+        <set_variable name="Fleetnumber" value="Fleetnumber+1" integer="yes" />
+    </event>
+    {% endfor %}
+
+    <event name="GM Move" >
+        <if_gm_key keyText="M" />
+        <set_to_gm_position use_gm_selection=" " distance="0" angle="0.0" />
+    </event>
+
+</mission_data>
