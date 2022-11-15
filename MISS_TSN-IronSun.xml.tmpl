@@ -29,7 +29,7 @@
         <create type="genericMesh" x="92872.0" y="-2100.0" z="50207.0" name="Terra Noua" 
             meshFileName="dat\TSN\USFP\marker.dxs" textureFileName="dat\TSN\USFP\marker.png"
             colorRed="0.0" colorGreen="0.2" colorBlue="0.7" />
-        <!-- <set_ship_text name="Terra Noua" race="Terrans" class="" desc="" scan_desc="Population: 10 bil." /> -->
+        <set_ship_text name="Terra Noua" scan_desc="Earth-like planet. Population: 20 bil." />
 
         <create type="genericMesh" x="100.0" y="0.0" z="100.0" angle="0" name="PA" meshFileName="dat\TSN\Planets\planet8.dxs" textureFileName="dat\TSN\Planets\pm1.png" fakeShieldsFront="1" fakeShieldsRear="1" hasFakeShldFreq="1" colorRed="0.0" colorGreen="0.2" colorBlue="0.7" />
         <set_object_property property="pushRadius" value="1.0" name="PA" />
@@ -88,17 +88,19 @@
         <set_ship_text name="PG" newname=" " />
         <set_ship_text name="PH" newname=" " />
 
+        
+        <get_object_property name="Terra Noua" property="positionX" variable="TerraNouaX" /> 
+        <get_object_property name="Terra Noua" property="positionY" variable="TerraNouaY" /> 
+        <get_object_property name="Terra Noua" property="positionZ" variable="TerraNouaZ" /> 
 
-
-        <set_variable name="IronSunFireInMinutes" value="45" integer="yes" />
-        <set_timer name="IronSunNextMinute" seconds="1"/>
-
-        <create type="genericMesh" x="4222.0" y="-2000.0" z="50622.0" name="Iron Sun" 
+        <create type="genericMesh" x="TerraNouaX - 90000" y="-1000.0" z="TerraNouaZ" name="Iron Sun" 
             meshFileName="dat\TSN\USFP\marker.dxs" textureFileName="dat\TSN\Caltron\shipHull13.png"
             colorRed="1.0" colorGreen="0.0" colorBlue="0.0" />
         <set_object_property property="artScale" value="20.0" name="Iron Sun" />
-        <set_object_property property="angleDelta" value="0.01" name="Iron Sun" />
+        <set_object_property property="angleDelta" value="0.05" name="Iron Sun" />
         <set_object_property property="pushRadius" value="2200.0" name="Iron Sun" />
+        <set_object_property property="speed" value="0.2" name="Iron Sun" />
+        <direct name="Iron Sun" targetName="Terra Noua" scriptThrottle="0.3" />
 
         <!-- Adding Shuttles -->
         {%- for shuttle in shuttles %}
@@ -109,7 +111,6 @@
         {%- endfor %}
 
 
-        
         <set_relative_position player_slot2="0" distance="4200" angle="0.0" name1="HQ" />
         <set_relative_position player_slot2="1" distance="4200" angle="45.0" name1="HQ" />
         <set_relative_position player_slot2="2" distance="4200" angle="90.0" name1="HQ" />
@@ -125,13 +126,66 @@
         <set_variable name="Initted" value="0" integer="yes" />
 
         <set_variable name="Fleetnumber" randomIntLow="0" randomIntHigh="97" integer="yes" />
+
+        <set_variable name="Wave" value="0" integer="yes" />
+
+        <set_timer name="Iron Sun distance timer" seconds="60" />
+
+        <get_object_property name="Iron Sun" property="positionX" variable="IronSunLastX" /> 
+        <get_object_property name="Iron Sun" property="positionY" variable="IronSunLastY" /> 
+        <get_object_property name="Iron Sun" property="positionZ" variable="IronSunLastZ" /> 
+
+        <set_variable name="GameOverRange" value="8000.0" integer="no" />
+        <set_variable name="IronSunShrinkedIter" value="0" integer="yes" />
+
+
+        <set_variable name="GasMiningTime" value="70.0" integer="no" />
+        <set_variable name="MineralMiningTime" value="60.0" integer="no" />
+
+        <set_timer name="Plasma drill update pos timer" seconds="1" />
+        <set_timer name="PD Site update pos timer" seconds="1" />
+        <set_timer name="Kugelblitz generator update pos timer" seconds="1" />
+        <set_timer name="KB Site update pos timer" seconds="1" />
+    
     </start>
 
+    <event name="Iron Sun distance report" >
+        <log text="Iron Sun distance report" />
+
+        <if_timer_finished name="Iron Sun distance timer"/>
+
+        <get_object_property name="Iron Sun" property="positionX" variable="IronSunCurrentX" />
+        <get_object_property name="Iron Sun" property="positionY" variable="IronSunCurrentY" />
+        <get_object_property name="Iron Sun" property="positionZ" variable="IronSunCurrentZ" />
+
+        <set_variable name="TerraNouaDestructionDist" value="TerraNouaX-IronSunCurrentX-GameOverRange" integer="no" />
+        <set_variable name="IronSunSpeed" value="(IronSunCurrentX-IronSunLastX)/60.0" integer="no" />
+        <set_variable name="IronSunEtaMin" value="(TerraNouaDestructionDist/IronSunSpeed)/60.0" integer="no" />
+
+        <log text="IronSunCurrentX |IronSunCurrentX|" />
+        <log text="IronSunLastX |IronSunLastX|" />
+        <log text="Iron Sun distance to Terra Noua |TerraNouaDestructionDist|" />
+        <log text="Iron Sun speed |IronSunSpeed|" />
+        <log text="IronSunEtaMin |IronSunEtaMin|" />
+
+        <incoming_comms_text from="HQ" sideValue="2" type="STATION">Iron Sun ETA: |IronSunEtaMin| minutes.</incoming_comms_text>
+
+        <set_timer name="Iron Sun distance timer" seconds="60" />
+        <get_object_property name="Iron Sun" property="positionX" variable="IronSunLastX" />
+        <get_object_property name="Iron Sun" property="positionY" variable="IronSunLastY" />
+        <get_object_property name="Iron Sun" property="positionZ" variable="IronSunLastZ" />
+    </event>
+
     <event name="Post init" >
+        <log text="Post init" />
+
         <if_timer_finished name="Post init timer"/>
         <if_variable name="Initted" comparator="EQUALS" value="0.0" />
 
         <set_timer name="Initted" seconds="10" />
+
+        <set_variable name="Initted" value="1" integer="yes" />
+        <set_variable name="KugelblitzConstructed" value="0" integer="yes" />
 
         <set_variable name="HQCargo0" value="10" integer="yes" />
         <set_variable name="HQCargo1" value="10" integer="yes" />
@@ -159,22 +213,55 @@
         <set_variable name="ArmoryCargo2" value="10" integer="yes" />
         <set_variable name="ArmoryCargo3" value="10" integer="yes" />
 
+        <set_variable name="Research facilityCargo0" value="10" integer="yes" />
+        <set_variable name="Research facilityCargo1" value="10" integer="yes" />
+        <set_variable name="Research facilityCargo2" value="10" integer="yes" />
+        <set_variable name="Research facilityCargo3" value="10" integer="yes" />
+
         <set_variable name="Nuclear labCargo0" value="10" integer="yes" />
         <set_variable name="Nuclear labCargo1" value="10" integer="yes" />
         <set_variable name="Nuclear labCargo2" value="10" integer="yes" />
         <set_variable name="Nuclear labCargo3" value="10" integer="yes" />
 
+        <set_variable name="Research LabCargo0" value="10" integer="yes" />
+        <set_variable name="Research LabCargo1" value="10" integer="yes" />
+        <set_variable name="Research LabCargo2" value="10" integer="yes" />
+        <set_variable name="Research LabCargo3" value="10" integer="yes" />
+
+        <set_variable name="Gravitational wave detectorCargo0" value="10" integer="yes" />
+        <set_variable name="Gravitational wave detectorCargo1" value="10" integer="yes" />
+        <set_variable name="Gravitational wave detectorCargo2" value="10" integer="yes" />
+        <set_variable name="Gravitational wave detectorCargo3" value="10" integer="yes" />
+
+        <set_variable name="Neutrino detectorCargo0" value="10" integer="yes" />
+        <set_variable name="Neutrino detectorCargo1" value="10" integer="yes" />
+        <set_variable name="Neutrino detectorCargo2" value="10" integer="yes" />
+        <set_variable name="Neutrino detectorCargo3" value="10" integer="yes" />
+
+        <set_variable name="Plasma drillCargo0" value="10" integer="yes" />
+        <set_variable name="Plasma drillCargo1" value="10" integer="yes" />
+        <set_variable name="Plasma drillCargo2" value="10" integer="yes" />
+        <set_variable name="Plasma drillCargo3" value="10" integer="yes" />
+
         <set_variable name="ProteusCargo0" value="10" integer="yes" />
         <set_variable name="ProteusCargo1" value="10" integer="yes" />
         <set_variable name="ProteusCargo2" value="10" integer="yes" />
         <set_variable name="ProteusCargo3" value="10" integer="yes" />
-
-        <set_variable name="Initted" value="1" integer="yes" />
     </event>
 
     
 
     <!-- Meta -->
+    
+    <event name="GM Move" >
+        <if_gm_key keyText="M" />
+        <set_to_gm_position use_gm_selection=" " distance="0" angle="0.0" />
+    </event>
+
+    <event name="GM Destroy" >
+        <if_gm_key keyText="D" />
+        <destroy use_gm_selection=" "  />
+    </event>
 
     <event name="Fleet number overflow" >
         <log text="Fleet number overflow" />
@@ -183,27 +270,19 @@
         <set_variable name="Fleetnumber" value="0" integer="yes" />
     </event>
 
-    <event name="Iron Sun countdown" >
-        <log text="Iron Sun countdown" />
+    <event name="Iron Sun reaches Terra Noua" >
+        <log text="Iron Sun reaches Terra Noua" />
 
-        <if_timer_finished name="IronSunNextMinute"/>
+        <if_distance name1="Iron Sun" name2="Terra Noua" comparator="LESS" value="GameOverRange" />
+        <if_variable name="Iron Sun Fired" comparator="EQUALS" value="0" />
 
-        <set_variable name="IronSunFireInMinutes" value="IronSunFireInMinutes-1" integer="yes" />
-        <set_ship_text name="Iron Sun" race="X" class="Doomsday Device" desc="Planetkiller weapon." scan_desc="Invulnerable to known attacks. Charged up in |IronSunFireInMinutes| minutes." />
-        <set_timer name="IronSunNextMinute" seconds="60"/>
-    </event>
+        <create count="50" type="mines" startX="92872.0" startY="0.0" startZ="50207.0" radius="5000" randomRange="5000" />
 
-    <event name="Iron Sun fires" >
-        <log text="Iron Sun fires" />
+        <set_ship_text name="Terra Noua" scan_desc="Uninhabitable planet. Population: 0" />
 
-        <if_variable name="IronSunFireInMinutes" comparator="EQUALS" value="-1" />
+        <warning_popup_message message="Iron Sun reached Terra Noua; mission lost" consoles="MHWESCO" />
 
-        <create count="200" type="mines" startX="92872.0" startY="0.0" startZ="50207.0" radius="5000" randomRange="5000" />
-
-        <set_ship_text name="Terra Noua" race="Terrans" class="" desc="" scan_desc="Population: 0" />
-
-        <warning_popup_message message="Iron Sun fired and obliterated Terra Noua; mission lost" consoles="MHWESCO" player_slot="0" />
-
+        <set_variable name="Iron Sun Fired" value="1.0" integer="yes" />
         <set_timer name="Mission end timer" seconds="20" />
     </event>
 
@@ -214,10 +293,11 @@
         <if_timer_finished name="Initted" />
         <if_variable name="Initted" comparator="EQUALS" value="1.0" />
 
-        <set_variable name="Initted" value="1" integer="yes" />
+        <set_variable name="Initted" value="2" integer="yes" />
 
         <if_not_exists name="HQ" />
-        <warning_popup_message message="HQ destroyed; mission lost" consoles="MHWESCO" player_slot="0" />
+
+        <warning_popup_message message="HQ destroyed; mission lost" consoles="MHWESCO" />
         <set_timer name="Mission end timer" seconds="20" />
     </event>
 
@@ -227,7 +307,9 @@
         <if_not_exists name="Iron Sun" />
         <if_variable name="Initted" comparator="EQUALS" value="1.0" />
 
-        <warning_popup_message message="Iron Sun destroyed; mission successful" consoles="MHWESCO" player_slot="0" />
+        <set_variable name="Initted" value="2" integer="yes" />
+
+        <warning_popup_message message="Iron Sun destroyed; mission successful" consoles="MHWESCO" />
         <set_timer name="Mission end timer" seconds="20" />
     </event>
 
@@ -239,6 +321,75 @@
     </event>
 
 
+    <event name="Kugelblitz generator countdown start" >
+        <log text="Kugelblitz generator countdown start" />
+
+        <if_exists name="Kugelblitz generator" />
+        <if_variable name="KugelblitzConstructed" comparator="EQUALS" value="0.0" />
+        <if_variable name="IronSunShrinkedIter" comparator="EQUALS" value="0.0" />
+
+        <warning_popup_message message="Get away from the Kugelblitz generator!" consoles="MHWESCO" />
+        <incoming_comms_text from="HQ" sideValue="2" type="STATION">Get away from the Kugelblitz generator!</incoming_comms_text>
+
+        <set_variable name="KugelblitzConstructed" value="1" integer="yes" />
+        <set_timer name="BlackHoleCreationTimer" seconds="10" />
+    </event>
+
+    <event name="Kugelblitz fired" >
+        <log text="Kugelblitz fired" />
+
+        <if_exists name="Kugelblitz generator" />
+        <if_timer_finished name="BlackHoleCreationTimer" />
+
+        <if_variable name="IronSunShrinkedIter" comparator="EQUALS" value="0.0" />
+
+        <get_object_property name="Kugelblitz generator" property="positionX" variable="KugelblitzX" />
+        <get_object_property name="Kugelblitz generator" property="positionY" variable="KugelblitzY" />
+        <get_object_property name="Kugelblitz generator" property="positionZ" variable="KugelblitzZ" />
+
+        <create type="blackHole" x="KugelblitzX" y="0.0" z="KugelblitzZ" />
+        <create type="ge" x="KugelblitzX" y="0.0" z="KugelblitzZ" name="Kugelblitz" />
+        <create type="genericMesh" x="KugelblitzX" y="0.0" z="KugelblitzZ" name="Kugelblitz" 
+            meshFileName="dat\TSN\USFP\marker.dxs" textureFileName="dat\TSN\USFP\marker.png"
+            colorRed="0.0" colorGreen="0.2" colorBlue="0.7" />
+
+        <set_object_property property="speed" value="1.0" name="Iron Sun" />
+        <direct name="Iron Sun" targetName="Kugelblitz" scriptThrottle="1.0" />
+
+        <set_timer name="IronSunShrinks" seconds="1" />
+        <set_variable name="IronSunShrinkedIter" value="1" integer="yes" />
+    </event>
+
+    <event name="Iron Sun shrinks">
+        <log text="Iron Sun shrinks" />
+
+        <if_timer_finished name="IronSunShrinks" />
+        
+        <set_timer name="IronSunShrinks" seconds="1" />
+        <set_variable name="IronSunShrinkedIter" value="IronSunShrinkedIter+1" integer="yes" />
+
+        <get_object_property name="Iron Sun" property="artScale" variable="IronSunArtScale" />
+        <set_object_property property="artScale" value="IronSunArtScale-1.5" name="Iron Sun" />
+    </event>
+
+    <event name="Iron Sun shrinked to 0">
+        <log text="Iron Sun shrinked to 0" />
+
+        <if_variable name="IronSunShrinkedIter" comparator="EQUALS" value="10.0" />
+        
+        <destroy name="Iron Sun" />
+    </event>
+
+    <event name="Kugelblitz failed, maybe destroyed - reset" >
+        <log text="Kugelblitz failed, maybe destroyed - reset" />
+
+        <if_exists name="Kugelblitz generator" />
+        <if_timer_finished name="BlackHoleCreationTimer" />
+
+        <set_variable name="IronSunShrinkedIter" value="0" integer="yes" />
+        <set_variable name="KugelblitzConstructed" value="0" integer="yes" />
+    </event>
+
     <!-- Shuttle brings cargo to construction site -->
     {%- for siteName,site in sites.items() %}
         {%- for cargoType,cargoNum in site.constructionRequirements.items() %}
@@ -247,11 +398,12 @@
     <event name="{{shuttle}} brings {{cargoType}} to {{siteName}}" >
         <log text="{{shuttle}} brings {{cargoType}} to {{siteName}}" />
 
-        <if_distance name1="{{shuttle}}" name2="{{site.constructionSiteName}}" comparator="LESS" value="100.0" />
+        <if_distance name1="{{shuttle}}" name2="{{site.constructionSiteName}}" comparator="LESS" value="500.0" />
         <if_variable name="{{shuttle}}Cargo{{cargoType}}" comparator=">" value="0.0" />
 
         <set_variable name="{{shuttle}}Cargo{{cargoType}}" value="{{shuttle}}Cargo{{cargoType}}-1" integer="yes" />
         <set_variable name="{{siteName}}Cargo{{cargoType}}" value="{{shuttle}}Cargo{{cargoType}}+1" integer="yes" />
+        <set_ship_text name="{{site.constructionSiteName}}" race="Terran" scan_desc="{{site.desc}}. Construction status: {{cargoTypes[1]}}: |{{siteName}}Cargo1|/{{site.constructionRequirements[0]}}. {{cargoTypes[2]}}: |{{siteName}}Cargo2|/{{site.constructionRequirements[1]}}. {{cargoTypes[3]}}: |{{siteName}}Cargo3|/{{site.constructionRequirements[2]}}" />
 
         <incoming_comms_text from="{{shuttle}}" sideValue="2" type="STATUS">{{shuttle}} delivered {{cargoTypes[cargoType]}} to {{site.constructionSiteName}}. 
             Current cargo: {{cargoTypes[1]}}: |{{shuttle}}Cargo1|. {{cargoTypes[2]}}: |{{shuttle}}Cargo2|. {{cargoTypes[3]}}: |{{shuttle}}Cargo3|.
@@ -269,7 +421,7 @@
     <event name="{{shuttle}} picks up {{cargoType}}" >
         <log text="{{shuttle}} picks up {{cargoType}}" />
 
-        <if_distance name1="{{shuttle}}" name2="{{cargoName}}" comparator="LESS" value="100.0" />
+        <if_distance name1="{{shuttle}}" name2="{{cargoName}}" comparator="LESS" value="500.0" />
 
         <set_variable name="{{shuttle}}Cargo{{cargoType}}" value="{{shuttle}}Cargo{{cargoType}}+1" integer="yes" />
 
@@ -297,7 +449,7 @@
         <create type="{{site.type}}" x="{{site.x}}" y="{{site.y}}" z="{{site.z}}" name="{{siteName}}" hullID="{{site.hullId}}" sideValue="2" />
         <destroy name="{{site.constructionSiteName}}" />
 
-        <set_ship_text name="{{siteName}}" race="Terran" desc="{{site.desc}}" />
+        <set_ship_text name="{{siteName}}" race="Terran" scan_desc="{{site.desc}}" />
 
 
         <set_object_property name="{{siteName}}" property="canBuild" value="0.0"/>
@@ -309,7 +461,14 @@
         <set_object_property name="{{siteName}}" property="missileStoresTag" value="0"  />
         <set_object_property name="{{siteName}}" property="missileStoresBeacon" value="0"  />
         <set_object_property name="{{siteName}}" property="missileStoresProbe" value="0"  />
+        <set_object_property name="{{siteName}}" property="missileStoresProbe" value="0"  />
+        <set_object_property name="{{siteName}}" property="throttle" value="0"  />
+        <set_object_property name="{{siteName}}" property="topSpeed" value="0"  />
     
+        <clear_ai name="{{siteName}}" />
+        <add_ai type="DIR_THROTTLE" value1="0" value2="0.0" name="{{siteName}}" />
+    
+
         {%- for cargoType,cargoNum in site.constructionRequirements.items() %}
         <set_variable name="{{siteName}}Cargo{{cargoType}}" value="0" integer="yes" />
         {%- endfor %}
@@ -320,7 +479,7 @@
             <set_object_property property="pushRadius" value="0.0" name="{{port.portName}}" />
             <set_timer name="{{port.portName}}CooldownTimer" seconds="1" />
             <set_timer name="{{port.portName}}ConfigureTimer" seconds="1" />
-            <set_ship_text name="{{port.portName}}" race="Terran" desc="{{port.desc}}" />
+            <set_ship_text name="{{port.portName}}" race="Terran" scan_desc="{{port.desc}}" />
         {%- endfor %}
 
         <set_timer name="{{siteName}}ProdTimer" seconds="{{site.producesEvery}}" />
@@ -342,7 +501,7 @@
     <event name="{{shuttle}} brings {{portType}} to port {{port.portName}}" >
         <log text="{{shuttle}} brings {{portType}} to port {{port.portName}}" />
     
-        <if_distance name1="{{shuttle}}" name2="{{port.portName}}" comparator="LESS" value="100.0" />
+        <if_distance name1="{{shuttle}}" name2="{{port.portName}}" comparator="LESS" value="500.0" />
         <if_timer_finished name="{{port.portName}}CooldownTimer" />
         <if_variable name="{{shuttle}}Cargo{{portType}}" comparator=">" value="0.0" />
 
@@ -365,6 +524,9 @@
 
         <if_not_exists name="{{siteName}}" />
         <if_not_exists name="{{site.constructionSiteName}}" />
+        {%- for requirement in site.requires_exist %}
+            <if_exists name="{{requirement}}" />
+        {%- endfor %}
 
         <create type="genericMesh" x="{{site.x}}" y="{{site.y}}" z="{{site.z}}" name="{{site.constructionSiteName}}" sideValue="0" meshFileName="dat\TSN\USFP\marker.dxs" textureFileName="dat\TSN\USFP\marker.png" />
         <set_object_property property="pushRadius" value="0.0" name="{{site.constructionSiteName}}" />
@@ -372,6 +534,8 @@
         {%- for portType,port in site.ports.items() %}
         <destroy name="{{port.portName}}" />
         {%- endfor %}
+
+        <set_ship_text name="{{site.constructionSiteName}}" race="Terran" scan_desc="{{site.desc}}. Construction status: {{cargoTypes[1]}}: |{{siteName}}Cargo1|/{{site.constructionRequirements[0]}}. {{cargoTypes[2]}}: |{{siteName}}Cargo2|/{{site.constructionRequirements[1]}}. {{cargoTypes[3]}}: |{{siteName}}Cargo3|/{{site.constructionRequirements[2]}}." />
 
         <set_timer name="{{site.constructionSiteName}}ConfigureTimer" seconds="1" />
     </event>
@@ -416,7 +580,6 @@
 
         <set_timer name="{{cargoTypes[site.producesCargo]}}ConfigureTimer" seconds="1" />
     </event>
-        {%- endif %}
 
     <event name="{{cargoTypes[site.producesCargo]}} configure" >
         <log text="{{cargoTypes[site.producesCargo]}} configure" />
@@ -429,6 +592,7 @@
 
         <set_timer name="{{cargoTypes[site.producesCargo]}}ConfigureTimer" seconds="10" />
     </event>
+        {%- endif %}
     {% endfor %}
 
 
@@ -453,7 +617,7 @@
         <set_variable name="makeLightFleet" value="0.0" integer="yes" />
 
         <set_variable name="Fleetnumber" value="Fleetnumber+1" integer="yes" />
-        <set_variable name="handleNewTSNFleet" value="1.0" integer="yes" />
+        <set_variable name="handleNewFleet" value="1.0" integer="yes" />
     </event>
 
 
@@ -476,7 +640,7 @@
         <set_variable name="makeHeavyFleet" value="0.0" integer="yes" />
 
         <set_variable name="Fleetnumber" value="Fleetnumber+1" integer="yes" />
-        <set_variable name="handleNewTSNFleet" value="1.0" integer="yes" />
+        <set_variable name="handleNewFleet" value="1.0" integer="yes" />
     </event>
 
     <event name="Armory produces torpedos">
@@ -513,24 +677,218 @@
 
 
     {%- for i in range(100) %}
-    <event name="Assign TSN fleet name {{i}}" >
-        <log text="Assign TSN fleet name {{i}}" />
+    <event name="Handle new fleet {{i}}" >
+        <log text="Handle new fleet {{i}}" />
 
-        <if_variable name="handleNewTSNFleet" comparator="EQUALS" value="1.0" />
+        <if_variable name="handleNewFleet" comparator="EQUALS" value="1.0" />
         <if_variable name="Fleetnumber" comparator="EQUALS" value="{{i}}" />
+
+        <clear_ai name="New TSN 1" />
+        <add_ai name="New TSN 1" type="TRY_TO_BECOME_LEADER"  />
+        <add_ai name="New TSN 1" type="CHASE_AI_SHIP" value1="3000" value2="500" />
+        <add_ai name="New TSN 1" type="CHASE_STATION" value1="100000"  />
+        <add_ai name="New TSN 1" type="DEFEND" value1="3000" value2="1000"  />
+        <add_ai name="New TSN 1" type="CHASE_ANGER"  />
+        <add_ai name="New TSN 1" type="LEADER_LEADS"  />
+        <add_ai name="New TSN 1" type="FOLLOW_LEADER"  />
+        <add_ai name="New TSN 1" type="LAUNCH_FIGHTERS" value1="8000" />
+        <add_ai name="New TSN 1" type="FOLLOW_COMMS_ORDERS"  />
+
+        <clear_ai name="New TSN 2" />
+        <add_ai name="New TSN 2" type="TRY_TO_BECOME_LEADER"  />
+        <add_ai name="New TSN 2" type="CHASE_AI_SHIP" value1="3000" value2="500" />
+        <add_ai name="New TSN 2" type="CHASE_STATION" value1="100000"  />
+        <add_ai name="New TSN 2" type="DEFEND" value1="3000" value2="1000"  />
+        <add_ai name="New TSN 2" type="CHASE_ANGER"  />
+        <add_ai name="New TSN 2" type="LEADER_LEADS"  />
+        <add_ai name="New TSN 2" type="FOLLOW_LEADER"  />
+        <add_ai name="New TSN 2" type="LAUNCH_FIGHTERS" value1="8000" />
+        <add_ai name="New TSN 2" type="FOLLOW_COMMS_ORDERS"  />
+
+        <clear_ai name="New TSN 3" />
+        <add_ai name="New TSN 3" type="TRY_TO_BECOME_LEADER"  />
+        <add_ai name="New TSN 3" type="CHASE_AI_SHIP" value1="3000" value2="500" />
+        <add_ai name="New TSN 3" type="CHASE_STATION" value1="100000"  />
+        <add_ai name="New TSN 3" type="DEFEND" value1="3000" value2="1000"  />
+        <add_ai name="New TSN 3" type="CHASE_ANGER"  />
+        <add_ai name="New TSN 3" type="LEADER_LEADS"  />
+        <add_ai name="New TSN 3" type="FOLLOW_LEADER"  />
+        <add_ai name="New TSN 3" type="LAUNCH_FIGHTERS" value1="8000" />
+        <add_ai name="New TSN 3" type="FOLLOW_COMMS_ORDERS" />
 
         <set_ship_text name="New TSN 1" newname="{{tsnShipNames[3*i+0]}}" />
         <set_ship_text name="New TSN 2" newname="{{tsnShipNames[3*i+1]}}" />
         <set_ship_text name="New TSN 3" newname="{{tsnShipNames[3*i+2]}}" />
 
-        <set_variable name="handleNewTSNFleet" value="0.0" />
+
+        <clear_ai name="New Caltron 1" />
+        <add_ai name="New Caltron 1" type="TRY_TO_BECOME_LEADER"  />
+        <add_ai name="New Caltron 1" type="CHASE_STATION" value1="200000"  />
+        <add_ai name="New Caltron 1" type="CHASE_AI_SHIP" value1="20000" value2="500" />
+        <add_ai name="New Caltron 1" type="CHASE_STATION" value1="3000"  />
+        <add_ai name="New Caltron 1" type="CHASE_AI_SHIP" value1="5000" value2="500" />
+        <add_ai name="New Caltron 1" type="FOLLOW_COMMS_ORDERS"  />
+        <add_ai name="New Caltron 1" type="LAUNCH_FIGHTERS" value1="6000"/>
+
+        <clear_ai name="New Caltron 2" />
+        <add_ai name="New Caltron 2" type="TRY_TO_BECOME_LEADER"  />
+        <add_ai name="New Caltron 2" type="CHASE_STATION" value1="200000"  />
+        <add_ai name="New Caltron 2" type="CHASE_AI_SHIP" value1="20000" value2="500" />
+        <add_ai name="New Caltron 2" type="CHASE_STATION" value1="3000"  />
+        <add_ai name="New Caltron 2" type="CHASE_AI_SHIP" value1="5000" value2="500" />
+        <add_ai name="New Caltron 2" type="FOLLOW_COMMS_ORDERS"  />
+        <add_ai name="New Caltron 2" type="LAUNCH_FIGHTERS" value1="6000"/>
+
+        <clear_ai name="New Caltron 3" />
+        <add_ai name="New Caltron 3" type="TRY_TO_BECOME_LEADER"  />
+        <add_ai name="New Caltron 3" type="CHASE_STATION" value1="200000"  />
+        <add_ai name="New Caltron 3" type="CHASE_AI_SHIP" value1="20000" value2="500" />
+        <add_ai name="New Caltron 3" type="CHASE_STATION" value1="3000"  />
+        <add_ai name="New Caltron 3" type="CHASE_AI_SHIP" value1="5000" value2="500" />
+        <add_ai name="New Caltron 3" type="FOLLOW_COMMS_ORDERS"  />
+        <add_ai name="New Caltron 3" type="LAUNCH_FIGHTERS" value1="6000"/>
+
+        <clear_ai name="New Caltron 4" />
+        <add_ai name="New Caltron 4" type="TRY_TO_BECOME_LEADER"  />
+        <add_ai name="New Caltron 4" type="CHASE_STATION" value1="200000"  />
+        <add_ai name="New Caltron 4" type="CHASE_AI_SHIP" value1="20000" value2="500" />
+        <add_ai name="New Caltron 4" type="CHASE_STATION" value1="3000"  />
+        <add_ai name="New Caltron 4" type="CHASE_AI_SHIP" value1="5000" value2="500" />
+        <add_ai name="New Caltron 4" type="FOLLOW_COMMS_ORDERS"  />
+        <add_ai name="New Caltron 4" type="LAUNCH_FIGHTERS" value1="6000"/>
+
+        <set_ship_text name="New Caltron 1" newname="{{caltronShipPrefixes[(4*i+0) % caltronShipPrefixes|length]}}{{caltronShipInfixes[(4*i+0) % caltronShipInfixes|length]}}{{caltronShipInfixes[(4*i+2) % caltronShipInfixes|length]}}{{caltronShipSuffixes[(4*i+0) % caltronShipSuffixes|length]}}" />
+        <set_ship_text name="New Caltron 2" newname="{{caltronShipPrefixes[(4*i+1) % caltronShipPrefixes|length]}}{{caltronShipInfixes[(4*i+1) % caltronShipInfixes|length]}}{{caltronShipInfixes[(4*i+3) % caltronShipInfixes|length]}}{{caltronShipSuffixes[(4*i+1) % caltronShipSuffixes|length]}}" />
+        <set_ship_text name="New Caltron 3" newname="{{caltronShipPrefixes[(4*i+2) % caltronShipPrefixes|length]}}{{caltronShipInfixes[(4*i+2) % caltronShipInfixes|length]}}{{caltronShipInfixes[(4*i+4) % caltronShipInfixes|length]}}{{caltronShipSuffixes[(4*i+2) % caltronShipSuffixes|length]}}" />
+        <set_ship_text name="New Caltron 4" newname="{{caltronShipPrefixes[(4*i+3) % caltronShipPrefixes|length]}}{{caltronShipInfixes[(4*i+3) % caltronShipInfixes|length]}}{{caltronShipInfixes[(4*i+5) % caltronShipInfixes|length]}}{{caltronShipSuffixes[(4*i+3) % caltronShipSuffixes|length]}}" />
+
+        <set_variable name="handleNewFleet" value="0.0" />
         <set_variable name="Fleetnumber" value="Fleetnumber+1" integer="yes" />
     </event>
     {% endfor %}
 
-    <event name="GM Move" >
-        <if_gm_key keyText="M" />
-        <set_to_gm_position use_gm_selection=" " distance="0" angle="0.0" />
+    <!-- Waves logic -->
+    {%- for wave in waves %}
+    <event name="Spawning wave {{loop.index-1}}" >
+        <log text="Spawning Wave {{loop.index-1}}" />
+
+        <if_distance name1="Iron Sun" name2="Terra Noua" comparator="LESS" value="{{wave.atDistance}}" />
+        <if_variable name="Wave" comparator="EQUALS" value="{{loop.index-1}}" />
+
+        {%- if 'hail' in wave %}
+        <incoming_comms_text from="Iron Sun" sideValue="2" type="ENEMY">{{wave.hail}}</incoming_comms_text>
+        {%- endif %}
+
+        <get_object_property name="Iron Sun" property="positionX" variable="IronSunX" /> 
+        <get_object_property name="Iron Sun" property="positionY" variable="IronSunY" /> 
+        <get_object_property name="Iron Sun" property="positionZ" variable="IronSunZ" /> 
+
+        {%- for hull in wave.hulls %}
+            {%- if 'spawnAt' in wave %}
+        <create type="enemy" name="New {{wave.race}} {{loop.index}}" x="IronSunX" y="IronSunY" z="IronSunZ" hullID="{{hull}}" sideValue="{{wave.sideValue}}" fleetnumber="Fleetnumber" />
+            {%- else %}
+        <create type="enemy" name="New {{wave.race}} {{loop.index}}" x="{{wave.x}}" y="{{wave.y}}" z="{{wave.z}}" hullID="{{hull}}" sideValue="{{wave.sideValue}}" fleetnumber="Fleetnumber" />
+            {%- endif %}
+        {%- endfor %}
+
+        <set_variable name="Fleetnumber" value="Fleetnumber+1" integer="yes" />
+        <set_variable name="handleNewFleet" value="1.0" integer="yes" />
+
+        <set_variable name="Wave" value="{{loop.index-1+1}}" integer="yes" />
     </event>
+    {% endfor %}
+
+    <!-- Moving mission objectives -->
+    <event name="Plasma drill update pos" >
+        <log text="Plasma drill update pos" />
+
+        <if_exists name="Plasma drill" />
+        <if_timer_finished name="Plasma drill update pos timer" />
+
+        <set_relative_position name2="Plasma drill" distance="2200" angle="180.0" name1="Iron Sun" />
+        <set_timer name="Plasma drill update pos timer" seconds="1" />
+    </event>
+    <event name="PD Site site update pos" >
+        <log text="PD Site site update pos" />
+
+        <if_exists name="PD Site" />
+        <if_timer_finished name="PD Site update pos timer" />
+
+        <set_relative_position name2="PD Site" distance="2200" angle="180.0" name1="Iron Sun" />
+
+        <set_timer name="PD Site update pos timer" seconds="1" />
+    </event>
+    <event name="Kugelblitz generator update pos" >
+        <log text="Kugelblitz generator update pos" />
+
+        <if_exists name="Kugelblitz generator" />
+        <if_timer_finished name="Kugelblitz generator update pos timer" />
+
+        <set_relative_position name2="Kugelblitz generator" distance="2200" angle="0.0" name1="Iron Sun" />
+
+        <set_timer name="Kugelblitz generator update pos timer" seconds="1" />
+    </event>
+    <event name="KB Site update pos" >
+        <log text="KB Site update pos" />
+
+        <if_exists name="KB Site" />
+        <if_timer_finished name="KB Site update pos timer" />
+
+        <set_relative_position name2="KB Site" distance="2200" angle="0.0" name1="Iron Sun" />
+
+        <set_timer name="KB Site update pos timer" seconds="1" />
+    </event>
+
+    <!-- Mine speedups -->
+    <event name="Both mining rigs exist" >
+        <log text="Both mining rigs exist" />
+
+        <if_exists name="Mining rig A" />
+        <if_exists name="Mining rig B" />
+
+        <set_variable name="MineralMiningTime" value="20.0" integer="no" />
+    </event>
+    <event name="Only mining rig A exists" >
+        <log text="Only mining rig A exists" />
+
+        <if_exists name="Mining rig A" />
+        <if_not_exists name="Mining rig B" />
+
+        <set_variable name="MineralMiningTime" value="40.0" integer="no" />
+    </event>
+    <event name="Only mining rig B exists" >
+        <log text="Only mining rig B exists" />
+
+        <if_exists name="Mining rig B" />
+        <if_not_exists name="Mining rig A" />
+
+        <set_variable name="MineralMiningTime" value="40.0" integer="no" />
+    </event>
+
+    <event name="Both Gas collectors exist" >
+        <log text="Both Gas collectors exist" />
+
+        <if_exists name="Gas collector A" />
+        <if_exists name="Gas collector B" />
+
+        <set_variable name="GasMiningTime" value="30.0" integer="no" />
+    </event>
+    <event name="Only Gas collector A exists" >
+        <log text="Only Gas collector A exists" />
+
+        <if_exists name="Gas collector A" />
+        <if_not_exists name="Gas collector B" />
+
+        <set_variable name="GasMiningTime" value="50.0" integer="no" />
+    </event>
+    <event name="Only Gas collector B exists" >
+        <log text="Only Gas collector B exists" />
+
+        <if_exists name="Gas collector B" />
+        <if_not_exists name="Gas collector A" />
+
+        <set_variable name="GasMiningTime" value="50.0" integer="no" />
+    </event>
+
 
 </mission_data>
