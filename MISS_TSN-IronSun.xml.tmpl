@@ -498,7 +498,10 @@
             <set_ship_text name="{{port.portName}}" race="Terran" scan_desc="{{port.desc}}" />
         {%- endfor %}
 
+        {%- if site.producesCargo != 0 %}
         <set_timer name="{{siteName}}ProdTimer" seconds="{{site.producesEvery}}" />
+        {%- endif %}
+
     </event>
 
         {%- for portType,port in site.ports.items() %}

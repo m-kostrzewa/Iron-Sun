@@ -43,12 +43,12 @@ def render():
                 "constructionSiteName": "HQ Site",
                 "constructionRequirements": {
                     0: 10, # dummy val for postinit 
-                    1: 0,
+                    1: 0, 
                     2: 0,
                     3: 0,
                 },
                 "producesCargo": 1,
-                "producesEvery": 5,
+                "producesEvery": 60,
                 "ports": {},
             },
             "Mineral processor": {
@@ -61,13 +61,13 @@ def render():
                 "type": "neutral",
                 "constructionSiteName": "MP Site",
                 "constructionRequirements": {
-                    0: 0,
-                    1: 1,
-                    2: 0,
-                    3: 0,
+                    0: 0, # ignore
+                    1: 1, # cost in Parts
+                    2: 0, # cost in Minerals
+                    3: 0, # cost in Gas
                 },
                 "producesCargo": 2,
-                "producesEvery": 5,
+                "producesEvery": "MineralMiningTime",
                 "ports": {},
             },
             "Mining rig A": {
@@ -86,8 +86,6 @@ def render():
                     2: 1,
                     3: 0,
                 },
-                "producesCargo": 2,
-                "producesEvery": 5,
                 "ports": {},
             },
             "Mining rig B": {
@@ -106,8 +104,6 @@ def render():
                     2: 1,
                     3: 0,
                 },
-                "producesCargo": 2,
-                "producesEvery": 5,
                 "ports": {},
             },
             "Gas refinery": {
@@ -121,12 +117,12 @@ def render():
                 "constructionSiteName": "GR Site",
                 "constructionRequirements": {
                     0: 0,
-                    1: 2,
+                    1: 1,
                     2: 2,
                     3: 0,
                 },
                 "producesCargo": 3,
-                "producesEvery": 5,
+                "producesEvery": "GasMiningTime",
                 "ports": {},
             },
             "Gas collector A": {
@@ -141,11 +137,9 @@ def render():
                 "constructionRequirements": {
                     0: 0,
                     1: 1,
-                    2: 1,
+                    2: 2,
                     3: 0,
                 },
-                "producesCargo": 2,
-                "producesEvery": 5,
                 "ports": {},
             },
             "Gas collector B": {
@@ -160,11 +154,9 @@ def render():
                 "constructionRequirements": {
                     0: 0,
                     1: 1,
-                    2: 1,
+                    2: 2,
                     3: 0,
                 },
-                "producesCargo": 2,
-                "producesEvery": 5,
                 "ports": {},
             },
             "Shipyard": {
@@ -178,12 +170,11 @@ def render():
                 "constructionSiteName": "SY Site",
                 "constructionRequirements": {
                     0: 0,
-                    1: 0,
+                    1: 1,
                     2: 2,
                     3: 2,
                 },
                 "producesCargo": 0,
-                "producesEvery": 5,
                 "ports": {
                     2: {
                         "portName": "Light",
@@ -210,12 +201,11 @@ def render():
                 "constructionSiteName": "AR Site",
                 "constructionRequirements": {
                     0: 0,
-                    1: 0,
+                    1: 1,
                     2: 2,
                     3: 2,
                 },
                 "producesCargo": 0,
-                "producesEvery": 5,
                 "ports": {
                     1: {
                         "portName": "Torpedo",
@@ -248,12 +238,11 @@ def render():
                 "constructionSiteName": "NL Site",
                 "constructionRequirements": {
                     0: 0,
-                    1: 0,
+                    1: 1,
                     2: 2,
                     3: 2,
                 },
                 "producesCargo": 0,
-                "producesEvery": 5,
                 "ports": {
                     2: {
                         "portName": "Mine",
@@ -280,7 +269,7 @@ def render():
                 "constructionSiteName": "RS Site",
                 "constructionRequirements": {
                     0: 0,
-                    1: 0,
+                    1: 1,
                     2: 2,
                     3: 2,
                 },
@@ -300,7 +289,7 @@ def render():
                 "constructionRequirements": {
                     0: 0,
                     1: 0,
-                    2: 2,
+                    2: 3,
                     3: 2,
                 },
                 "producesCargo": 0,
@@ -320,7 +309,7 @@ def render():
                     0: 0,
                     1: 0,
                     2: 2,
-                    3: 2,
+                    3: 3,
                 },
                 "producesCargo": 0,
                 "ports": {}
@@ -357,8 +346,8 @@ def render():
                 "constructionRequirements": {
                     0: 0,
                     1: 0,
-                    2: 2,
-                    3: 2,
+                    2: 1,
+                    3: 3,
                 },
                 "producesCargo": 0,
                 "ports": {}
@@ -374,7 +363,7 @@ def render():
                 "constructionSiteName": "SA Site",
                 "constructionRequirements": {
                     0: 0,
-                    1: 0,
+                    1: 1,
                     2: 2,
                     3: 2,
                 },
@@ -541,16 +530,16 @@ def render():
         "caltronShipSuffixes": ['', '++', '', '', '', '', '--', '', '()', '', ';', '[:]', '', '', '', ],
         "waves": [
             {
-                "atDistance": 90000,
-                "nameList": "TSN",
-                "x": 4000,
+                "atDistance": 90000,  # Distance between Iron Sun and Terra noua at which the wave "triggers"
+                "nameList": "TSN",    # This simply defines from which name list to name the new ships
+                "x": 4000,            # X,Y,Z positions of the newly spawned fleet. Alternatively, provide "spawnAt" (see usage below).
                 "y": "0.0",
                 "z": midRightZ,
-                "hulls": [1, 1, 2],
-                "sideValue": 2,
+                "hulls": [1, 1, 2],   # List of hull types to spawn. NOTE there are limits: max 3 TSN, max 4 Caltron, max 7 Hegemony/Pirate hulls per wave.
+                "sideValue": 2,       # 2 - friendly; 1 - enemy.
             },
             {
-                "hail": "Hello again, insects. We've devised a new test to see if you're worthy of ascension. Enjoy the encounter with Iron Sun!",
+                "hail": "Hello again, meatbags. Behold, our ultimate weapon, the Iron Sun!",
                 "atDistance": 89900,
                 "nameList": "Caltron",
                 "spawnAt": "Iron Sun",
@@ -583,7 +572,7 @@ def render():
                 "x": topLeftX,
                 "y": "0.0",
                 "z": topLeftZ,
-                "overrideName": "Antenna A",
+                "overrideName": "Antenna A", # Override automatic naming of ships so that we can add custom behaviour to this ship.
                 "hulls": [1353],
                 "sideValue": 1,
             },
@@ -710,10 +699,10 @@ def render():
         "spawners": {
             "Antenna A": {
                 "commsFromHQ": "We're reading Kralien slingshot jump signatures!",
-                "every": 60*4,
-                "nameList": "Hegemony",
-                "hulls": [2000, 2000, 2001, 2002, 2100],
-                "sideValue": 1,
+                "every": 60*4,                              # Hulls will be spawned every this amount of seconds
+                "nameList": "Hegemony",                     # See 'waves'
+                "hulls": [2000, 2000, 2001, 2002, 2100],    # See 'waves'
+                "sideValue": 1,                             # see 'waves'
             },
             "Antenna B": {
                 "commsFromHQ": "Incoming jump signatures, Arvonian configuration!",
