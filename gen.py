@@ -7,13 +7,6 @@ OUT_FNAME = "MISS_TSN-IronSun.xml"
 
 def render():
 
-    midtopRightX, midtopRightZ = 0, 29550
-    midRightX, midRightZ = 0, 50000
-    midbotRightX, midbotRightZ = 0, 70449
-    botRightX, botRightZ = 0, 93598
-    topLeftX, topLeftZ = 93288, 7231
-    botLeftX, botLeftZ = 93288, 93183
-
     context = {
         "shuttles": [
             "Proteus", 
@@ -33,7 +26,7 @@ def render():
         },
         "sites": {
             "HQ": {
-                "desc": "Terran headquarters. Protect at all costs! Produces Parts.",
+                "desc": "Terran headquarters. Protect at all costs! Produces Parts. Replaces lost shuttles.",
                 "onConstructedComms": "HQ online. Find a way to destroy Iron Sun before it obliterates Terra Noua! Also, defend us at the HQ.",
                 "x": "93184.0",
                 "y": "0.0",
@@ -108,7 +101,7 @@ def render():
             },
             "Gas refinery": {
                 "desc": "Mines Gas.",
-                "onConstructedComms": "Pressure nominal.",
+                "onConstructedComms": "Refinery starting up.",
                 "x": "52388.0",
                 "y": "0.0",
                 "z": "85916.0",
@@ -127,6 +120,7 @@ def render():
             },
             "Gas collector A": {
                 "requires_exist": ["Gas refinery"],
+                "onConstructedComms": "Valves open.",
                 "desc": "Online.",
                 "x": "45018.0",
                 "y": "0.0",
@@ -144,6 +138,7 @@ def render():
             },
             "Gas collector B": {
                 "requires_exist": ["Gas refinery"],
+                "onConstructedComms": "Pressure nominal.",
                 "desc": "On station.",
                 "x": "60381.0",
                 "y": "0.0",
@@ -160,6 +155,7 @@ def render():
                 "ports": {},
             },
             "Shipyard": {
+                "requires_exist": ["Mineral processor", "Gas refinery"],
                 "desc": "Produces allied fleets.",
                 "onConstructedComms": "We are ready to construct light and heavy fleets for Minerals and Gas respectively.",
                 "x": "89654.0",
@@ -191,6 +187,7 @@ def render():
                 },
             },
             "Armory": {
+                "requires_exist": ["Mineral processor", "Gas refinery"],
                 "desc": "Produces tactical ordnance: torpedoes, pshocks and EMPs.",
                 "onConstructedComms": "Bring us Parts, Minerals or Gas and we'll construct Torpedoes, PShocks and EMPs respectively.",
                 "x": "89862.0",
@@ -228,6 +225,7 @@ def render():
                 },
             },
             "Nuclear lab": {
+                "requires_exist": ["Mineral processor", "Gas refinery"],
                 "desc": "Produces nuke-based ordnance: mines and nukes.",
                 "onConstructedComms": "Nuclear fission byproducts let us prepare Mine and Nuke warheads for Minerals and Gas.",
                 "x": "92976.0",
@@ -259,6 +257,7 @@ def render():
                 },
             },
             "Research facility": {
+                "requires_exist": ["Mineral processor", "Gas refinery"],
                 "desc": "May provide clues on how to defeat the Iron Sun.",
                 "onConstructedComms": "We need more data! Construct gravitational waves detector, neutrino detector and plasma drill at designated coordinates.",
                 "x": "95883.0",
@@ -353,6 +352,7 @@ def render():
                 "ports": {}
             },
             "Sappers": {
+                "requires_exist": ["Mineral processor", "Gas refinery"],
                 "desc": "Allows construction of weapon platforms.",
                 "onConstructedComms": "We have designated locations suitable for weapon platforms construction.",
                 "x": "96298.0",
@@ -534,7 +534,7 @@ def render():
                 "nameList": "TSN",    # This simply defines from which name list to name the new ships
                 "x": 4000,            # X,Y,Z positions of the newly spawned fleet. Alternatively, provide "spawnAt" (see usage below).
                 "y": "0.0",
-                "z": midRightZ,
+                "z": "50000",
                 "hulls": [1, 1, 2],   # List of hull types to spawn. NOTE there are limits: max 3 TSN, max 4 Caltron, max 7 Hegemony/Pirate hulls per wave.
                 "sideValue": 2,       # 2 - friendly; 1 - enemy.
             },
@@ -549,18 +549,18 @@ def render():
             {
                 "atDistance": 89800,
                 "nameList": "Caltron",
-                "x": midbotRightX,
+                "x": "0",
                 "y": "0.0",
-                "z": midbotRightZ,
+                "z": "70000",
                 "hulls": [7201, 7203],
                 "sideValue": 1,
             },
             {
                 "atDistance": 89700,
                 "nameList": "Caltron",
-                "x": midtopRightX,
+                "x": "0",
                 "y": "0.0",
-                "z": midtopRightZ,
+                "z": "30000",
                 "hulls": [7201, 7202, 7202],
                 "sideValue": 1,
             },
@@ -569,9 +569,9 @@ def render():
                 "hail": "Let's invite some of your old friends, the Kraliens, to the party.",
                 "atDistance": 75300,
                 "nameList": "Hegemony",
-                "x": topLeftX,
+                "x": "93000",
                 "y": "0.0",
-                "z": topLeftZ,
+                "z": "7000",
                 "overrideName": "Antenna A", # Override automatic naming of ships so that we can add custom behaviour to this ship.
                 "hulls": [1353],
                 "sideValue": 1,
@@ -595,18 +595,18 @@ def render():
                 "hail": "The Ximni are here too.",
                 "atDistance": 67200,
                 "nameList": "Hegemony",
-                "x": midtopRightX,
+                "x": "0",
                 "y": "0.0",
-                "z": midtopRightZ,
+                "z": "30000",
                 "hulls": [7504, 7502],
                 "sideValue": 1,
             },
             {
                 "atDistance": 67100,
                 "nameList": "Hegemony",
-                "x": midbotRightX,
+                "x": "0",
                 "y": "0.0",
-                "z": midbotRightZ,
+                "z": "70000",
                 "hulls": [7506, 7502],
                 "sideValue": 1,
             },
@@ -615,9 +615,9 @@ def render():
                 "hail": "Looks like the Kraliens called for help of their Hegemony allies.",
                 "atDistance": 50300,
                 "nameList": "Hegemony",
-                "x": botLeftX,
+                "x": "93000",
                 "y": "0.0",
-                "z": botLeftZ,
+                "z": "93000",
                 "overrideName": "Antenna B",
                 "hulls": [1353],
                 "sideValue": 1,
@@ -641,18 +641,18 @@ def render():
                 "hail": "Im enjoying this.",
                 "atDistance": 40200,
                 "nameList": "Hegemony",
-                "x": topLeftX,
+                "x": "93000",
                 "y": "0.0",
-                "z": topLeftZ,
+                "z": "7000",
                 "hulls": [5000, 5002],
                 "sideValue": 1,
             },
             {
                 "atDistance": 40100,
                 "nameList": "Hegemony",
-                "x": botLeftX,
+                "x": "93000",
                 "y": "0.0",
-                "z": botLeftZ,
+                "z": "93000",
                 "hulls": [5001, 5000],
                 "sideValue": 1,
             },
@@ -661,9 +661,9 @@ def render():
                 "hail": "We didn't invite Torgoths, but they must have scented your blood!",
                 "atDistance": 30200,
                 "nameList": "Hegemony",
-                "x": botRightX,
+                "x": "25000",
                 "y": "0.0",
-                "z": botRightZ,
+                "z": "85000",
                 "overrideName": "Antenna C",
                 "hulls": [1353],
                 "sideValue": 1,
@@ -680,18 +680,18 @@ def render():
                 "hail": "Can you feel the end?",
                 "atDistance": 20200,
                 "nameList": "Hegemony",
-                "x": topLeftX,
+                "x": "93000",
                 "y": "0.0",
-                "z": topLeftZ,
+                "z": "7000",
                 "hulls": [5000, 5000, 5000],
                 "sideValue": 1,
             },
             {
                 "atDistance": 20100,
                 "nameList": "Hegemony",
-                "x": botLeftX,
+                "x": "93000",
                 "y": "0.0",
-                "z": botLeftZ,
+                "z": "93000",
                 "hulls": [5001, 5002],
                 "sideValue": 1,
             },

@@ -4,7 +4,13 @@ A mission for Artemis Spaceship Bridge Simulator v.2.8.1 (but may work on other 
 
 Balanced for TSN RP community (~4 coordinated crews).
 
-You may wish to tweak the scenario to your liking. See [Modification](#Modification).
+GM Console is available to tweak the scenario on the fly. If the GM buttons don't appear, use "G" hotkey when on GM screen.
+
+You may wish to tweak the scenario to your liking. See [Modification](#Modification). 
+
+![Screen 1](Screen1.png?raw=true "Map")
+![Screen 2](Screen2.png?raw=true "Planet")
+![Screen 3](Screen3.png?raw=true "Iron Sun")
 
 ## Outline
 
