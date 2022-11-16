@@ -7,7 +7,6 @@ OUT_FNAME = "MISS_TSN-IronSun.xml"
 
 def render():
 
-    topRightX, topRightZ = 0, 6401
     midtopRightX, midtopRightZ = 0, 29550
     midRightX, midRightZ = 0, 50000
     midbotRightX, midbotRightZ = 0, 70449
@@ -35,6 +34,7 @@ def render():
         "sites": {
             "HQ": {
                 "desc": "Terran headquarters. Protect at all costs! Produces Parts.",
+                "onConstructedComms": "HQ online. Find a way to destroy Iron Sun before it obliterates Terra Noua! Also, defend us at the HQ.",
                 "x": "93184.0",
                 "y": "0.0",
                 "z": "53425.0",
@@ -53,6 +53,7 @@ def render():
             },
             "Mineral processor": {
                 "desc": "Mines Minerals.",
+                "onConstructedComms": "Commencing mining operations.",
                 "x": "53011.0",
                 "y": "0.0",
                 "z": "14290.0",
@@ -72,6 +73,7 @@ def render():
             "Mining rig A": {
                 "requires_exist": ["Mineral processor"],
                 "desc": "Speeds up mineral mining.",
+                "onConstructedComms": "Reporting for duty.",
                 "x": "61627.0",
                 "y": "0.0",
                 "z": "10034.0",
@@ -91,6 +93,7 @@ def render():
             "Mining rig B": {
                 "requires_exist": ["Mineral processor"],
                 "desc": "Speeds up mineral mining.",
+                "onConstructedComms": "Ready!",
                 "x": "44395.0",
                 "y": "0.0",
                 "z": "26955.0",
@@ -109,6 +112,7 @@ def render():
             },
             "Gas refinery": {
                 "desc": "Mines Gas.",
+                "onConstructedComms": "Pressure nominal.",
                 "x": "52388.0",
                 "y": "0.0",
                 "z": "85916.0",
@@ -127,7 +131,7 @@ def render():
             },
             "Gas collector A": {
                 "requires_exist": ["Gas refinery"],
-                "desc": "Speeds up gas collection.",
+                "desc": "Online.",
                 "x": "45018.0",
                 "y": "0.0",
                 "z": "93391.0",
@@ -146,7 +150,7 @@ def render():
             },
             "Gas collector B": {
                 "requires_exist": ["Gas refinery"],
-                "desc": "Speeds up gas collection.",
+                "desc": "On station.",
                 "x": "60381.0",
                 "y": "0.0",
                 "z": "85916.0",
@@ -165,6 +169,7 @@ def render():
             },
             "Shipyard": {
                 "desc": "Produces allied fleets.",
+                "onConstructedComms": "We are ready to construct light and heavy fleets for Minerals and Gas respectively.",
                 "x": "89654.0",
                 "y": "0.0",
                 "z": "47404.0",
@@ -196,6 +201,7 @@ def render():
             },
             "Armory": {
                 "desc": "Produces tactical ordnance: torpedoes, pshocks and EMPs.",
+                "onConstructedComms": "Bring us Parts, Minerals or Gas and we'll construct Torpedoes, PShocks and EMPs respectively.",
                 "x": "89862.0",
                 "y": "0.0",
                 "z": "51557.0",
@@ -233,6 +239,7 @@ def render():
             },
             "Nuclear lab": {
                 "desc": "Produces nuke-based ordnance: mines and nukes.",
+                "onConstructedComms": "Nuclear fission byproducts let us prepare Mine and Nuke warheads for Minerals and Gas.",
                 "x": "92976.0",
                 "y": "0.0",
                 "z": "45743.0",
@@ -264,6 +271,7 @@ def render():
             },
             "Research facility": {
                 "desc": "May provide clues on how to defeat the Iron Sun.",
+                "onConstructedComms": "We need more data! Construct gravitational waves detector, neutrino detector and plasma drill at designated coordinates.",
                 "x": "95883.0",
                 "y": "0.0",
                 "z": "48235.0",
@@ -282,6 +290,7 @@ def render():
             "Gravitational wave detector": {
                 "requires_exist": ["Research facility"],
                 "desc": "May provide clues on how to defeat the Iron Sun.",
+                "onConstructedComms": "Analyzing Iron Sun gravitional wave footprint.",
                 "x": "35052.0",
                 "y": "0.0",
                 "z": "66297.0",
@@ -300,6 +309,7 @@ def render():
             "Neutrino detector": {
                 "requires_exist": ["Research facility"],
                 "desc": "May provide clues on how to defeat the Iron Sun.",
+                "onConstructedComms": "We're detecting anti-neutrinos emanating from the Iron Sun.",
                 "x": "27786.0",
                 "y": "0.0",
                 "z": "36712.0",
@@ -318,6 +328,7 @@ def render():
             "Plasma drill": {
                 "requires_exist": ["Research facility"],
                 "desc": "May provide clues on how to defeat the Iron Sun.",
+                "onConstructedComms": "Extracting Iron Sun surface sample.",
                 "x": "0.0",
                 "y": "0.0",
                 "z": "0.0",
@@ -336,6 +347,7 @@ def render():
             "Kugelblitz generator": {
                 "requires_exist": ["Research facility", "Gravitational wave detector", "Neutrino detector", "Plasma drill"],
                 "desc": "Creates a black hole from photon energy.",
+                "onConstructedComms": "Kugelblitz generator online.",
                 "x": "0.0",
                 "y": "0.0",
                 "z": "0.0",
@@ -353,6 +365,7 @@ def render():
             },
             "Sappers": {
                 "desc": "Allows construction of weapon platforms.",
+                "onConstructedComms": "We have designated locations suitable for weapon platforms construction.",
                 "x": "96298.0",
                 "y": "0.0",
                 "z": "51141.0",
@@ -370,6 +383,7 @@ def render():
             },
             "WP1": {
                 "requires_exist": ["Sappers"],
+                "onConstructedComms": "Weapon platform online.",
                 "desc": "Weapons platform.",
                 "x": "52284.0",
                 "y": "0.0",
@@ -388,6 +402,7 @@ def render():
             },
             "WP2": {
                 "requires_exist": ["Sappers"],
+                "onConstructedComms": "Weapon platform online.",
                 "desc": "Weapons platform.",
                 "x": "45848.0",
                 "y": "0.0",
@@ -406,6 +421,7 @@ def render():
             },
             "WP3": {
                 "requires_exist": ["Sappers"],
+                "onConstructedComms": "Weapon platform online.",
                 "desc": "Weapons platform.",
                 "x": "42319.0",
                 "y": "0.0",
@@ -424,6 +440,7 @@ def render():
             },
             "WP4": {
                 "requires_exist": ["Sappers"],
+                "onConstructedComms": "Weapon platform online.",
                 "desc": "Weapons platform.",
                 "x": "50623.0",
                 "y": "0.0",
@@ -442,6 +459,7 @@ def render():
             },
             "WP5": {
                 "requires_exist": ["Sappers"],
+                "onConstructedComms": "Weapon platform online.",
                 "desc": "Weapons platform.",
                 "x": "92769.0",
                 "y": "0.0",
@@ -460,6 +478,7 @@ def render():
             },
             "WP6": {
                 "requires_exist": ["Sappers"],
+                "onConstructedComms": "Weapon platform online.",
                 "desc": "Weapons platform.",
                 "x": "85710.0",
                 "y": "0.0",
@@ -478,6 +497,7 @@ def render():
             },
             "WP7": {
                 "requires_exist": ["Sappers"],
+                "onConstructedComms": "Weapon platform online.",
                 "desc": "Weapons platform.",
                 "x": "86333.0",
                 "y": "0.0",
@@ -496,6 +516,7 @@ def render():
             },
             "WP8": {
                 "requires_exist": ["Sappers"],
+                "onConstructedComms": "Weapon platform online.",
                 "desc": "Weapons platform.",
                 "x": "93392.0",
                 "y": "0.0",
@@ -513,15 +534,15 @@ def render():
                 "ports": {}
             },
         },
-        "tsnShipNames": ['Foxglove', 'Bantry', 'Calshot Castle', 'Gorgon', 'Egremont', 'Glorious', 'Church', 'Holcombe', 'Hereward', 'Appleby Castle', 'Hepatica', 'Bloom', 'Colchester', 'Kingcup', 'Polsham', 'Minehead', 'Polecat', 'Earl Roberts', 'Sartine', 'Glasgow', 'Whirlwind', 'Ufton', 'Dolphins Prize', 'Epinal', 'Dalswinton', 'Heythorp', 'Black', 'Aberfoyle', 'Ellinor', 'Diamond', 'Geranium', 'Gympie', 'Cordelia', 'Bourbonnaise', 'Diamantina', 'Alyssum', 'Indomitable', 'Poulmic', 'Porto', 'Woodcock', 'Deale Castle', 'Fubbs', 'England', 'Kilbride', 'Illustrious', 'Grandmere', 'Esperanza', 'Snaefell', 'Quainton', 'Quiberon', 'Token', 'Bangor', 'Hoverfly', 'Etna', 'Bedford Galley', 'Belfast', 'Quesnel', 'Zebra', 'Pinner', 'Hydrangea', 'Hecate', 'Goodall', 'Campaspe', 'Clavering Castle', 'Stoic', 'Bustler', 'Maplin', 'Arve Prince', 'Lonsdale', 'Capelin', 'Portia', 'Wrenn', 'Racoon', 'Carrere', 'Halifax', 'Gulnare', 'Durham', 'Dannemark', 'Kitchen', 'Abergavenny', 'Brutus', 'Don', 'Felicidade', 'Oryx', 'Tweed', 'Verity', 'Magic', 'Crocus', 'Monkshood', 'Chichester', 'New Zealand', 'Eltham', 'Whimbrel', 'Hazardous', 'Craufurd', 'Green Linnet', 'Whitley', 'Wilhelmina', 'Isabella', 'Calypso', 'Cromarty', 'Wanderer', 'Ursa', 'Penelope', 'Kestrel', 'Mayford', 'Kilmersdon', 'Fairy', 'Farndale', 'Aydon Castle', 'Woodpecker', 'Scarab', 'Frome', 'Latrobe', 'Niagara', 'President', 'Marguerite', 'Majestic', 'Clun Castle', 'Furieuse', 'Valkyrie', 'Brocklesby', 'Pluto', 'Cassius', 'Owners Goodwill', 'Ben Lomond', 'Auricula', 'Polacca', 'Axford', 'Trump', 'Amalthaea', 'Imogen', 'Paz', 'Investigator', 'Maryborough', 'Torrens', 'Inglis', 'Buttington', 'Scylla', 'Helverson', 'Jenny', 'Lizard', 'Patrician', 'Albert', 'Clydebank', 'Arbiter', 'Julius', 'Duke of Albany', 'Azov', 'Clitheroe Castle', 'Undaunted', 'Ladybird', 'Cardigan Bay', 'Ekins', 'Bickerton', 'Gawler', 'Curlew', 'Dictator', 'Kilfinny', 'Dennis', 'Infernal', 'Urania', 'Alaart', 'Termagent', 'Broomley', 'Lancaster', 'Arras', 'Mounsey', 'Maida', 'Georgeham', 'Malvern', 'Blackmore Lady', 'Westcott', 'Bienfaisant', 'Bruce', 'Gavotte', 'Hindustan', 'Quaker', 'Sovereign', 'Fernie', 'Black Joke', 'Atherstone', 'Abelia', 'Ruby', 'Alligator', 'Unrivalled', 'Torch', 'Sandown', 'Marlingford', 'Caraquet', 'Cobourg', 'Resolute', 'Honeysuckle', 'Prosperous', 'Frontenac', 'Bull', 'Galicia', 'Pandora', 'Pegasus', 'Port Antonio', 'Flintham', 'Cauvery', 'Iveston', 'Upas', 'Camperdown', 'Alfred', 'Bantum', 'Tenedos', 'Haughty', 'Alonzo', 'Edderton', 'Orilla', 'Kalgoorlie', 'Combustion', 'Stayner', 'Paramour', 'Viper', 'Ben-my-Chree', 'James', 'Courageux', 'Brearley', 'Guardian', 'Ceanothus', 'Clayoquot', 'Bedham', 'Vanguard', 'Greyhound', 'Demon', 'Blaxton', 'Floriston', 'Fortune', 'Quinte', 'Urgent', 'Stronghold', 'Penetang', 'Andromeda', 'Cutlass', 'Charlottetown', 'Abelard', 'Isis', 'Antelope', 'Walpole', 'Parramatta', 'Hydra', 'Ramisham', 'Shamrock', 'Margett', 'Ellinore', 'Cornerbrook', 'Grandmistress', 'Nepeta', 'Mingan', 'Minuet', 'Oakville', 'Hussar', 'Dartington', 'Furnace', 'Condamine', 'Panglima', 'Vigo', 'Galt', 'Liverpool', 'Seven Sisters', 'Dogstar', 'Starling', 'Galliot', 'Belliqueux', 'Trenchant', 'Bradford', 'Caunton', 'Cat', 'Messenger', 'Edmonton', 'Antagonist', 'Magnanime', 'Jerfalcon', 'Barrosa', 'Cobham', 'Clarbeston', 'Esquimalt', 'Goree', 'Dullisk Cove', 'Belzebub', 'Champlain', 'Clio', 'Brothers', 'Papillon', 'Regulus', 'Indignant', 'Herald', 'Caldecot Castle', 'Dromio', 'Holdernesse', 'Legion', 'Porpoise', 'Espion', 'Havant', 'Hygeia', 'Velox', 'Spikenard', 'Dundas', 'Kempton', 'Winchelsea', 'Harland', 'Thistle', 'Myosotis', 'Blade', 'Flame', 'Grebe', 'Dover Prize'],
-        "hegShipNames": ['Cannon Blocker', 'Sunken Seaweed', 'Night Fighter', 'Happy Dog', 'Davy Jones', 'Buccaneers', 'Dead-Mans Raft', 'Chubb', 'Begonia', 'Yarra', 'Littleham', 'Una', 'Coltsfoot', 'Filthy', 'Scorn', 'Fearful Slave', 'Damned Night', 'Example', 'Insolent', 'Brave Titan', 'Fallen Hook', 'Astraea', 'White Wave', 'Shiverin’ Dragon', 'Cacophonous', 'Pirate', 'Dragon', 'Tally-Ho', 'Happy Sailor', 'Wicked Folly', 'Kilchreest', 'Embleton', 'Abandoned Barnacle', 'Return', 'Kistna', 'Britomart', 'Chatham Hulk', 'Prompt', 'Dark Shark', 'Mad', 'Vile', 'Angry', 'Tonnant', 'Carlotta', 'Golden Squid', 'Thunder Tide', 'Speedy Slug', 'Horrid', 'Infanta', 'Fallen Captain', 'Burton', 'Gold', 'Old James', 'Seas', 'Python', 'Nelson', 'Tainted', 'Doubloon', 'Grille', 'Corsair', 'Raven', 'Lost Lagoon', 'North', 'Servant', 'Camel', 'Sanguine', 'Deadly Squid', 'Royal Pearl', 'Fall', 'Old Scallywag', 'Bittersweet', 'Black', 'Dream Chaser', 'Red', 'Plague Storm', 'Abandoned', 'Pillager', 'Hungry Hangman', 'Treasure', 'Silent Killer', 'Old Sea Dog', 'Princess', 'Monowai', 'Aubretia', 'Soul Cairn', 'Wenslydale', 'Ogre', 'Marauders', 'Disgraced', 'Lightning', 'Barbaric Ghost', 'Nith', 'Tattoo', 'Howl', 'Old Barnacle', 'Prompt Prize', 'Durweston', 'Hangman', 'Servants', 'Hazard', 'Springer', 'Silent', 'Trumpeteer', 'Golden Eel', 'Tithonus', 'Stone Angel', 'Tainted Dragon', 'Delphinium', 'Night Wind', 'Rambler', 'Whitby', 'Executioners', 'Dishonorable', 'Grail', 'Confiance', 'Privateers', 'Slave', 'Fair Rhodian', 'Keren', 'Handy', 'Sea', 'Charles and Henry', 'Ganga', 'Torbay', 'Navarino', 'Murderers', 'Usk', 'Gold Coast', 'Otranto', 'Sea', 'Flight', 'Stinkin Skull', 'Irvine', 'Dead Bones', 'Oribi', 'Poseidon\'s Revenge', 'Pure Sirens', 'Lost King', 'Cadmus', 'Red Pirate', 'Rift', 'Ameer', 'Fowey', 'Aeolus', 'Kilmacrennan', 'Somme', 'Formidable', 'Canceaux', 'Spartan', 'Broken Slave', 'Blind', 'North Star', 'Mersey', 'Cursed', 'Wheatland', 'Swashbucklers', 'Dirty Dragon', 'Dodman Point', 'Slinger', 'Hurst Castle', 'Ruthless Raider', 'Gilia', 'Homicidal', 'Neptune’s Teeth', 'Pretty Coral', 'Hope', 'Squid Blaster', 'Dreaming Wave', 'Collins', 'New Pearl', 'Howling', 'Greed', 'Banshee', 'Ghostly Death', 'Beschermer', 'Old TIde', 'Hasty', 'Tainted Rose', 'Captains', 'Revenge Queen', 'Hateful', 'Ramsey', 'Fear', 'Serapis', 'Hades', 'Crimson', 'Halstarr', 'Caribbean', 'Cursed Raider', 'Vanilla Skyline', 'Lost Treasure', 'Plunder', 'Coriander', 'Eel', 'Sacrett', 'Murderous', 'Gambia', 'Inman', 'Sea of Terror', 'Pirates', 'Prize', 'Crofton', 'Damned', 'Privateer', 'Ben Nevis', 'Cottesmore', 'Shark', 'Buctouche', 'Red Wave', 'Independencia', 'Grief', 'Darsham', 'Vittoria', 'Glorioso', 'Firequeen', 'Cutlass', 'Broken', 'Torrington', 'Ledsham', 'Grand Serpent', 'Drunken James', 'Scurvy', 'Grenville', 'Puntoone', 'Poisonous Maid', 'Festering', 'Eclair', 'Harp', 'Insanity', 'Rude', 'Foul Serpent', 'Night', 'Bone Heart', 'Hangman’s Hollow', 'Brunei', 'Obedient', 'Red Hurricane', 'Rovers', 'Lost Soul', 'Ocean Curse', 'Penzance', 'Zest', 'Nisus', 'Nettle', 'Wager', 'Loyal Chancellor', 'Deceitful', 'Cromer', 'Seven Seas', 'Medina', 'Prestonian', 'Seven Seas of WIlliams', 'Bamborough Castle', 'Raider', 'Calendula', 'Murderer', 'Thunder Waves', 'Shadow Storm', 'Neptune', 'Ypres', 'Bream', 'Rising Ghost', 'Reindeer', 'Dream Stealer', 'Landrail', 'Sudden', 'Shadow', 'Progresso', 'Evil', 'Sceptre', 'Centaur', 'Sadness', 'Howl', 'Horror', 'Blood Lightening', 'Heliotrope', 'Happy', 'Jewel Serpent', 'Fearful', 'Amazon', 'Bloody Hangman', 'Moslem', 'Madness', 'Havannah', 'Seas', 'Terror', 'Saber', 'Guinea', 'Drunken Sailor', 'Nymph', 'Bigbury Bay', 'Devil’s Heart', 'Acheron', 'Kilfullert', 'Damp Queen', 'Tancred', 'Pimpernel', 'Chatham Double', 'Nereus', 'Flamingo', 'Ginger Snap', 'White Night', 'Serpent\'s Revenge', 'Greyhond', 'Mont Blanc', 'Kingsford', 'Corso', 'Sun Howler', 'Damned', 'Parret'],
+        "tsnShipNames": ['Guerriere', 'Kelly', 'Adroit', 'Orkney', 'Seabear', 'Statesman', 'Doon', 'Martial', 'York Castle', 'Decouverte', 'Mauritius', 'Orontes', 'Exeter', 'Halifax', 'Amfitrite', 'Kilmaine', 'Edmundston', 'Statice', 'Slinger', 'Buxton', 'Espoir', 'Nessus', 'Glenroy', 'Bodiam Castle', 'Etrusco', 'Medusa', 'Olympus', 'Strenuous', 'Daedalus', 'Amokura', 'Constance', 'Alynbank', 'Pollington', 'Benalla', 'Puck', 'Wessex', 'Pukaki', 'Spindrift', 'Mounts Bay', 'Cheriton', 'Epreuve', 'Prompte', 'Carhampton', 'Aboukir', 'Cornwallis', 'Gondwana', 'Kilcar', 'Niger', 'Nepeta', 'Teviot Bank', 'Crediton', 'Charles', 'Wolsey', 'Neza', 'Tedworth', 'Upholder', 'Plantagenet', 'Duchess of Norfolk', 'Carew Castle', 'Antagonist', 'Lockeport', 'Alpheus', 'Andromeda', 'Vulcan', 'George', 'Aphrodite', 'Badminton', 'Havick', 'Emperor', 'Aylmer', 'Albemarle', 'Friezland', 'Exmoor', 'Michael', 'Pevensey Castle', 'Paul', 'Clarence', 'Batman', 'Gorleston', 'Ledbury', 'Onslow', 'Eden', 'Alfred', 'Persian', 'Lewiston', 'Ballindery', 'Wishart', 'Brixham', 'Caroles', 'Redpole', 'Nyaden', 'Tenby', 'Puntoone', 'Flamborough', 'Linganbar', 'Yukon', 'Ascension', 'Goodson', 'Portsmouth', 'Unsparing', 'Kilmorey', 'Milne', 'Ettrick', 'Fairy', 'Hesper', 'Finch', 'Trinidad', 'Fritham', 'Seagull', 'Pomone', 'Panther', 'Elphinstone', 'James Galley', 'Kempthorne', 'Henrietta', 'Turpin', 'Marlborough', 'Spiteful', 'Bevington', 'Comeet', 'Drury', 'Moira', 'Norwich Castle', 'Tigress', 'Kincardine', 'Welshman', 'Nighthawk', 'Swindon', 'Borage', 'Ascot', 'Titania', 'Matchless', 'Phlegethon', 'Cardigan Bay', 'Mansfield', 'Orion', 'Slaney', 'Loosestrife', 'Unbridled', 'Kilburn', 'Podargus', 'Mediterranean', 'Zenobia', 'Burchett', 'Prestonian', 'Belle Isle', 'Aimable', 'Glengyle', 'Unite', 'Loyal Chancellor', 'Bouncer', 'Bellwort', 'Isle of Wight', 'Meynell', 'Cavalier', 'Thistle', 'Supreme', 'Cyclops', 'Bucephalus', 'Teviot', 'Oberon', 'Apollo', 'Dolphins Prize', 'Palinurus', 'Vidette', 'De Ruyter', 'Appleton', 'Viking', 'Aldenham', 'Eyderen', 'Sea Devil', 'Georgiana', 'Mutine', 'Sesame', 'Palm Tree', 'Triumph', 'Margate', 'Errant', 'Owners Adventure', 'David', 'Nile', 'Affray', 'Sovereign', 'Bilsthorpe', 'Adam & Eve', 'Sunfish', 'Dover Prize', 'Margett', 'Capilano', 'Cerf', 'Abelia', 'Dunwich', 'Deptford Prize', 'Hornby', 'Constitution', 'Battleaxe', 'Galliot', 'Chediston', 'Broadway', 'Cook', 'Carisbrooke Castle', 'Tweed', 'Carronade', 'Blake', 'Dover Castle', 'Audaciuex', 'Torbay', 'Satyr', 'Venturer', 'Fyen', 'Broaderschap', 'Allegiance', 'Highburton', 'Unrivalled', 'Torrington', 'Newcastle', 'Holcombe', 'Jubilant', 'Egremont Castle', 'Hyacinth', 'Newton', 'Valiant', 'Dunbar', 'Narcissus', 'Cherub', 'Lookout', 'Islip', 'Narbrough', 'Murray', 'Sabine', 'Sterlet', 'Wilton', 'Sladen', 'Chevreuil', 'Blackburn', 'Ranger', 'Excalibur', 'Lothian', 'Cambrian', 'Penn', 'Voltaire', 'Oakington', 'Sapphire', 'Dianella', 'Vetch', 'Henry Prize', 'Jellicoe', 'Matabele', 'Uganda', 'Decoy', 'Saladin', 'Gabriel', 'Otter', 'Bienfaisant', 'Oreste', 'Cicero', 'Prevost', 'Granby', 'Cawsand Bay', 'Bombay Castle', 'Tasman', 'Argenta', 'Owners Love', 'Parapet', 'Crafty', 'Glatton', 'Lasham', 'Badger', 'Cornel', 'Marne', 'Circassian', 'Elias', 'Menace', 'Mandate', 'Ivanhoe', 'Monitor', 'Sheerness', 'Redgauntlet', 'Hermes', 'Goodall', 'Meteor', 'Warwick', 'Explorer', 'Abundance', 'Dutiful', 'Sunflower', 'Bonito', 'Perseverance', 'Paladin', 'Cracker', 'Edgar', 'Grenada', 'Etna', 'Bedford Galley', 'Peterel', 'Mayford', 'Castor', 'Terrible', 'Geraldton', 'Caunton', 'Burnie', 'Peregrine', 'Anne Royal', 'Urania', 'Bottisham', 'Trumpeteer', 'Fleche', 'Hecate', 'Imaum', 'Omdurman'],
+        "hegShipNames": ['Dirty Dragon', 'Vanilla Skyline', 'Rorqual', 'Gloire', 'Hawkins', 'Forester', 'Gayundah', 'Angel of Doom', 'Preston', 'Providence', 'Bluethroat', 'Golden Eel', 'Jervis', 'Epsom', 'Blood-Thirsty Rover', 'Trespasser', 'White Wave', 'Fearful', 'Malham', 'Manta', 'Thane', 'Christopher', 'Helicon', 'Boscawen', 'Murderer', 'Thisbe', 'Uncultured', 'Disgraced Anchor', 'Maesterland', 'Caribbean', 'Tide', 'Corrupted Skull', 'Plunderer', 'Scream Fire', 'Hellish', 'Baleine', 'Abbotsham', 'HellFish', 'Maryport', 'Killer', 'Elk', 'Crooked Star', 'Red Wave', 'Giles', 'Duncansby Head', 'Demir Hisar', 'Haydon', 'Advice Prize', 'Poisonous Maid', 'Beacon Hill', 'Fareham', 'Seven Seas of WIlliams', 'Pigeon', 'Thunder Tide', 'Deadly Squid', 'Night Blood', 'Rose', 'Dark Shark', 'Curse of Poseidon', 'Easton', 'Servants', 'Jewel Theif', 'Good', 'Christ', 'Hickleton', 'Saldhana', 'Lost Treasure', 'Night', 'Coaticook', 'Nova Scotia', 'Faulknor', 'Chasseur', 'Drunken Squid', 'Carrier', 'Tainted', 'Mermaid', 'Hardi', 'Tetcott', 'Uproar', 'Ghostly Death', 'Blairmore', 'Curragh', 'Moyola', 'Jolly Skull', 'Aeneas', 'Speedy', 'Sanguine', 'Dishonorable', 'Mayflower', 'Punjabi', 'Avon', 'Hestor', 'Ginger Snap', 'Petard', 'Comox', 'Impolite', 'Milfoil', 'Plague', 'Lagan', 'Jahangir', 'Deadly Destiny', 'Tiger', 'Sudden', 'Pirate’s Secret', 'Tainted Heart', 'Executioners', 'Fallen Hook', 'Nilam', 'Fawkner', 'Deale Castle', 'Abandoned', 'Kipling', 'Hateful', 'Bat', 'Petunia', 'Disgraceful', 'Grail', 'Captains', 'Revenge Queen', 'Night Fighter', 'Barbados', 'Redoubt', 'Night Soul', 'Damp Queen', 'Red', 'Ingonish', 'Princess', 'Broken Soul', 'Mystic Sirens', 'Servant', 'Amelia', 'Aubretia', 'Lost Lagoon', 'Lost Soul', 'Bloodthirsty', 'Poison', 'Serpent’s Cry', 'Demon', 'Cursed', 'Cicala', 'Golden', 'Neptune’s Teeth', 'Melbreak', 'Ulgy Kraken', 'Hungry Hangman', 'Canceaux', 'Pitcairn', 'Fallen Titan', 'Sea Ghost', 'Vicious', 'Hawthorn', 'Overyssel', 'Night', 'Claverhouse', 'Landguard', 'Hart', 'Engadine', 'Victory', 'Bloody', 'Old Sea Dog', 'Dream Stealer', 'Nusa', 'Dundalk', 'Madras', 'Hampton', 'Keats', 'Combatant', 'Resource', 'Marjoram', 'Artigo', 'Cambridge', 'Meredith', 'Executioner', 'Return', 'Plunder', 'Dusty Anchor', 'Arras', 'Shark', 'Plague Lagoon', 'Delphinen', 'Fear', 'Captain', 'Old Barnacle', 'Hellish Shark', 'Agate', 'Acertif', 'Hades', 'Euphrates', 'North Bay', 'Kilcolgan', 'Buccaneer', 'Barbaric Ghost', 'Joseph', 'Cursed Raider', 'Speedy Sun', 'Delhi', 'Windsor', 'Bearded', 'Sadness', 'Carnarvon Bay', 'Devils', 'Torch', 'Plunderers', 'Night Wind', 'Endymion', 'Brolga', 'Howling', 'Mad', 'Drunken Sailor', 'Terror', 'Frog', 'Corruption', 'Snake', 'Tetrarch', 'Wolverine', 'Fagons', 'Thetis', 'Alliance', 'Dolphin', 'Fallen Captain', 'Lanton', 'Charles and Henry', 'Golden Jewel', 'Lightning', 'Deceitful', 'Rancid', 'Whimbrel', 'Kilchvan', 'Seven Seas', 'Gael', 'Germoon Prize', 'Serpent’s Revenge', 'Disdain', "Lion's Whelp", 'Shah', 'Germaine', 'Ajdaha', 'Sun Howler', 'Sunken Seaweed', 'Bramber Castle', 'Moth', 'Tortola', 'Folkeston', 'Brune', 'Gawler', 'Firefly', 'Curacoa', 'New Pearl', 'Hurworth', 'Portleven', 'Chignecto', 'Mariana', 'Invention', 'Brayford', 'Inconstant', 'Devil’s Heart', 'Foul Serpent', 'Silent', 'Scream', 'Corrupted', 'Benjamin', 'Golden Rose', 'Lost Mayflower', 'Horrid', 'Sea of Terror', 'Thruster', 'Cruel', 'Soulless Dragon', 'Evil', 'Owen Glendower', 'Revenge', 'Radstock', 'Saber', 'Snap', 'Thunder Waves', 'Brenchley', 'Keppel', 'Estridge', 'Cavan', 'Toreador', 'Brave Titan', 'New Adventure', 'Tainted Dragon', 'Persimmon', 'Broken', 'Charlotte', 'Golden Squid', 'Droxford', 'Redmill', 'Mosquito', 'Kilbrittain', 'Diadem', 'Gulnare', 'Fredericton', 'Akbar', 'Braithwaite', 'Humberstone', 'Shadow Storm', 'Chester', 'Port Colborne', 'Sea Scout', 'Liberty', 'Blood Lightening', 'Upton', 'Blaze', 'Chepstow Castle', 'Unswerving', 'Halcyon', 'Burning Rose', 'Pirates', 'Camilla', 'Thule', 'Disgrace', 'Bellerophon', 'Oriole', 'Caicos', 'Franchise', 'Jewel Serpent', 'Verbena', 'Sick Walrus', 'Bastion', 'Eurotas', 'Celebes', 'Julian', 'Dampier', 'Sunken Whale', 'Colchester', 'Impregnable', 'Eagle', 'Stone Shark', 'Kite', 'Independencia', 'Dream Chaser', 'Red Pirate', 'Happy', 'Southwold', 'Cannon Blocker', 'Spur', 'Paradox', 'Botha', 'Guysborough', 'Pure Sirens', 'Festering', 'Portland Bill', 'Dilston', 'Biddeford', 'Fencer', 'Medina', 'Cyrus', 'Scorn', 'Curieux', 'Greed', 'Renascent', 'Rising', 'Poictiers', 'Delivery', 'Dazzling Pearl', 'Black', 'Silent Killer', 'Marauders', 'Willowherb', 'Popham', 'Aberfoyle', 'Jed', 'Disgraced', 'Astarte', 'Silent Raider', 'Montford', 'Sea', 'Lone Star', 'Tenedos', 'Milford', 'Fish Fryer', 'Spider', 'Courageux', 'Fallen Fish', 'Dacres', 'Dungeness', 'Scurvy Wave', 'Starwort', 'Insanity', 'Buccaneers', 'Red Hurricane', 'Gloriosa', 'Sun', 'Courbet', 'Tactician', 'Rambler', 'Bone Rattler', 'Barbaric Serpent', 'Lofoten', 'Pumba', 'Soul Cairn', 'Revenge', 'Minas', 'Mull', 'Discourteous', 'Amity', 'Rovers', 'Grand', 'Frobisher', 'Colombo', 'Anna', 'Belmont', 'Happy Dog', 'Shark Rider', 'Poisoned Arrow', 'Portreath', 'Plague Storm', 'Hornpipe', 'Peterhead', 'Speedy Slug', 'Cotswold', 'Adventure Prize', 'Barcross', 'Revenge Tide', 'Conflagration', 'Little', 'Siskin', 'Flying', 'Ossington', 'Crimson', 'Bathurst', 'Madness', 'Red Tsunami', 'Ranger', 'Wager', 'Fairlight', 'Doom', 'Cheviot', 'Bedouin', 'Murderers', 'Penelope', 'Dagger', 'Cadmus', 'Privateer', 'Grenade', 'Fortune', 'White', 'Ocean Curse', 'North', 'Bann', 'Old TIde', 'Raider', 'Scourge', 'Death Fire', 'Montbretia', 'Stinkin Plank', 'Voyager', 'Coward', 'Loyal', 'Jewel', 'Consort', 'Haughty', 'Wild Storm', 'Hellish Captain', 'Hannam', 'Wind Raider', 'Norwich', 'Swashbucklers', 'Trepassy', 'Trinity', 'Pirate', 'Hydra', 'Palma', 'Impulsive', 'Greenwich', 'Dirty', 'Fort Erie', 'Fife', 'Trailer', 'Ruthless Raider', 'Polruan', 'Neptune', 'Narbada', 'Glory Iv', 'Howl', 'Pillager', 'Adventure Galley', 'Wolf', 'Fearful Slave', 'Angry', 'Ben Meidie', 'Diver', 'Guelderland', 'Strumpet', 'Camel', 'Conquerante', 'Veronica', 'Suffolk', 'Keith', 'Courser', 'Walker', 'Bury', 'Bath', 'Ypres', 'Ellinor', 'Broken Slave', 'Raider', 'Jason', 'Murderous', 'Awake', 'Arab', 'Heron', 'Damnation', 'Sylph', 'Fearful Diamond', 'Rising Ghost', 'Unruly', 'Bear', 'Gold', 'Fortune', 'Glenelg', 'Kilham', 'Damned Night', 'Damned', 'Aeolus', 'Foam', 'Jewel of Atlantis', 'Echuca', 'Hespeler', 'Tavy', 'Disrespectful', 'Dark Soul', 'Vile', 'Dreaming Wave', 'Lisburne', 'Albrighton', 'Rusty Cannon', 'Mystic Sea', 'Moon Whisperer', 'Maryborough', 'Golden Mermaid', 'Mangy', 'Swordfish', 'Minnow', 'Galley', 'Old Scallywag', 'Treasure', 'Janus', 'England', 'Cacophonous', 'Bahamas', 'Snapdragon', 'Soggy Seaweed', 'Manchester', 'Blasted', 'Buccaneers', 'Dragon', 'Kilmuckridge', 'Pelican Prize', 'Bruizer', 'Fierce', 'Clitheroe Castle', 'Calendula', 'Squid Blaster', 'Wicked Folly', 'Leeds Castle', 'Plunder', 'Killers', 'Embleton', 'Happy Sailor', 'Port Mahon', 'Attacker', 'Durweston', 'Dragons', 'Adventure', 'Rift', 'Storm', 'Pillager', 'Paris', 'Drake', 'Delight', 'Pagham', 'Lust', 'Night of Doom', 'Squid', 'Malabar', 'Clumsy Sailor', 'Tuna', 'Old James', 'Falcon', 'Excellent', 'Anger', 'Cowra', 'Moorhen', 'Cutlass', 'Uppingham', 'Boreas', 'Truro', 'Damned', 'Black Posthorse', 'Galatea', 'Privateers', 'Dark Howler', 'Carnation', 'Cape Scott', 'Birmingham', 'Arundel', 'Upward', 'Stinkin Skull', 'Rockwood', 'Carrick', 'Howl', 'Grand Serpent', 'Desiree', 'Royal Pearl', 'Cursed Slave', 'Orwell', 'Most', 'Dead-Man’s Raft', 'Curse', 'Burning', 'Doubloon', 'Cuckmere', 'Burning Dragon', 'Blind', 'Cordelia', 'Shallow Mermaid', 'Cerberus', 'Jenny', 'Elusive', 'Cutter', 'Raglan', 'Savage', 'Oribi', 'Littleham', 'Alisma', 'Vivien', 'Fall', 'Davy Jones', 'Cameronia', 'Alacrity', 'Portia', 'Filthy', 'Mingan', 'Infanta', 'Dervish', 'Earl of Chatham', 'Secret', 'Hades', 'Tattoo', 'Laleston', 'Salamander', 'Clinton', 'King', 'Parker', 'Dorothea', 'Abergavenny', 'Dagger', 'Bloody Hangman', 'Shiverin’ Dragon', 'Peterman', 'Barbaric', 'Brevdrageren', 'Lost King', 'Hind', 'Pretty Coral', 'Odin', 'Pyrrhus', 'Scurvy', 'Transit', 'Sea', 'Cursed Hangman', 'Secret Dagger', 'Crown Malago', 'Heliotrope', 'Jolly Storm', 'Parret', 'Slave', 'Shadow', 'Seas', 'Balfour', 'Culloden', 'Ghost', 'Fiona', 'Black Pearl', 'Neptune’s Wave', 'Derrington', 'Lark', 'Rupert', 'Grenado', 'Dead Bones', 'Seas', 'Atlantis', 'Golden Cairn', 'Hangman', 'Tortuga', 'Hell-born', 'Bone Heart', 'Tainted Rose', 'Bellona', 'Kilby', 'Post', 'Pearl', 'Sheldrake', 'Vengeance', 'Eskimo', 'Celerity', 'Quadrille', 'Demon Sea-Dog', 'Drunken', 'Genoa', 'Bigbury Bay', 'Horror', 'Rusty Bell', 'Corsair', 'Norfolk', 'Amarylis', 'White Night', 'Knave', 'Bayfield', 'Lochinvar', 'Ortenzia', 'Poseidon’s Revenge', 'Bisham', 'Grief', 'Convulsion', 'Gift', 'Minoru', 'Eel', 'Cry', 'Eurus', 'Dainty', 'Ildefonso', 'Stone Angel', 'Chevron', 'Homicidal', 'Morris', 'Drunken James', 'Lost Screams of Peter', 'Lost Dreams', 'Manly', 'Hangman’s Hollow', 'Abandoned Barnacle', 'Tracker', 'Rude', 'Moon Raider', 'Death', 'Alfreda'],
         "caltronShipPrefixes": ['', '0x', '', '0b', '', '', '', '&', '', '*', '-', '', '', '', '', '', ''],
         "caltronShipInfixes": ['F', '_', 'B', 'V', 'L', 'add', 'nop', 'C', 'O', 'Y', 'M', 'mov', 'G', 'Z', 'U', '=>', 'mov', '_', 'Q', 'I', 'T', 'mul', '0', 'Y', '0', 'K', '5', 'H', 'P', 'I', 'X', 'S', 'fizz', 'H', 'P', '2', '6', 'N', 'R', 'buzz', '-', 'A', '-', 'D', '4', 'V', 'Z', '_', 'nop', '-', 'A', 'U', 'D', 'T', 'S', 'R', '4', '=>', 'O', 'N', '_', '1', 'J', '3', 'bar', 'J', '1', 'foo', '=>', '-', '_', 'L', '_', 'E', 'E', 'G', '-', 'C', 'X', '->', 'B', 'M', 'F', 'Q', '-'],
         "caltronShipSuffixes": ['', '++', '', '', '', '', '--', '', '()', '', ';', '[:]', '', '', '', ],
         "waves": [
             {
                 "atDistance": 90000,
-                "race": "TSN",
+                "nameList": "TSN",
                 "x": 4000,
                 "y": "0.0",
                 "z": midRightZ,
@@ -531,14 +552,14 @@ def render():
             {
                 "hail": "Hello again, insects. We've devised a new test to see if you're worthy of ascension. Enjoy the encounter with Iron Sun!",
                 "atDistance": 89900,
-                "race": "Caltron",
+                "nameList": "Caltron",
                 "spawnAt": "Iron Sun",
                 "hulls": [7206, 7204, 7201],
                 "sideValue": 1,
             },
             {
                 "atDistance": 89800,
-                "race": "Caltron",
+                "nameList": "Caltron",
                 "x": midbotRightX,
                 "y": "0.0",
                 "z": midbotRightZ,
@@ -547,14 +568,182 @@ def render():
             },
             {
                 "atDistance": 89700,
-                "race": "Caltron",
+                "nameList": "Caltron",
                 "x": midtopRightX,
                 "y": "0.0",
                 "z": midtopRightZ,
                 "hulls": [7201, 7202, 7202],
                 "sideValue": 1,
             },
+
+            {
+                "hail": "Let's invite some of your old friends, the Kraliens, to the party.",
+                "atDistance": 75300,
+                "nameList": "Hegemony",
+                "x": topLeftX,
+                "y": "0.0",
+                "z": topLeftZ,
+                "overrideName": "Antenna A",
+                "hulls": [1353],
+                "sideValue": 1,
+            },
+            {
+                "atDistance": 75200,
+                "nameList": "Hegemony",
+                "spawnAt": "Antenna A",
+                "hulls": [2000, 2000, 2001, 2001, 2002, 2100],
+                "sideValue": 1,
+            },
+            {
+                "atDistance": 75100,
+                "nameList": "Hegemony",
+                "spawnAt": "Antenna A",
+                "hulls": [2000, 2000, 2001, 2001, 2002, 2100],
+                "sideValue": 1,
+            },
+
+            {
+                "hail": "The Ximni are here too.",
+                "atDistance": 67200,
+                "nameList": "Hegemony",
+                "x": midtopRightX,
+                "y": "0.0",
+                "z": midtopRightZ,
+                "hulls": [7504, 7502],
+                "sideValue": 1,
+            },
+            {
+                "atDistance": 67100,
+                "nameList": "Hegemony",
+                "x": midbotRightX,
+                "y": "0.0",
+                "z": midbotRightZ,
+                "hulls": [7506, 7502],
+                "sideValue": 1,
+            },
+
+            {
+                "hail": "Looks like the Kraliens called for help of their Hegemony allies.",
+                "atDistance": 50300,
+                "nameList": "Hegemony",
+                "x": botLeftX,
+                "y": "0.0",
+                "z": botLeftZ,
+                "overrideName": "Antenna B",
+                "hulls": [1353],
+                "sideValue": 1,
+            },
+            {
+                "atDistance": 50200,
+                "nameList": "Hegemony",
+                "spawnAt": "Antenna B",
+                "hulls": [3002, 3002, 3100],
+                "sideValue": 1,
+            },
+            {
+                "atDistance": 50100,
+                "nameList": "Hegemony",
+                "spawnAt": "Antenna B",
+                "hulls": [3001, 3001, 3001],
+                "sideValue": 1,
+            },
+
+            {
+                "hail": "Im enjoying this.",
+                "atDistance": 40200,
+                "nameList": "Hegemony",
+                "x": topLeftX,
+                "y": "0.0",
+                "z": topLeftZ,
+                "hulls": [5000, 5002],
+                "sideValue": 1,
+            },
+            {
+                "atDistance": 40100,
+                "nameList": "Hegemony",
+                "x": botLeftX,
+                "y": "0.0",
+                "z": botLeftZ,
+                "hulls": [5001, 5000],
+                "sideValue": 1,
+            },
+
+            {
+                "hail": "We didn't invite Torgoths, but they must have scented your blood!",
+                "atDistance": 30200,
+                "nameList": "Hegemony",
+                "x": botRightX,
+                "y": "0.0",
+                "z": botRightZ,
+                "overrideName": "Antenna C",
+                "hulls": [1353],
+                "sideValue": 1,
+            },
+            {
+                "atDistance": 30100,
+                "nameList": "Hegemony",
+                "spawnAt": "Antenna C",
+                "hulls": [4002, 4100],
+                "sideValue": 1,
+            },
+
+            {
+                "hail": "Can you feel the end?",
+                "atDistance": 20200,
+                "nameList": "Hegemony",
+                "x": topLeftX,
+                "y": "0.0",
+                "z": topLeftZ,
+                "hulls": [5000, 5000, 5000],
+                "sideValue": 1,
+            },
+            {
+                "atDistance": 20100,
+                "nameList": "Hegemony",
+                "x": botLeftX,
+                "y": "0.0",
+                "z": botLeftZ,
+                "hulls": [5001, 5002],
+                "sideValue": 1,
+            },
         ],
+        "spawners": {
+            "Antenna A": {
+                "commsFromHQ": "We're reading Kralien slingshot jump signatures!",
+                "every": 60*4,
+                "nameList": "Hegemony",
+                "hulls": [2000, 2000, 2001, 2002, 2100],
+                "sideValue": 1,
+            },
+            "Antenna B": {
+                "commsFromHQ": "Incoming jump signatures, Arvonian configuration!",
+                "every": 60*4,
+                "nameList": "Hegemony",
+                "hulls": [3001, 3001, 3002],
+                "sideValue": 1,
+            },
+            "Antenna C": {
+                "commsFromHQ": "Torgoth fleet just entered the system!",
+                "every": 60*4,
+                "nameList": "Hegemony",
+                "hulls": [4000, 4000, 4001],
+                "sideValue": 1,
+            },
+            "Asteroid Base": {
+                "commsFromHQ": "We're reading a pirate raiding party on long range scanners!",
+                "every": 60*4,
+                "nameList": "Hegemony",
+                "hulls": [7300, 7300, 7301],
+                "sideValue": 1,
+            },
+            "Iron Sun": {
+                "commsFromHQ": "Seismic activity on the Iron Star... More Caltrons!",
+                "every": 60*5,
+                "nameList": "Caltron",
+                "hulls": [7201, 7202, 7201, 7205],
+                "sideValue": 1,
+            }
+        }
     }
 
 

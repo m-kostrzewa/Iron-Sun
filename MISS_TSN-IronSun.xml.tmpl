@@ -25,6 +25,8 @@
         <create count="30" type="nebulas" startAngle="90" endAngle="270" startX="76679.0" startY="0.0" startZ="79065.0" radius="20000" randomRange="10000" />
 
 
+        <create type="enemy" hullID="1250" x="14187.0" y="0.0" z="15536.0" name="Asteroid Base" sideValue="1" />
+
 
         <create type="genericMesh" x="92872.0" y="-2100.0" z="50207.0" name="Terra Noua" 
             meshFileName="dat\TSN\USFP\marker.dxs" textureFileName="dat\TSN\USFP\marker.png"
@@ -97,7 +99,6 @@
             meshFileName="dat\TSN\USFP\marker.dxs" textureFileName="dat\TSN\Caltron\shipHull13.png"
             colorRed="1.0" colorGreen="0.0" colorBlue="0.0" />
         <set_object_property property="artScale" value="20.0" name="Iron Sun" />
-        <set_object_property property="angleDelta" value="0.05" name="Iron Sun" />
         <set_object_property property="pushRadius" value="2200.0" name="Iron Sun" />
         <set_object_property property="speed" value="0.2" name="Iron Sun" />
         <direct name="Iron Sun" targetName="Terra Noua" scriptThrottle="0.3" />
@@ -120,8 +121,9 @@
         <set_relative_position player_slot2="6" distance="4200" angle="270.0" name1="HQ" />
         <set_relative_position player_slot2="7" distance="4200" angle="315.0" name1="HQ" />
 
-        <incoming_comms_text from="HQ" sideValue="2" type="STATION">Find a way to destroy Iron Sun before it obliterates Terra Noua! Also, defend us at the HQ.</incoming_comms_text>
-    
+
+        <!-- A bunch of state tracking -->
+
         <set_timer name="Post init timer" seconds="1"/>
         <set_variable name="Initted" value="0" integer="yes" />
 
@@ -135,9 +137,10 @@
         <get_object_property name="Iron Sun" property="positionY" variable="IronSunLastY" /> 
         <get_object_property name="Iron Sun" property="positionZ" variable="IronSunLastZ" /> 
 
-        <set_variable name="GameOverRange" value="8000.0" integer="no" />
+        <set_variable name="GameOverRange" value="3000.0" integer="no" />
         <set_variable name="IronSunShrinkedIter" value="0" integer="yes" />
 
+        <set_variable name="InformedAboutKugelblitz" value="0" integer="yes" />
 
         <set_variable name="GasMiningTime" value="70.0" integer="no" />
         <set_variable name="MineralMiningTime" value="60.0" integer="no" />
@@ -146,6 +149,13 @@
         <set_timer name="PD Site update pos timer" seconds="1" />
         <set_timer name="Kugelblitz generator update pos timer" seconds="1" />
         <set_timer name="KB Site update pos timer" seconds="1" />
+
+        
+        {%- for spawnerName,spawner in spawners.items() %}
+        <set_timer name="{{spawnerName}}spawner timer" seconds="1" />
+        {%- endfor %}
+        <!-- Artificially delay first asteroid base spawn -->
+        <set_timer name="Asteroid Basespawner timer" seconds="60" /> 
     
     </start>
 
@@ -174,6 +184,7 @@
         <get_object_property name="Iron Sun" property="positionX" variable="IronSunLastX" />
         <get_object_property name="Iron Sun" property="positionY" variable="IronSunLastY" />
         <get_object_property name="Iron Sun" property="positionZ" variable="IronSunLastZ" />
+
     </event>
 
     <event name="Post init" >
@@ -401,9 +412,13 @@
         <if_distance name1="{{shuttle}}" name2="{{site.constructionSiteName}}" comparator="LESS" value="500.0" />
         <if_variable name="{{shuttle}}Cargo{{cargoType}}" comparator=">" value="0.0" />
 
+        {%- for requirement in site.requires_exist %}
+        <if_exists name="{{requirement}}" />
+        {%- endfor %}
+
         <set_variable name="{{shuttle}}Cargo{{cargoType}}" value="{{shuttle}}Cargo{{cargoType}}-1" integer="yes" />
         <set_variable name="{{siteName}}Cargo{{cargoType}}" value="{{shuttle}}Cargo{{cargoType}}+1" integer="yes" />
-        <set_ship_text name="{{site.constructionSiteName}}" race="Terran" scan_desc="{{site.desc}}. Construction status: {{cargoTypes[1]}}: |{{siteName}}Cargo1|/{{site.constructionRequirements[0]}}. {{cargoTypes[2]}}: |{{siteName}}Cargo2|/{{site.constructionRequirements[1]}}. {{cargoTypes[3]}}: |{{siteName}}Cargo3|/{{site.constructionRequirements[2]}}" />
+        <set_ship_text name="{{site.constructionSiteName}}" race="Terran" scan_desc="{{site.desc}} Construction status: {{cargoTypes[1]}}: |{{siteName}}Cargo1|/{{site.constructionRequirements[0]}}. {{cargoTypes[2]}}: |{{siteName}}Cargo2|/{{site.constructionRequirements[1]}}. {{cargoTypes[3]}}: |{{siteName}}Cargo3|/{{site.constructionRequirements[2]}}" />
 
         <incoming_comms_text from="{{shuttle}}" sideValue="2" type="STATUS">{{shuttle}} delivered {{cargoTypes[cargoType]}} to {{site.constructionSiteName}}. 
             Current cargo: {{cargoTypes[1]}}: |{{shuttle}}Cargo1|. {{cargoTypes[2]}}: |{{shuttle}}Cargo2|. {{cargoTypes[3]}}: |{{shuttle}}Cargo3|.
@@ -451,6 +466,7 @@
 
         <set_ship_text name="{{siteName}}" race="Terran" scan_desc="{{site.desc}}" />
 
+        <incoming_comms_text from="{{siteName}}" sideValue="2" type="STATION">{{site.onConstructedComms}}</incoming_comms_text> 
 
         <set_object_property name="{{siteName}}" property="canBuild" value="0.0"/>
         <set_object_property name="{{siteName}}" property="missileStoresHoming" value="0"  />
@@ -487,7 +503,7 @@
 
         {%- for portType,port in site.ports.items() %}
     <event name="{{port.portName}} configure">
-        <log text="{{port.portName}} configure" />
+        <!-- <log text="{{port.portName}} configure" /> -->
 
         <if_timer_finished name="{{port.portName}}ConfigureTimer" />
 
@@ -508,7 +524,7 @@
         <set_variable name="{{shuttle}}Cargo{{portType}}" value="{{shuttle}}Cargo{{portType}}-1" integer="yes" />
         <set_variable name="{{port.var}}" value="1.0" integer="yes" />
 
-        <set_timer name="{{port.portName}}CooldownTimer" seconds="{{site.producesEvery}}" />
+        <set_timer name="{{port.portName}}CooldownTimer" seconds="10" />
 
         <incoming_comms_text from="{{shuttle}}" sideValue="2" type="STATUS">{{shuttle}} brought {{cargoTypes[portType]}} to {{port.portName}} port. 
             Current cargo: {{cargoTypes[1]}}: |{{shuttle}}Cargo1|. {{cargoTypes[2]}}: |{{shuttle}}Cargo2|. {{cargoTypes[3]}}: |{{shuttle}}Cargo3|.
@@ -525,7 +541,7 @@
         <if_not_exists name="{{siteName}}" />
         <if_not_exists name="{{site.constructionSiteName}}" />
         {%- for requirement in site.requires_exist %}
-            <if_exists name="{{requirement}}" />
+        <if_exists name="{{requirement}}" />
         {%- endfor %}
 
         <create type="genericMesh" x="{{site.x}}" y="{{site.y}}" z="{{site.z}}" name="{{site.constructionSiteName}}" sideValue="0" meshFileName="dat\TSN\USFP\marker.dxs" textureFileName="dat\TSN\USFP\marker.png" />
@@ -535,12 +551,12 @@
         <destroy name="{{port.portName}}" />
         {%- endfor %}
 
-        <set_ship_text name="{{site.constructionSiteName}}" race="Terran" scan_desc="{{site.desc}}. Construction status: {{cargoTypes[1]}}: |{{siteName}}Cargo1|/{{site.constructionRequirements[0]}}. {{cargoTypes[2]}}: |{{siteName}}Cargo2|/{{site.constructionRequirements[1]}}. {{cargoTypes[3]}}: |{{siteName}}Cargo3|/{{site.constructionRequirements[2]}}." />
+        <set_ship_text name="{{site.constructionSiteName}}" race="Terran" scan_desc="{{site.desc}} Construction status: {{cargoTypes[1]}}: |{{siteName}}Cargo1|/{{site.constructionRequirements[0]}}. {{cargoTypes[2]}}: |{{siteName}}Cargo2|/{{site.constructionRequirements[1]}}. {{cargoTypes[3]}}: |{{siteName}}Cargo3|/{{site.constructionRequirements[2]}}." />
 
         <set_timer name="{{site.constructionSiteName}}ConfigureTimer" seconds="1" />
     </event>
     <event name="{{site.constructionSiteName}} configure" >
-        <log text="{{site.constructionSiteName}} configure" />
+        <!-- <log text="{{site.constructionSiteName}} configure" /> -->
 
         <if_timer_finished name="{{site.constructionSiteName}}ConfigureTimer" />
 
@@ -582,7 +598,7 @@
     </event>
 
     <event name="{{cargoTypes[site.producesCargo]}} configure" >
-        <log text="{{cargoTypes[site.producesCargo]}} configure" />
+        <!-- <log text="{{cargoTypes[site.producesCargo]}} configure" /> -->
 
         <if_timer_finished name="{{cargoTypes[site.producesCargo]}}ConfigureTimer" />
 
@@ -616,7 +632,6 @@
 
         <set_variable name="makeLightFleet" value="0.0" integer="yes" />
 
-        <set_variable name="Fleetnumber" value="Fleetnumber+1" integer="yes" />
         <set_variable name="handleNewFleet" value="1.0" integer="yes" />
     </event>
 
@@ -639,7 +654,6 @@
 
         <set_variable name="makeHeavyFleet" value="0.0" integer="yes" />
 
-        <set_variable name="Fleetnumber" value="Fleetnumber+1" integer="yes" />
         <set_variable name="handleNewFleet" value="1.0" integer="yes" />
     </event>
 
@@ -683,84 +697,48 @@
         <if_variable name="handleNewFleet" comparator="EQUALS" value="1.0" />
         <if_variable name="Fleetnumber" comparator="EQUALS" value="{{i}}" />
 
-        <clear_ai name="New TSN 1" />
-        <add_ai name="New TSN 1" type="TRY_TO_BECOME_LEADER"  />
-        <add_ai name="New TSN 1" type="CHASE_AI_SHIP" value1="3000" value2="500" />
-        <add_ai name="New TSN 1" type="CHASE_STATION" value1="100000"  />
-        <add_ai name="New TSN 1" type="DEFEND" value1="3000" value2="1000"  />
-        <add_ai name="New TSN 1" type="CHASE_ANGER"  />
-        <add_ai name="New TSN 1" type="LEADER_LEADS"  />
-        <add_ai name="New TSN 1" type="FOLLOW_LEADER"  />
-        <add_ai name="New TSN 1" type="LAUNCH_FIGHTERS" value1="8000" />
-        <add_ai name="New TSN 1" type="FOLLOW_COMMS_ORDERS"  />
+        {%- for j in range(3) %}
+        <clear_ai name="New TSN {{j+1}}" />
+        <add_ai name="New TSN {{j+1}}" type="TRY_TO_BECOME_LEADER"  />
+        <add_ai name="New TSN {{j+1}}" type="CHASE_AI_SHIP" value1="3000" value2="500" />
+        <add_ai name="New TSN {{j+1}}" type="CHASE_STATION" value1="100000"  />
+        <add_ai name="New TSN {{j+1}}" type="CHASE_ANGER"  />
+        <add_ai name="New TSN {{j+1}}" type="LEADER_LEADS"  />
+        <add_ai name="New TSN {{j+1}}" type="FOLLOW_LEADER"  />
+        <add_ai name="New TSN {{j+1}}" type="LAUNCH_FIGHTERS" value1="8000" />
+        <add_ai name="New TSN {{j+1}}" type="FOLLOW_COMMS_ORDERS"  />
+        <set_ship_text name="New TSN {{j+1}}" newname="{{tsnShipNames[3*i+j]}}" />
+        {% endfor %}
 
-        <clear_ai name="New TSN 2" />
-        <add_ai name="New TSN 2" type="TRY_TO_BECOME_LEADER"  />
-        <add_ai name="New TSN 2" type="CHASE_AI_SHIP" value1="3000" value2="500" />
-        <add_ai name="New TSN 2" type="CHASE_STATION" value1="100000"  />
-        <add_ai name="New TSN 2" type="DEFEND" value1="3000" value2="1000"  />
-        <add_ai name="New TSN 2" type="CHASE_ANGER"  />
-        <add_ai name="New TSN 2" type="LEADER_LEADS"  />
-        <add_ai name="New TSN 2" type="FOLLOW_LEADER"  />
-        <add_ai name="New TSN 2" type="LAUNCH_FIGHTERS" value1="8000" />
-        <add_ai name="New TSN 2" type="FOLLOW_COMMS_ORDERS"  />
+        {%- for j in range(4) %}
+        <clear_ai name="New Caltron {{j+1}}" />
+        <add_ai name="New Caltron {{j+1}}" type="TRY_TO_BECOME_LEADER"  />
+        <add_ai name="New Caltron {{j+1}}" type="CHASE_STATION" value1="200000"  />
+        <add_ai name="New Caltron {{j+1}}" type="CHASE_AI_SHIP" value1="50000" value2="500" />
+        <add_ai name="New Caltron {{j+1}}" type="CHASE_STATION" value1="3000"  />
+        <add_ai name="New Caltron {{j+1}}" type="CHASE_AI_SHIP" value1="5000" value2="500" />
+        <add_ai name="New Hegemony {{j+1}}" type="CHASE_PLAYER" value1="4000" value2="1500"  />
+        <add_ai name="New Caltron {{j+1}}" type="FOLLOW_COMMS_ORDERS"  />
+        <add_ai name="New Caltron {{j+1}}" type="LAUNCH_FIGHTERS" value1="6000"/>
+        <set_ship_text name="New Caltron {{j+1}}" newname="{{caltronShipPrefixes[(4*i+j) % caltronShipPrefixes|length]}}{{caltronShipInfixes[(4*i+j) % caltronShipInfixes|length]}}{{caltronShipInfixes[(4*i+2) % caltronShipInfixes|length]}}{{caltronShipSuffixes[(4*i+j) % caltronShipSuffixes|length]}}" />
+        {% endfor %}
 
-        <clear_ai name="New TSN 3" />
-        <add_ai name="New TSN 3" type="TRY_TO_BECOME_LEADER"  />
-        <add_ai name="New TSN 3" type="CHASE_AI_SHIP" value1="3000" value2="500" />
-        <add_ai name="New TSN 3" type="CHASE_STATION" value1="100000"  />
-        <add_ai name="New TSN 3" type="DEFEND" value1="3000" value2="1000"  />
-        <add_ai name="New TSN 3" type="CHASE_ANGER"  />
-        <add_ai name="New TSN 3" type="LEADER_LEADS"  />
-        <add_ai name="New TSN 3" type="FOLLOW_LEADER"  />
-        <add_ai name="New TSN 3" type="LAUNCH_FIGHTERS" value1="8000" />
-        <add_ai name="New TSN 3" type="FOLLOW_COMMS_ORDERS" />
-
-        <set_ship_text name="New TSN 1" newname="{{tsnShipNames[3*i+0]}}" />
-        <set_ship_text name="New TSN 2" newname="{{tsnShipNames[3*i+1]}}" />
-        <set_ship_text name="New TSN 3" newname="{{tsnShipNames[3*i+2]}}" />
-
-
-        <clear_ai name="New Caltron 1" />
-        <add_ai name="New Caltron 1" type="TRY_TO_BECOME_LEADER"  />
-        <add_ai name="New Caltron 1" type="CHASE_STATION" value1="200000"  />
-        <add_ai name="New Caltron 1" type="CHASE_AI_SHIP" value1="20000" value2="500" />
-        <add_ai name="New Caltron 1" type="CHASE_STATION" value1="3000"  />
-        <add_ai name="New Caltron 1" type="CHASE_AI_SHIP" value1="5000" value2="500" />
-        <add_ai name="New Caltron 1" type="FOLLOW_COMMS_ORDERS"  />
-        <add_ai name="New Caltron 1" type="LAUNCH_FIGHTERS" value1="6000"/>
-
-        <clear_ai name="New Caltron 2" />
-        <add_ai name="New Caltron 2" type="TRY_TO_BECOME_LEADER"  />
-        <add_ai name="New Caltron 2" type="CHASE_STATION" value1="200000"  />
-        <add_ai name="New Caltron 2" type="CHASE_AI_SHIP" value1="20000" value2="500" />
-        <add_ai name="New Caltron 2" type="CHASE_STATION" value1="3000"  />
-        <add_ai name="New Caltron 2" type="CHASE_AI_SHIP" value1="5000" value2="500" />
-        <add_ai name="New Caltron 2" type="FOLLOW_COMMS_ORDERS"  />
-        <add_ai name="New Caltron 2" type="LAUNCH_FIGHTERS" value1="6000"/>
-
-        <clear_ai name="New Caltron 3" />
-        <add_ai name="New Caltron 3" type="TRY_TO_BECOME_LEADER"  />
-        <add_ai name="New Caltron 3" type="CHASE_STATION" value1="200000"  />
-        <add_ai name="New Caltron 3" type="CHASE_AI_SHIP" value1="20000" value2="500" />
-        <add_ai name="New Caltron 3" type="CHASE_STATION" value1="3000"  />
-        <add_ai name="New Caltron 3" type="CHASE_AI_SHIP" value1="5000" value2="500" />
-        <add_ai name="New Caltron 3" type="FOLLOW_COMMS_ORDERS"  />
-        <add_ai name="New Caltron 3" type="LAUNCH_FIGHTERS" value1="6000"/>
-
-        <clear_ai name="New Caltron 4" />
-        <add_ai name="New Caltron 4" type="TRY_TO_BECOME_LEADER"  />
-        <add_ai name="New Caltron 4" type="CHASE_STATION" value1="200000"  />
-        <add_ai name="New Caltron 4" type="CHASE_AI_SHIP" value1="20000" value2="500" />
-        <add_ai name="New Caltron 4" type="CHASE_STATION" value1="3000"  />
-        <add_ai name="New Caltron 4" type="CHASE_AI_SHIP" value1="5000" value2="500" />
-        <add_ai name="New Caltron 4" type="FOLLOW_COMMS_ORDERS"  />
-        <add_ai name="New Caltron 4" type="LAUNCH_FIGHTERS" value1="6000"/>
-
-        <set_ship_text name="New Caltron 1" newname="{{caltronShipPrefixes[(4*i+0) % caltronShipPrefixes|length]}}{{caltronShipInfixes[(4*i+0) % caltronShipInfixes|length]}}{{caltronShipInfixes[(4*i+2) % caltronShipInfixes|length]}}{{caltronShipSuffixes[(4*i+0) % caltronShipSuffixes|length]}}" />
-        <set_ship_text name="New Caltron 2" newname="{{caltronShipPrefixes[(4*i+1) % caltronShipPrefixes|length]}}{{caltronShipInfixes[(4*i+1) % caltronShipInfixes|length]}}{{caltronShipInfixes[(4*i+3) % caltronShipInfixes|length]}}{{caltronShipSuffixes[(4*i+1) % caltronShipSuffixes|length]}}" />
-        <set_ship_text name="New Caltron 3" newname="{{caltronShipPrefixes[(4*i+2) % caltronShipPrefixes|length]}}{{caltronShipInfixes[(4*i+2) % caltronShipInfixes|length]}}{{caltronShipInfixes[(4*i+4) % caltronShipInfixes|length]}}{{caltronShipSuffixes[(4*i+2) % caltronShipSuffixes|length]}}" />
-        <set_ship_text name="New Caltron 4" newname="{{caltronShipPrefixes[(4*i+3) % caltronShipPrefixes|length]}}{{caltronShipInfixes[(4*i+3) % caltronShipInfixes|length]}}{{caltronShipInfixes[(4*i+5) % caltronShipInfixes|length]}}{{caltronShipSuffixes[(4*i+3) % caltronShipSuffixes|length]}}" />
+        {%- for j in range(7) %}
+        <clear_ai name="New Hegemony {{j+1}}" />
+        <add_ai name="New Hegemony {{j+1}}" type="SPCL_AI"  />
+        <add_ai name="New Hegemony {{j+1}}" type="TRY_TO_BECOME_LEADER"  />
+        <add_ai name="New Hegemony {{j+1}}" type="CHASE_PLAYER"  />
+        <add_ai name="New Hegemony {{j+1}}" type="CHASE_AI_SHIP"  />
+        <add_ai name="New Hegemony {{j+1}}" type="CHASE_STATION"  />
+        <add_ai name="New Hegemony {{j+1}}" type="CHASE_PLAYER" value1="4000" value2="1500"  />
+        <add_ai name="New Hegemony {{j+1}}" type="CHASE_ANGER"  />
+        <add_ai name="New Hegemony {{j+1}}" type="LEADER_LEADS" />
+        <add_ai name="New Hegemony {{j+1}}" type="FOLLOW_LEADER"  />
+        <add_ai name="New Hegemony {{j+1}}" type="LAUNCH_FIGHTERS" value1="6000"/>
+        <add_ai name="New Hegemony {{j+1}}" type="CHASE_AI_SHIP" value1="50000" value2="1500"  />
+        <add_ai name="New Hegemony {{j+1}}" type="CHASE_STATION" value1="50000" />
+        <set_ship_text name="New Hegemony {{j+1}}" newname="{{hegShipNames[3*i+j]}}" />
+        {% endfor %}
 
         <set_variable name="handleNewFleet" value="0.0" />
         <set_variable name="Fleetnumber" value="Fleetnumber+1" integer="yes" />
@@ -779,28 +757,54 @@
         <incoming_comms_text from="Iron Sun" sideValue="2" type="ENEMY">{{wave.hail}}</incoming_comms_text>
         {%- endif %}
 
-        <get_object_property name="Iron Sun" property="positionX" variable="IronSunX" /> 
-        <get_object_property name="Iron Sun" property="positionY" variable="IronSunY" /> 
-        <get_object_property name="Iron Sun" property="positionZ" variable="IronSunZ" /> 
+        {%- if 'spawnAt' in wave %}
+        <get_object_property name="{{wave.spawnAt}}" property="positionX" variable="posX" /> 
+        <get_object_property name="{{wave.spawnAt}}" property="positionZ" variable="posZ" /> 
+        {%- endif %}
 
         {%- for hull in wave.hulls %}
             {%- if 'spawnAt' in wave %}
-        <create type="enemy" name="New {{wave.race}} {{loop.index}}" x="IronSunX" y="IronSunY" z="IronSunZ" hullID="{{hull}}" sideValue="{{wave.sideValue}}" fleetnumber="Fleetnumber" />
+        <create type="enemy" name="New {{wave.nameList}} {{loop.index}}" x="posX" y="0" z="posZ" hullID="{{hull}}" sideValue="{{wave.sideValue}}" fleetnumber="Fleetnumber" />
             {%- else %}
-        <create type="enemy" name="New {{wave.race}} {{loop.index}}" x="{{wave.x}}" y="{{wave.y}}" z="{{wave.z}}" hullID="{{hull}}" sideValue="{{wave.sideValue}}" fleetnumber="Fleetnumber" />
+        <create type="enemy" name="New {{wave.nameList}} {{loop.index}}" x="{{wave.x}}" y="{{wave.y}}" z="{{wave.z}}" hullID="{{hull}}" sideValue="{{wave.sideValue}}" fleetnumber="Fleetnumber" />
+            {%- endif %}
+            {%- if wave.overrideName is defined %}
+        <set_ship_text name="New {{wave.nameList}} {{loop.index}}" newname="{{wave.overrideName}}" />
             {%- endif %}
         {%- endfor %}
 
-        <set_variable name="Fleetnumber" value="Fleetnumber+1" integer="yes" />
         <set_variable name="handleNewFleet" value="1.0" integer="yes" />
 
         <set_variable name="Wave" value="{{loop.index-1+1}}" integer="yes" />
     </event>
     {% endfor %}
 
+    <!-- Respawn points -->
+    {%- for spawnerName,spawner in spawners.items() %}
+    <event name="{{spawnerName}} respawn fleet" >
+        <log text="{{spawnerName}} respawn fleet" />
+
+        <if_exists name="{{spawnerName}}" />
+        <if_timer_finished name="{{spawnerName}}spawner timer" />
+ 
+        <incoming_comms_text from="HQ" sideValue="2" type="STATION">{{spawner.commsFromHQ}}</incoming_comms_text>
+
+        <get_object_property name="{{spawnerName}}" property="positionX" variable="posX" /> 
+        <get_object_property name="{{spawnerName}}" property="positionZ" variable="posZ" /> 
+
+        {%- for hull in spawner.hulls %}
+        <create type="enemy" name="New {{spawner.nameList}} {{loop.index}}" x="posX" y="0" z="posZ" hullID="{{hull}}" sideValue="{{spawner.sideValue}}" fleetnumber="Fleetnumber" />
+        {%- endfor %}
+
+        <set_variable name="handleNewFleet" value="1.0" integer="yes" />
+
+        <set_timer name="{{spawnerName}}spawner timer" seconds="{{spawner.every}}" />
+    </event>
+    {% endfor %}
+
     <!-- Moving mission objectives -->
     <event name="Plasma drill update pos" >
-        <log text="Plasma drill update pos" />
+        <!-- <log text="Plasma drill update pos" /> -->
 
         <if_exists name="Plasma drill" />
         <if_timer_finished name="Plasma drill update pos timer" />
@@ -809,7 +813,7 @@
         <set_timer name="Plasma drill update pos timer" seconds="1" />
     </event>
     <event name="PD Site site update pos" >
-        <log text="PD Site site update pos" />
+        <!-- <log text="PD Site site update pos" /> -->
 
         <if_exists name="PD Site" />
         <if_timer_finished name="PD Site update pos timer" />
@@ -819,7 +823,7 @@
         <set_timer name="PD Site update pos timer" seconds="1" />
     </event>
     <event name="Kugelblitz generator update pos" >
-        <log text="Kugelblitz generator update pos" />
+        <!-- <log text="Kugelblitz generator update pos" /> -->
 
         <if_exists name="Kugelblitz generator" />
         <if_timer_finished name="Kugelblitz generator update pos timer" />
@@ -829,7 +833,7 @@
         <set_timer name="Kugelblitz generator update pos timer" seconds="1" />
     </event>
     <event name="KB Site update pos" >
-        <log text="KB Site update pos" />
+        <!-- <log text="KB Site update pos" /> -->
 
         <if_exists name="KB Site" />
         <if_timer_finished name="KB Site update pos timer" />
@@ -837,6 +841,20 @@
         <set_relative_position name2="KB Site" distance="2200" angle="0.0" name1="Iron Sun" />
 
         <set_timer name="KB Site update pos timer" seconds="1" />
+    </event>
+
+
+    <event name="Inform about Kugelblitz research" >
+        <if_variable name="InformedAboutKugelblitz" comparator="EQUALS" value="0" />
+
+        <if_exists name="Research facility" />
+        <if_exists name="Gravitational wave detector" />
+        <if_exists name="Neutrino detector" />
+        <if_exists name="Plasma drill" />
+
+        <incoming_comms_text from="Research facility" sideValue="2" type="STATION">We have found a weakness in Iron Sun! Stability of spacetime fabric around it is favorable for creating an artificial blackhole by focusing hypercooled lasers on a singular point - a Kugelblitz! Construct a Kugelblitz generator at Iron Sun's surface. Keep all sensors alive until the black hole is created.</incoming_comms_text>
+
+        <set_variable name="InformedAboutKugelblitz" value="1" integer="yes" />
     </event>
 
     <!-- Mine speedups -->
@@ -889,6 +907,7 @@
 
         <set_variable name="GasMiningTime" value="50.0" integer="no" />
     </event>
+
 
 
 </mission_data>

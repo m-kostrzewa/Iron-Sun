@@ -166,10 +166,10 @@ h = ["Adventure","Angry","Barbaric","Bearded","Black","Blasted","Crimson","Sangu
 ,"Jewel Serpent"
 ,"Speedy Slug"
 ,"Sunken Seaweed"
-,"Sunken Whale"] + a[400:700]
+,"Sunken Whale"] + a[400:800]
 
 print(len(h))
 
 import random 
 random.shuffle(h)
-print(h[:310])
+print(h)
