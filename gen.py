@@ -24,16 +24,22 @@ def render():
             2: "Minerals", 
             3: "Gas",
         },
+        "cargoTypesMeshes": {
+            0: "dat\\TSN\\USFP\\marker.png",
+            1: "dat\\monster5_spec.png",
+            2: "dat\\electricNoise5.png",
+            3: "dat\\electricNoise3.png",
+        },
         "sites": {
             "HQ": {
                 "desc": "Terran headquarters. Protect at all costs! Produces Parts. Replaces lost shuttles.",
-                "onConstructedComms": "HQ online. Find a way to destroy Iron Sun before it obliterates Terra Noua! Also, defend us at the HQ.",
+                "onConstructedComms": "HQ online. Datalink estabilished.",
                 "x": "93184.0",
                 "y": "0.0",
                 "z": "53425.0",
                 "hullId": "1002",
                 "type": "station",
-                "constructionSiteName": "HQ Site",
+                "constructionSiteName": "(HQ)",
                 "constructionRequirements": {
                     0: 10, # dummy val for postinit 
                     1: 0, 
@@ -46,13 +52,13 @@ def render():
             },
             "Mineral processor": {
                 "desc": "Mines Minerals.",
-                "onConstructedComms": "Commencing mining operations.",
+                "onConstructedComms": "Commencing mining operations. We will periodically output Minerals for you to pick up with your shuttles.",
                 "x": "53011.0",
                 "y": "0.0",
                 "z": "14290.0",
                 "hullId": "1003",
                 "type": "neutral",
-                "constructionSiteName": "MP Site",
+                "constructionSiteName": "(Mineral processor)",
                 "constructionRequirements": {
                     0: 0, # ignore
                     1: 1, # cost in Parts
@@ -66,13 +72,13 @@ def render():
             "Mining rig A": {
                 "requires_exist": ["Mineral processor"],
                 "desc": "Speeds up mineral mining.",
-                "onConstructedComms": "Reporting for duty.",
+                "onConstructedComms": "Reporting for duty. Improving mineral mining rate.",
                 "x": "61627.0",
                 "y": "0.0",
                 "z": "10034.0",
                 "hullId": "1601",
                 "type": "neutral",
-                "constructionSiteName": "MRA Site",
+                "constructionSiteName": "(Mining rig A)",
                 "constructionRequirements": {
                     0: 0,
                     1: 1,
@@ -84,13 +90,13 @@ def render():
             "Mining rig B": {
                 "requires_exist": ["Mineral processor"],
                 "desc": "Speeds up mineral mining.",
-                "onConstructedComms": "Ready!",
+                "onConstructedComms": "Ready! Improving mineral mining rate.",
                 "x": "44395.0",
                 "y": "0.0",
                 "z": "26955.0",
                 "hullId": "1601",
                 "type": "neutral",
-                "constructionSiteName": "MRB Site",
+                "constructionSiteName": "(Mining rig B)",
                 "constructionRequirements": {
                     0: 0,
                     1: 1,
@@ -101,13 +107,13 @@ def render():
             },
             "Gas refinery": {
                 "desc": "Mines Gas.",
-                "onConstructedComms": "Refinery starting up.",
+                "onConstructedComms": "Refinery starting up. Use your shuttles to pick up the Gas we refine.",
                 "x": "52388.0",
                 "y": "0.0",
                 "z": "85916.0",
                 "hullId": "1356",
                 "type": "neutral",
-                "constructionSiteName": "GR Site",
+                "constructionSiteName": "(Gas refinery)",
                 "constructionRequirements": {
                     0: 0,
                     1: 1,
@@ -120,14 +126,14 @@ def render():
             },
             "Gas collector A": {
                 "requires_exist": ["Gas refinery"],
-                "onConstructedComms": "Valves open.",
-                "desc": "Online.",
+                "onConstructedComms": "Valves open. Improving gas refining rate.",
+                "desc": "Improves gas refining rate.",
                 "x": "45018.0",
                 "y": "0.0",
                 "z": "93391.0",
                 "hullId": "1503",
                 "type": "neutral",
-                "constructionSiteName": "GCA Site",
+                "constructionSiteName": "(Gas collector A)",
                 "constructionRequirements": {
                     0: 0,
                     1: 1,
@@ -138,14 +144,14 @@ def render():
             },
             "Gas collector B": {
                 "requires_exist": ["Gas refinery"],
-                "onConstructedComms": "Pressure nominal.",
-                "desc": "On station.",
+                "onConstructedComms": "Pressure nominal. Improving gas refining rate.",
+                "desc": "Improves gas refining rate.",
                 "x": "60381.0",
                 "y": "0.0",
                 "z": "85916.0",
                 "hullId": "1503",
                 "type": "neutral",
-                "constructionSiteName": "GCB Site",
+                "constructionSiteName": "(Gas collector B)",
                 "constructionRequirements": {
                     0: 0,
                     1: 1,
@@ -156,14 +162,14 @@ def render():
             },
             "Shipyard": {
                 "requires_exist": ["Mineral processor", "Gas refinery"],
-                "desc": "Produces allied fleets.",
-                "onConstructedComms": "We are ready to construct light and heavy fleets for Minerals and Gas respectively.",
+                "desc": "Produces allied fleets. Use your shuttles to bring construction materials to loading zones nearby.",
+                "onConstructedComms": "We are ready to construct light and heavy fleets for Minerals and Gas respectively. Use your shuttles to bring construction materials to loading zones nearby.",
                 "x": "89654.0",
                 "y": "0.0",
                 "z": "47404.0",
                 "hullId": "1053",
                 "type": "neutral",
-                "constructionSiteName": "SY Site",
+                "constructionSiteName": "(Shipyard)",
                 "constructionRequirements": {
                     0: 0,
                     1: 1,
@@ -189,13 +195,13 @@ def render():
             "Armory": {
                 "requires_exist": ["Mineral processor", "Gas refinery"],
                 "desc": "Produces tactical ordnance: torpedoes, pshocks and EMPs.",
-                "onConstructedComms": "Bring us Parts, Minerals or Gas and we'll construct Torpedoes, PShocks and EMPs respectively.",
+                "onConstructedComms": "Bring us Parts, Minerals or Gas and we'll construct Torpedoes, PShocks and EMPs respectively. Use your shuttles to bring construction materials to loading zones nearby.",
                 "x": "89862.0",
                 "y": "0.0",
                 "z": "51557.0",
                 "hullId": "1407",
                 "type": "station",
-                "constructionSiteName": "AR Site",
+                "constructionSiteName": "(Armory)",
                 "constructionRequirements": {
                     0: 0,
                     1: 1,
@@ -227,13 +233,13 @@ def render():
             "Nuclear lab": {
                 "requires_exist": ["Mineral processor", "Gas refinery"],
                 "desc": "Produces nuke-based ordnance: mines and nukes.",
-                "onConstructedComms": "Nuclear fission byproducts let us prepare Mine and Nuke warheads for Minerals and Gas.",
+                "onConstructedComms": "Nuclear fission byproducts let us prepare Mine and Nuke warheads for Minerals and Gas. Use your shuttles to bring construction materials to loading zones nearby.",
                 "x": "92976.0",
                 "y": "0.0",
                 "z": "45743.0",
                 "hullId": "1050",
                 "type": "station",
-                "constructionSiteName": "NL Site",
+                "constructionSiteName": "(Nuclear lab)",
                 "constructionRequirements": {
                     0: 0,
                     1: 1,
@@ -265,7 +271,7 @@ def render():
                 "z": "48235.0",
                 "hullId": "1004",
                 "type": "neutral",
-                "constructionSiteName": "RS Site",
+                "constructionSiteName": "(Research facility)",
                 "constructionRequirements": {
                     0: 0,
                     1: 1,
@@ -284,7 +290,7 @@ def render():
                 "z": "66297.0",
                 "hullId": "1410",
                 "type": "neutral",
-                "constructionSiteName": "GW Site",
+                "constructionSiteName": "(Gravitational wave detector)",
                 "constructionRequirements": {
                     0: 0,
                     1: 0,
@@ -303,7 +309,7 @@ def render():
                 "z": "36712.0",
                 "hullId": "1411",
                 "type": "neutral",
-                "constructionSiteName": "ND Site",
+                "constructionSiteName": "(Neutrino detector)",
                 "constructionRequirements": {
                     0: 0,
                     1: 0,
@@ -322,7 +328,7 @@ def render():
                 "z": "0.0",
                 "hullId": "1054",
                 "type": "neutral",
-                "constructionSiteName": "PD Site",
+                "constructionSiteName": "(Plasma drill)",
                 "constructionRequirements": {
                     0: 0,
                     1: 0,
@@ -341,7 +347,7 @@ def render():
                 "z": "0.0",
                 "hullId": "1055",
                 "type": "neutral",
-                "constructionSiteName": "KB Site",
+                "constructionSiteName": "(Kugelblitz generator)",
                 "constructionRequirements": {
                     0: 0,
                     1: 0,
@@ -360,7 +366,7 @@ def render():
                 "z": "51141.0",
                 "hullId": "1050",
                 "type": "neutral",
-                "constructionSiteName": "SA Site",
+                "constructionSiteName": "(Sappers)",
                 "constructionRequirements": {
                     0: 0,
                     1: 1,
@@ -379,7 +385,7 @@ def render():
                 "z": "83529.0",
                 "hullId": "1052",
                 "type": "neutral",
-                "constructionSiteName": "WP1 Site",
+                "constructionSiteName": "(WP1)",
                 "constructionRequirements": {
                     0: 0,
                     1: 0,
@@ -398,7 +404,7 @@ def render():
                 "z": "90795.0",
                 "hullId": "1052",
                 "type": "neutral",
-                "constructionSiteName": "WP2 Site",
+                "constructionSiteName": "(WP2)",
                 "constructionRequirements": {
                     0: 0,
                     1: 0,
@@ -417,7 +423,7 @@ def render():
                 "z": "27889.0",
                 "hullId": "1052",
                 "type": "neutral",
-                "constructionSiteName": "WP3 Site",
+                "constructionSiteName": "(WP3)",
                 "constructionRequirements": {
                     0: 0,
                     1: 0,
@@ -436,7 +442,7 @@ def render():
                 "z": "14913.0",
                 "hullId": "1052",
                 "type": "neutral",
-                "constructionSiteName": "WP4 Site",
+                "constructionSiteName": "(WP4)",
                 "constructionRequirements": {
                     0: 0,
                     1: 0,
@@ -455,7 +461,7 @@ def render():
                 "z": "41903.0",
                 "hullId": "1052",
                 "type": "neutral",
-                "constructionSiteName": "WP5 Site",
+                "constructionSiteName": "(WP5)",
                 "constructionRequirements": {
                     0: 0,
                     1: 0,
@@ -474,7 +480,7 @@ def render():
                 "z": "43356.0",
                 "hullId": "1052",
                 "type": "neutral",
-                "constructionSiteName": "WP6 Site",
+                "constructionSiteName": "(WP6)",
                 "constructionRequirements": {
                     0: 0,
                     1: 0,
@@ -493,7 +499,7 @@ def render():
                 "z": "54982.0",
                 "hullId": "1052",
                 "type": "neutral",
-                "constructionSiteName": "WP7 Site",
+                "constructionSiteName": "(WP7)",
                 "constructionRequirements": {
                     0: 0,
                     1: 0,
@@ -512,7 +518,7 @@ def render():
                 "z": "56228.0",
                 "hullId": "1052",
                 "type": "neutral",
-                "constructionSiteName": "WP8 Site",
+                "constructionSiteName": "(WP8)",
                 "constructionRequirements": {
                     0: 0,
                     1: 0,
@@ -535,7 +541,7 @@ def render():
                 "x": 4000,            # X,Y,Z positions of the newly spawned fleet. Alternatively, provide "spawnAt" (see usage below).
                 "y": "0.0",
                 "z": "50000",
-                "hulls": [1, 1, 2],   # List of hull types to spawn. NOTE there are limits: max 3 TSN, max 4 Caltron, max 7 Hegemony/Pirate hulls per wave.
+                "hulls": [2, 2, 4],   # List of hull types to spawn. NOTE there are limits: max 3 TSN, max 4 Caltron, max 7 Hegemony/Pirate hulls per wave.
                 "sideValue": 2,       # 2 - friendly; 1 - enemy.
             },
             {
@@ -592,13 +598,13 @@ def render():
             },
 
             {
-                "hail": "The Ximni are here too.",
+                "hail": "The Skaraans are here too.",
                 "atDistance": 67200,
                 "nameList": "Hegemony",
                 "x": "0",
                 "y": "0.0",
                 "z": "30000",
-                "hulls": [7504, 7502],
+                "hulls": [5002, 5000],
                 "sideValue": 1,
             },
             {
@@ -607,12 +613,12 @@ def render():
                 "x": "0",
                 "y": "0.0",
                 "z": "70000",
-                "hulls": [7506, 7502],
+                "hulls": [5001, 5000],
                 "sideValue": 1,
             },
 
             {
-                "hail": "Looks like the Kraliens called for help of their Hegemony allies.",
+                "hail": "Let's see you deal with Arvonian carriers!",
                 "atDistance": 50300,
                 "nameList": "Hegemony",
                 "x": "93000",
@@ -658,7 +664,7 @@ def render():
             },
 
             {
-                "hail": "We didn't invite Torgoths, but they must have scented your blood!",
+                "hail": "We didn't invite the Torgoths, but they must have caught the scent of your blood!",
                 "atDistance": 30200,
                 "nameList": "Hegemony",
                 "x": "25000",

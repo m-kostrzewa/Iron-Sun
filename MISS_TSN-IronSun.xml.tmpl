@@ -102,6 +102,7 @@
         <set_object_property property="pushRadius" value="2200.0" name="Iron Sun" />
         <set_object_property property="speed" value="0.2" name="Iron Sun" />
         <direct name="Iron Sun" targetName="Terra Noua" scriptThrottle="0.3" />
+        <set_ship_text name="Iron Sun" race="Caltron" desc="Caltron superweapon." scan_desc="Invulnerable to known weapon systems. More research is required." />
 
         <!-- Adding Shuttles -->
         {%- for shuttle in shuttles %}
@@ -138,7 +139,7 @@
         <get_object_property name="Iron Sun" property="positionY" variable="IronSunLastY" /> 
         <get_object_property name="Iron Sun" property="positionZ" variable="IronSunLastZ" /> 
 
-        <set_variable name="GameOverRange" value="3000.0" integer="no" />
+        <set_variable name="GameOverRange" value="4000.0" integer="no" />
         <set_variable name="IronSunShrinkedIter" value="0" integer="yes" />
 
         <set_variable name="InformedAboutKugelblitz" value="0" integer="yes" />
@@ -159,6 +160,10 @@
         {%- endfor %}
         <!-- Artificially delay first asteroid base spawn -->
         <set_timer name="Asteroid Basespawner timer" seconds="60" />
+
+
+        <set_timer name="HQ mission timer" seconds="15"/>
+        <set_variable name="HQ mission timer state" value="0.0" integer="yes" />
     
     </start>
 
@@ -271,6 +276,24 @@
         <set_gm_button text="Make\{{siteName}}" />
         {%- endfor %}
 
+        <set_relative_position player_slot2="0" distance="4200" angle="0.0" name1="HQ" />
+        <set_relative_position player_slot2="1" distance="4200" angle="45.0" name1="HQ" />
+        <set_relative_position player_slot2="2" distance="4200" angle="90.0" name1="HQ" />
+        <set_relative_position player_slot2="3" distance="4200" angle="135.0" name1="HQ" />
+        <set_relative_position player_slot2="4" distance="4200" angle="180.0" name1="HQ" />
+        <set_relative_position player_slot2="5" distance="4200" angle="225.0" name1="HQ" />
+        <set_relative_position player_slot2="6" distance="4200" angle="270.0" name1="HQ" />
+        <set_relative_position player_slot2="7" distance="4200" angle="315.0" name1="HQ" />
+    </event>
+
+    <event name="Give mission objectives after delay" >
+        <log text="Give mission objectives after delay" />
+
+        <if_timer_finished name="HQ mission timer" />
+        <if_variable name="HQ mission timer state" comparator="EQUALS" value="0.0" />
+
+        <incoming_comms_text from="HQ" sideValue="2" type="STATION">This is HQ. Find a way to destroy Iron Sun before it obliterates Terra Noua. Also, HQ must be protected. ^We need to rapidly build up our local defenses and research capabilities. We will periodically provide construction materials for basic infrastructure. Use your shuttles to pick up and deliver construction materials to construction sites. Start with construction of Mineral processor and Gas refinery.</incoming_comms_text>
+        <set_variable name="HQ mission timer state" value="1.0" integer="yes" />
     </event>
 
     
@@ -365,11 +388,90 @@
         <if_distance name1="Iron Sun" name2="Terra Noua" comparator="LESS" value="GameOverRange" />
         <if_variable name="Iron Sun Fired" comparator="EQUALS" value="0" />
 
-        <create count="50" type="mines" startX="92872.0" startY="0.0" startZ="50207.0" radius="5000" randomRange="5000" />
+        <create count="50" type="mines" startX="92872.0" startY="0.0" startZ="50207.0" radius="4000" randomRange="2000" randomSeed="1" />
+
+        <!-- Spam asteroids and rely on their collision to create an "exploding planet crust" effect -->
+        <create count="15" type="asteroids" startX="92872.0" startY="-500.0" startZ="50207.0" radius="500" randomRange="1000" randomSeed="77"/>
+        <create count="50" type="asteroids" startX="92872.0" startY="-3000.0" startZ="50207.0" radius="500" randomRange="1000" randomSeed="33"/>
+        <create count="100" type="asteroids" startX="92872.0" startY="-2500.0" startZ="50207.0" radius="500" randomRange="1000" randomSeed="33"/>
+        <create count="100" type="asteroids" startX="92872.0" startY="-2000.0" startZ="50207.0" radius="500" randomRange="1000" randomSeed="33"/>
+        <create count="100" type="asteroids" startX="92872.0" startY="-2500.0" startZ="50207.0" radius="500" randomRange="1000" randomSeed="44"/>
+        <create count="100" type="asteroids" startX="92872.0" startY="-1000.0" startZ="50207.0" radius="500" randomRange="1000" randomSeed="55"/>
+        <create count="100" type="asteroids" startX="92872.0" startY="-500.0" startZ="50207.0" radius="500" randomRange="1000" randomSeed="66"/>
+        <create count="50" type="asteroids" startX="92872.0" startY="0.0" startZ="50207.0" radius="500" randomRange="1000" randomSeed="77"/>
+        <create count="15" type="asteroids" startX="92872.0" startY="500.0" startZ="50207.0" radius="500" randomRange="1000" randomSeed="77"/>
+
+        <create count="10" type="nebulas" startX="92872.0" startY="-2000.0" startZ="50207.0" radius="500" randomRange="1000" randomSeed="11"/>
 
         <set_ship_text name="Terra Noua" scan_desc="Uninhabitable planet. Population: 0" />
 
-        <warning_popup_message message="Iron Sun reached Terra Noua; mission lost" consoles="MHWESCO" />
+        <warning_popup_message message="Iron Sun reached Terra Noua; mission lost" consoles="MHWESCOF" />
+
+        <destroy name=" " />
+        <destroy name=" " />
+        <destroy name=" " />
+        <destroy name=" " />
+        <destroy name=" " />
+        <destroy name=" " />
+        <destroy name=" " />
+        <destroy name=" " />
+        
+        <create type="genericMesh" x="100.0" y="0.0" z="100.0" angle="0" name="PA" meshFileName="dat\TSN\Planets\planet8.dxs" textureFileName="dat\TSN\Planets\planetTex4.png" fakeShieldsFront="1" fakeShieldsRear="1" hasFakeShldFreq="1" colorRed="0.0" colorGreen="0.2" colorBlue="0.7" />
+        <set_object_property property="pushRadius" value="1.0" name="PA" />
+        <set_object_property property="artScale" value="8.0" name="PA" />
+        <create type="genericMesh" x="100.0" y="2.0" z="100.0" angle="0" name="PB" meshFileName="dat\TSN\Planets\planet8.dxs" textureFileName="dat\TSN\Planets\planetTex4.png" fakeShieldsFront="1" fakeShieldsRear="1" hasFakeShldFreq="1" colorRed="0.0" colorGreen="0.2" colorBlue="0.7" />
+        <set_object_property property="artScale" value="8.0" name="PB" />
+        <set_object_property property="pushRadius" value="1.0" name="PB" />
+        <create type="genericMesh" x="100.0" y="4.0" z="100.0" angle="0" name="PC" meshFileName="dat\TSN\Planets\planet8.dxs" textureFileName="dat\TSN\Planets\planetTex4.png" fakeShieldsFront="1" fakeShieldsRear="1" hasFakeShldFreq="1" colorRed="0.0" colorGreen="0.2" colorBlue="0.7" />
+        <set_object_property property="pushRadius" value="1.0" name="PC" />
+        <set_object_property property="artScale" value="8.0" name="PC" />
+        <create type="genericMesh" x="100.0" y="6.0" z="100.0" angle="0" name="PD" meshFileName="dat\TSN\Planets\planet8.dxs" textureFileName="dat\TSN\Planets\planetTex4.png" fakeShieldsFront="1" fakeShieldsRear="1" hasFakeShldFreq="1" colorRed="0.0" colorGreen="0.2" colorBlue="0.7" />
+        <set_object_property property="pushRadius" value="1.0" name="PD" />
+        <set_object_property property="artScale" value="8.0" name="PD" />
+        <create type="genericMesh" x="100.0" y="8.0" z="100.0" angle="0" name="PE" meshFileName="dat\TSN\Planets\planet8.dxs" textureFileName="dat\TSN\Planets\planetTex4.png" fakeShieldsFront="1" fakeShieldsRear="1" hasFakeShldFreq="1" colorRed="0.0" colorGreen="0.2" colorBlue="0.7" />
+        <set_object_property property="pushRadius" value="1.0" name="PE" />
+        <set_object_property property="artScale" value="8.0" name="PE" />
+        <create type="genericMesh" x="100.0" y="10.0" z="100.0" angle="0" name="PF" meshFileName="dat\TSN\Planets\planet8.dxs" textureFileName="dat\TSN\Planets\planetTex4.png" fakeShieldsFront="1" fakeShieldsRear="1" hasFakeShldFreq="1" colorRed="0.0" colorGreen="0.2" colorBlue="0.7" />
+        <set_object_property property="pushRadius" value="1.0" name="PF" />
+        <set_object_property property="artScale" value="8.0" name="PF" />
+        <create type="genericMesh" x="100.0" y="12.0" z="100.0" angle="0" name="PG" meshFileName="dat\TSN\Planets\planet8.dxs" textureFileName="dat\TSN\Planets\planetTex4.png" fakeShieldsFront="1" fakeShieldsRear="1" hasFakeShldFreq="1" colorRed="0.0" colorGreen="0.2" colorBlue="0.7" />
+        <set_object_property property="pushRadius" value="1.0" name="PG" />
+        <set_object_property property="artScale" value="8.0" name="PG" />
+        <create type="genericMesh" x="100.0" y="14.0" z="100.0" angle="0" name="PH" meshFileName="dat\TSN\Planets\planet8.dxs" textureFileName="dat\TSN\Planets\planetTex4.png" fakeShieldsFront="1" fakeShieldsRear="1" hasFakeShldFreq="1" colorRed="0.0" colorGreen="0.2" colorBlue="0.7" />
+        <set_object_property property="pushRadius" value="1.0" name="PH" />
+        <set_object_property property="artScale" value="8.0" name="PH" />
+        <set_relative_position name2="PA" distance="2000" angle="0.0" name1="Terra Noua" />
+        <set_relative_position name2="PB" distance="2000" angle="45.0" name1="Terra Noua" />
+        <set_relative_position name2="PC" distance="2000" angle="90.0" name1="Terra Noua" />
+        <set_relative_position name2="PD" distance="2000" angle="135.0" name1="Terra Noua" />
+        <set_relative_position name2="PE" distance="2000" angle="180.0" name1="Terra Noua" />
+        <set_relative_position name2="PF" distance="2000" angle="225.0" name1="Terra Noua" />
+        <set_relative_position name2="PG" distance="2000" angle="270.0" name1="Terra Noua" />
+        <set_relative_position name2="PH" distance="2000" angle="315.0" name1="Terra Noua" />
+        <set_object_property property="positionY" value="-2100.0" name="PA" />
+        <set_object_property property="positionY" value="-2100.0" name="PB" />
+        <set_object_property property="positionY" value="-2100.0" name="PC" />
+        <set_object_property property="positionY" value="-2100.0" name="PD" />
+        <set_object_property property="positionY" value="-2100.0" name="PE" />
+        <set_object_property property="positionY" value="-2100.0" name="PF" />
+        <set_object_property property="positionY" value="-2100.0" name="PG" />
+        <set_object_property property="positionY" value="-2100.0" name="PH" />
+        <set_object_property property="angle" value="6.283185307" name="PA" />
+        <set_object_property property="angle" value="7.068583471" name="PB" />
+        <set_object_property property="angle" value="7.853981634" name="PC" />
+        <set_object_property property="angle" value="8.639379797" name="PD" />
+        <set_object_property property="angle" value="3.141590654" name="PE" />
+        <set_object_property property="angle" value="3.926990817" name="PF" />
+        <set_object_property property="angle" value="4.71238898" name="PG" />
+        <set_object_property property="angle" value="5.497787144" name="PH" />
+        <set_ship_text name="PA" newname=" " />
+        <set_ship_text name="PB" newname=" " />
+        <set_ship_text name="PC" newname=" " />
+        <set_ship_text name="PD" newname=" " />
+        <set_ship_text name="PE" newname=" " />
+        <set_ship_text name="PF" newname=" " />
+        <set_ship_text name="PG" newname=" " />
+        <set_ship_text name="PH" newname=" " />
 
         <set_variable name="Iron Sun Fired" value="1.0" integer="yes" />
         <set_timer name="Mission end timer" seconds="10" />
@@ -386,7 +488,7 @@
 
         <if_not_exists name="HQ" />
 
-        <warning_popup_message message="HQ destroyed; mission lost" consoles="MHWESCO" />
+        <warning_popup_message message="HQ destroyed; mission lost" consoles="MHWESCOF" />
         <set_timer name="Mission end timer" seconds="10" />
     </event>
 
@@ -398,7 +500,7 @@
 
         <set_variable name="StateTransition" value="2" integer="yes" />
 
-        <warning_popup_message message="Iron Sun destroyed! Destroy remaining hostiles in the sector." consoles="MHWESCO" />
+        <warning_popup_message message="Iron Sun destroyed! Destroy remaining hostiles in the sector." consoles="MHWESCOF" />
         <incoming_comms_text from="HQ" sideValue="2" type="STATION">Iron Sun destroyed! Destroy remaining hostiles in the sector.</incoming_comms_text>
     </event>
 
@@ -411,7 +513,7 @@
 
         <set_variable name="StateTransition" value="3" integer="yes" />
 
-        <warning_popup_message message="Area is secure. Mission successful!" consoles="MHWESCO" />
+        <warning_popup_message message="Area is secure. Mission successful!" consoles="MHWESCOF" />
         <incoming_comms_text from="HQ" sideValue="2" type="STATION">Area is secure. Mission successful!</incoming_comms_text>
         <set_timer name="Mission end timer" seconds="10" />
     </event>
@@ -431,7 +533,7 @@
         <if_variable name="KugelblitzConstructed" comparator="EQUALS" value="0.0" />
         <if_variable name="IronSunShrinkedIter" comparator="EQUALS" value="0.0" />
 
-        <warning_popup_message message="Get away from the Kugelblitz generator!" consoles="MHWESCO" />
+        <warning_popup_message message="Get away from the Kugelblitz generator!" consoles="MHWESCOF" />
         <incoming_comms_text from="HQ" sideValue="2" type="STATION">Get away from the Kugelblitz generator!</incoming_comms_text>
 
         <set_variable name="KugelblitzConstructed" value="1" integer="yes" />
@@ -513,11 +615,14 @@
 
         <set_variable name="{{shuttle}}Cargo{{cargoType}}" value="{{shuttle}}Cargo{{cargoType}}-1" integer="yes" />
         <set_variable name="{{siteName}}Cargo{{cargoType}}" value="{{shuttle}}Cargo{{cargoType}}+1" integer="yes" />
-        <set_ship_text name="{{site.constructionSiteName}}" race="Terran" scan_desc="{{site.desc}} Shuttles can bring materials. Construction requirements: {{site.requires_exist|join(',')}}. Construction status: {{cargoTypes[1]}}: |{{siteName}}Cargo1|/{{site.constructionRequirements[0]}}. {{cargoTypes[2]}}: |{{siteName}}Cargo2|/{{site.constructionRequirements[1]}}. {{cargoTypes[3]}}: |{{siteName}}Cargo3|/{{site.constructionRequirements[2]}}" />
+        <set_ship_text name="{{site.constructionSiteName}}" race="Terran" scan_desc="{{site.desc}} Shuttles can bring materials. {{site.requires_exist|length>0 and 'Construction prerequisites: ' or ''}}{{site.requires_exist|join(', ')}}{{site.requires_exist|length>0 and '.' or ''}} Construction status: {{cargoTypes[1]}}: |{{siteName}}Cargo1|/{{site.constructionRequirements[1]}}. {{cargoTypes[2]}}: |{{siteName}}Cargo2|/{{site.constructionRequirements[2]}}. {{cargoTypes[3]}}: |{{siteName}}Cargo3|/{{site.constructionRequirements[3]}}"  />
 
         <incoming_comms_text from="{{shuttle}}" sideValue="2" type="STATUS">{{shuttle}} delivered {{cargoTypes[cargoType]}} to {{site.constructionSiteName}}. 
             Current cargo: {{cargoTypes[1]}}: |{{shuttle}}Cargo1|. {{cargoTypes[2]}}: |{{shuttle}}Cargo2|. {{cargoTypes[3]}}: |{{shuttle}}Cargo3|.
         </incoming_comms_text>
+
+        <warning_popup_message message="{{shuttle}} current cargo: {{cargoTypes[1]}}: |{{shuttle}}Cargo1|. {{cargoTypes[2]}}: |{{shuttle}}Cargo2|. {{cargoTypes[3]}}: |{{shuttle}}Cargo3|." consoles="F" />
+
         <log text="{{shuttle}} delivered {{cargoTypes[cargoType]}} to {{site.constructionSiteName}}. Current cargo: {{cargoTypes[1]}}: |{{shuttle}}Cargo1|. {{cargoTypes[2]}}: |{{shuttle}}Cargo2|. {{cargoTypes[3]}}: |{{shuttle}}Cargo3|." />
     </event>
                 {%- endfor %}
@@ -540,6 +645,9 @@
         <incoming_comms_text from="{{shuttle}}" sideValue="2" type="STATUS">{{shuttle}} picked up {{cargoTypes[cargoType]}}. 
             Current cargo: {{cargoTypes[1]}}: |{{shuttle}}Cargo1|. {{cargoTypes[2]}}: |{{shuttle}}Cargo2|. {{cargoTypes[3]}}: |{{shuttle}}Cargo3|.
         </incoming_comms_text>
+
+        <warning_popup_message message="{{shuttle}} current cargo: {{cargoTypes[1]}}: |{{shuttle}}Cargo1|. {{cargoTypes[2]}}: |{{shuttle}}Cargo2|. {{cargoTypes[3]}}: |{{shuttle}}Cargo3|." consoles="F" />
+
         <log text="{{shuttle}} picked up {{cargoTypes[cargoType]}}. Current cargo: {{cargoTypes[1]}}: |{{shuttle}}Cargo1|. {{cargoTypes[2]}}: |{{shuttle}}Cargo2|. {{cargoTypes[3]}}: |{{shuttle}}Cargo3|." />
     </event>
         {%- endfor %}
@@ -587,7 +695,7 @@
         {%- endfor %}
 
         {%- for portType,port in site.ports.items() %}
-            <create type="genericMesh" name="{{port.portName}}" sideValue="0" meshFileName="dat\TSN\USFP\marker.dxs" textureFileName="dat\TSN\USFP\marker.png" />
+            <create type="genericMesh" name="{{port.portName}}" sideValue="0" meshFileName="dat\TSN\USFP\marker.dxs" textureFileName="{{cargoTypesMeshes[portType]}}" />
             <set_relative_position name2="{{port.portName}}" distance="500" angle="{{port.angle}}" name1="{{siteName}}" />
             <set_object_property property="pushRadius" value="0.0" name="{{port.portName}}" />
             <set_timer name="{{port.portName}}CooldownTimer" seconds="1" />
@@ -629,6 +737,9 @@
         <incoming_comms_text from="{{shuttle}}" sideValue="2" type="STATUS">{{shuttle}} brought {{cargoTypes[portType]}} to {{port.portName}} port. 
             Current cargo: {{cargoTypes[1]}}: |{{shuttle}}Cargo1|. {{cargoTypes[2]}}: |{{shuttle}}Cargo2|. {{cargoTypes[3]}}: |{{shuttle}}Cargo3|.
         </incoming_comms_text>
+
+        <warning_popup_message message="{{shuttle}} current cargo: {{cargoTypes[1]}}: |{{shuttle}}Cargo1|. {{cargoTypes[2]}}: |{{shuttle}}Cargo2|. {{cargoTypes[3]}}: |{{shuttle}}Cargo3|." consoles="F" />
+
         <log text="{{shuttle}} brought {{cargoTypes[portType]}} to {{port.portName}} port. Current cargo: {{cargoTypes[1]}}: |{{shuttle}}Cargo1|. {{cargoTypes[2]}}: |{{shuttle}}Cargo2|. {{cargoTypes[3]}}: |{{shuttle}}Cargo3|." />
 
     </event>
@@ -651,7 +762,7 @@
         <destroy name="{{port.portName}}" />
         {%- endfor %}
 
-        <set_ship_text name="{{site.constructionSiteName}}" race="Terran" scan_desc="{{site.desc}} Shuttles can bring materials. Construction requirements: {{site.requires_exist|join(',')}}. Construction status: {{cargoTypes[1]}}: |{{siteName}}Cargo1|/{{site.constructionRequirements[0]}}. {{cargoTypes[2]}}: |{{siteName}}Cargo2|/{{site.constructionRequirements[1]}}. {{cargoTypes[3]}}: |{{siteName}}Cargo3|/{{site.constructionRequirements[2]}}" />
+        <set_ship_text name="{{site.constructionSiteName}}" race="Terran" scan_desc="{{site.desc}} Shuttles can bring materials. {{site.requires_exist|length>0 and 'Construction prerequisites: ' or ''}}{{site.requires_exist|join(', ')}}{{site.requires_exist|length>0 and '.' or ''}} Construction status: {{cargoTypes[1]}}: |{{siteName}}Cargo1|/{{site.constructionRequirements[1]}}. {{cargoTypes[2]}}: |{{siteName}}Cargo2|/{{site.constructionRequirements[2]}}. {{cargoTypes[3]}}: |{{siteName}}Cargo3|/{{site.constructionRequirements[3]}}"  />
 
         <set_timer name="{{site.constructionSiteName}}ConfigureTimer" seconds="1" />
     </event>
@@ -686,7 +797,7 @@
         <if_variable name="{{siteName}}Producing" comparator="EQUALS" value="1.0" />
         <if_timer_finished name="{{siteName}}ProdTimer" />
 
-        <create type="genericMesh" x="{{site.x}}" y="{{site.y}}" z="{{site.z}}-500" name="{{cargoTypes[site.producesCargo]}}" sideValue="0" meshFileName="dat\TSN\USFP\marker.dxs" textureFileName="dat\TSN\USFP\marker.png" />
+        <create type="genericMesh" x="{{site.x}}" y="{{site.y}}" z="{{site.z}}-500" name="{{cargoTypes[site.producesCargo]}}" sideValue="0" meshFileName="dat\mine.dxs" textureFileName="{{cargoTypesMeshes[site.producesCargo]}}" />
         <set_object_property property="pushRadius" value="0.0" name="{{cargoTypes[site.producesCargo]}}" />
 
         <set_ship_text name="{{cargoTypes[site.producesCargo]}}" race="Terran" scan_desc="Shuttles may pick up this cargo" />
@@ -920,15 +1031,15 @@
         <set_relative_position name2="Plasma drill" distance="2200" angle="180.0" name1="Iron Sun" />
         <set_timer name="Plasma drill update pos timer" seconds="1" />
     </event>
-    <event name="PD Site site update pos" >
-        <!-- <log text="PD Site site update pos" /> -->
+    <event name="(Plasma drill) site update pos" >
+        <!-- <log text="(Plasma drill) site update pos" /> -->
 
-        <if_exists name="PD Site" />
-        <if_timer_finished name="PD Site update pos timer" />
+        <if_exists name="(Plasma drill)" />
+        <if_timer_finished name="Plasma drill update pos timer" />
 
-        <set_relative_position name2="PD Site" distance="2200" angle="180.0" name1="Iron Sun" />
+        <set_relative_position name2="(Plasma drill)" distance="2200" angle="180.0" name1="Iron Sun" />
 
-        <set_timer name="PD Site update pos timer" seconds="1" />
+        <set_timer name="Plasma drill update pos timer" seconds="1" />
     </event>
     <event name="Kugelblitz generator update pos" >
         <!-- <log text="Kugelblitz generator update pos" /> -->
@@ -940,15 +1051,15 @@
 
         <set_timer name="Kugelblitz generator update pos timer" seconds="1" />
     </event>
-    <event name="KB Site update pos" >
-        <!-- <log text="KB Site update pos" /> -->
+    <event name="(Kugelblitz generator) update pos" >
+        <!-- <log text="(Kugelblitz generator) update pos" /> -->
 
-        <if_exists name="KB Site" />
-        <if_timer_finished name="KB Site update pos timer" />
+        <if_exists name="(Kugelblitz generator)" />
+        <if_timer_finished name="Kugelblitz generator update pos timer" />
 
-        <set_relative_position name2="KB Site" distance="2200" angle="0.0" name1="Iron Sun" />
+        <set_relative_position name2="(Kugelblitz generator)" distance="2200" angle="0.0" name1="Iron Sun" />
 
-        <set_timer name="KB Site update pos timer" seconds="1" />
+        <set_timer name="Kugelblitz generator update pos timer" seconds="1" />
     </event>
 
 
