@@ -2,7 +2,9 @@
 
 A mission for Artemis Spaceship Bridge Simulator v.2.8.1 (but may work on other versions).
 
-Balanced for TSN RP community (~4 coordinated crews).
+There are two variants of this mission available: "normal" and "easy".
+
+Normal mode is balanced for TSN RP community (~4 coordinated crews).
 
 GM Console is available to tweak the scenario on the fly. If the GM buttons don't appear, use "G" hotkey when on GM screen.
 
@@ -24,7 +26,8 @@ Gather resources, construct stations, build fleets and ordnance, research the Ca
 
 Requires TSN RP Mod File 3.1 installed (it provides additional assets), available [here](http://www.terranstellarnavy.net/tsn-expansion/).
 
-Place the .xml file under `Artemis\dat\Missions\MISS_TSN-IronSun` (e.g. `C:\Program Files (x86)\Artemis\dat\Missions\MISS_TSN-IronSun`).
+* Place the MISS_TSN-IronSun.xml file under `Artemis\dat\Missions\MISS_TSN-IronSun` (e.g. `C:\Program Files (x86)\Artemis\dat\Missions\MISS_TSN-IronSun`).
+* Place the MISS_TSN-IronSunEasy.xml file under `Artemis\dat\Missions\MISS_TSN-IronSunEasy` (e.g. `C:\Program Files (x86)\Artemis\dat\Missions\MISS_TSN-IronSunEasy`).
 
 
 ## Modification

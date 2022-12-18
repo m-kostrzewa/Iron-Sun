@@ -549,7 +549,8 @@ def render():
                 "atDistance": 89900,
                 "nameList": "Caltron",
                 "spawnAt": "Iron Sun",
-                "hulls": [7206, 7204, 7201],
+                # "hulls": [7206, 7204, 7201],
+                "hulls": [7206, 7204],
                 "sideValue": 1,
             },
             {
@@ -558,7 +559,8 @@ def render():
                 "x": "0",
                 "y": "0.0",
                 "z": "70000",
-                "hulls": [7201, 7203],
+                # "hulls": [7201, 7203],
+                "hulls": [7203],
                 "sideValue": 1,
             },
             {
@@ -567,7 +569,8 @@ def render():
                 "x": "0",
                 "y": "0.0",
                 "z": "30000",
-                "hulls": [7201, 7202, 7202],
+                # "hulls": [7201, 7202, 7202],
+                "hulls": [7201, 7202],
                 "sideValue": 1,
             },
 
@@ -589,13 +592,13 @@ def render():
                 "hulls": [2000, 2000, 2001, 2001, 2002, 2100],
                 "sideValue": 1,
             },
-            {
-                "atDistance": 75100,
-                "nameList": "Hegemony",
-                "spawnAt": "Antenna A",
-                "hulls": [2000, 2000, 2001, 2001, 2002, 2100],
-                "sideValue": 1,
-            },
+            # {
+            #     "atDistance": 75100,
+            #     "nameList": "Hegemony",
+            #     "spawnAt": "Antenna A",
+            #     "hulls": [2000, 2000, 2001, 2001, 2002, 2100],
+            #     "sideValue": 1,
+            # },
 
             {
                 "hail": "The Skaraans are here too.",
@@ -607,15 +610,15 @@ def render():
                 "hulls": [5002, 5000],
                 "sideValue": 1,
             },
-            {
-                "atDistance": 67100,
-                "nameList": "Hegemony",
-                "x": "0",
-                "y": "0.0",
-                "z": "70000",
-                "hulls": [5001, 5000],
-                "sideValue": 1,
-            },
+            # {
+            #     "atDistance": 67100,
+            #     "nameList": "Hegemony",
+            #     "x": "0",
+            #     "y": "0.0",
+            #     "z": "70000",
+            #     "hulls": [5001, 5000],
+            #     "sideValue": 1,
+            # },
 
             {
                 "hail": "Let's see you deal with Arvonian carriers!",
@@ -635,13 +638,13 @@ def render():
                 "hulls": [3002, 3002, 3100],
                 "sideValue": 1,
             },
-            {
-                "atDistance": 50100,
-                "nameList": "Hegemony",
-                "spawnAt": "Antenna B",
-                "hulls": [3001, 3001, 3001],
-                "sideValue": 1,
-            },
+            # {
+            #     "atDistance": 50100,
+            #     "nameList": "Hegemony",
+            #     "spawnAt": "Antenna B",
+            #     "hulls": [3001, 3001, 3001],
+            #     "sideValue": 1,
+            # },
 
             {
                 "hail": "Im enjoying this.",
@@ -653,15 +656,15 @@ def render():
                 "hulls": [5000, 5002],
                 "sideValue": 1,
             },
-            {
-                "atDistance": 40100,
-                "nameList": "Hegemony",
-                "x": "93000",
-                "y": "0.0",
-                "z": "93000",
-                "hulls": [5001, 5000],
-                "sideValue": 1,
-            },
+            # {
+            #     "atDistance": 40100,
+            #     "nameList": "Hegemony",
+            #     "x": "93000",
+            #     "y": "0.0",
+            #     "z": "93000",
+            #     "hulls": [5001, 5000],
+            #     "sideValue": 1,
+            # },
 
             {
                 "hail": "We didn't invite the Torgoths, but they must have caught the scent of your blood!",
@@ -692,50 +695,58 @@ def render():
                 "hulls": [5000, 5000, 5000],
                 "sideValue": 1,
             },
-            {
-                "atDistance": 20100,
-                "nameList": "Hegemony",
-                "x": "93000",
-                "y": "0.0",
-                "z": "93000",
-                "hulls": [5001, 5002],
-                "sideValue": 1,
-            },
+            # {
+            #     "atDistance": 20100,
+            #     "nameList": "Hegemony",
+            #     "x": "93000",
+            #     "y": "0.0",
+            #     "z": "93000",
+            #     "hulls": [5001, 5002],
+            #     "sideValue": 1,
+            # },
         ],
         "spawners": {
             "Antenna A": {
                 "commsFromHQ": "We're reading Kralien slingshot jump signatures!",
                 "every": 60*4,                              # Hulls will be spawned every this amount of seconds
                 "nameList": "Hegemony",                     # See 'waves'
-                "hulls": [2000, 2000, 2001, 2002, 2100],    # See 'waves'
+                # "hulls": [2000, 2000, 2001, 2002, 2100],    # See 'waves'
+                "hulls": [2000, 2002, 2100],    # See 'waves'
                 "sideValue": 1,                             # see 'waves'
             },
             "Antenna B": {
                 "commsFromHQ": "Incoming jump signatures, Arvonian configuration!",
-                "every": 60*4,
+                # "every": 60*4,
+                "every": 60*8,
                 "nameList": "Hegemony",
-                "hulls": [3001, 3001, 3002],
+                # "hulls": [3001, 3001, 3002],
+                "hulls": [3001, 3002],
                 "sideValue": 1,
             },
             "Antenna C": {
                 "commsFromHQ": "Torgoth fleet just entered the system!",
-                "every": 60*4,
+                # "every": 60*4,
+                "every": 60*8,
                 "nameList": "Hegemony",
-                "hulls": [4000, 4000, 4001],
+                "hulls": [4000, 4001],
                 "sideValue": 1,
             },
             "Asteroid Base": {
                 "commsFromHQ": "We're reading a pirate raiding party on long range scanners!",
-                "every": 60*4,
+                # "every": 60*4,
+                "every": 60*7,
                 "nameList": "Hegemony",
-                "hulls": [7300, 7300, 7301],
+                # "hulls": [7300, 7300, 7301],
+                "hulls": [7300, 7301],
                 "sideValue": 1,
             },
             "Iron Sun": {
                 "commsFromHQ": "Seismic activity on the Iron Star... More Caltrons!",
-                "every": 60*5,
+                # "every": 60*5,
+                "every": 60*7,
                 "nameList": "Caltron",
-                "hulls": [7201, 7202, 7201, 7205],
+                # "hulls": [7201, 7202, 7201, 7205],
+                "hulls": [7201, 7205],
                 "sideValue": 1,
             }
         }
